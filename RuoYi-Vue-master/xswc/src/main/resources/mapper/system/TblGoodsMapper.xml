@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.TblGoodsMapper">
+    
+    <resultMap type="TblGoods" id="TblGoodsResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="price"    column="price"    />
+        <result property="introduce"    column="introduce"    />
+        <result property="picture"    column="picture"    />
+        <result property="coverPicture"    column="cover_picture"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createBy"    column="create_by"    />
+    </resultMap>
+
+    <sql id="selectTblGoodsVo">
+        select id, name, price, introduce, picture, cover_picture, update_time, update_by, create_time, create_by from tbl_goods
+    </sql>
+
+    <select id="selectTblGoodsList" parameterType="TblGoods" resultMap="TblGoodsResult">
+        <include refid="selectTblGoodsVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="price != null "> and price = #{price}</if>
+            <if test="introduce != null  and introduce != ''"> and introduce = #{introduce}</if>
+            <if test="picture != null  and picture != ''"> and picture = #{picture}</if>
+            <if test="coverPicture != null  and coverPicture != ''"> and cover_picture = #{coverPicture}</if>
+        </where>
+    </select>
+    
+    <select id="selectTblGoodsById" parameterType="Long" resultMap="TblGoodsResult">
+        <include refid="selectTblGoodsVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTblGoods" parameterType="TblGoods">
+        insert into tbl_goods
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="name != null">name,</if>
+            <if test="price != null">price,</if>
+            <if test="introduce != null">introduce,</if>
+            <if test="picture != null">picture,</if>
+            <if test="coverPicture != null">cover_picture,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="name != null">#{name},</if>
+            <if test="price != null">#{price},</if>
+            <if test="introduce != null">#{introduce},</if>
+            <if test="picture != null">#{picture},</if>
+            <if test="coverPicture != null">#{coverPicture},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTblGoods" parameterType="TblGoods">
+        update tbl_goods
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="introduce != null">introduce = #{introduce},</if>
+            <if test="picture != null">picture = #{picture},</if>
+            <if test="coverPicture != null">cover_picture = #{coverPicture},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTblGoodsById" parameterType="Long">
+        delete from tbl_goods where id = #{id}
+    </delete>
+
+    <delete id="deleteTblGoodsByIds" parameterType="String">
+        delete from tbl_goods where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

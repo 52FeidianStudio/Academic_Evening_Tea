@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.TblActivityMapper">
+    
+    <resultMap type="TblActivity" id="TblActivityResult">
+        <result property="id"    column="id"    />
+        <result property="details"    column="details"    />
+        <result property="img"    column="img"    />
+        <result property="userId"    column="user_id"    />
+        <result property="userName"    column="user_name"    />
+        <result property="userTel"    column="user_tel"    />
+        <result property="hot"    column="hot"    />
+        <result property="hbNum"    column="hb_num"    />
+        <result property="top"    column="top"    />
+        <result property="givelike"    column="givelike"    />
+        <result property="views"    column="views"    />
+        <result property="money"    column="money"    />
+        <result property="typeId"    column="type_id"    />
+        <result property="state"    column="state"    />
+        <result property="time"    column="time"    />
+        <result property="address"    column="address"    />
+        <result property="hbKeyword"    column="hb_keyword"    />
+        <result property="hong"    column="hong"    />
+        <result property="userImg2"    column="user_img2"    />
+        <result property="cityname"    column="cityname"    />
+        <result property="lat"    column="lat"    />
+        <result property="lng"    column="lng"    />
+        <result property="qphone"    column="qphone"    />
+        <result property="str1"    column="str1"    />
+        <result property="str2"    column="str2"    />
+    </resultMap>
+
+    <sql id="selectTblActivityVo">
+        select id, details, img, user_id, user_name, user_tel, hot, hb_num, top, givelike, views, money, type_id, state, time, address, hb_keyword, hong, user_img2, cityname, lat, lng, qphone, str1, str2 from tbl_activity
+    </sql>
+
+    <select id="selectTblActivityList" parameterType="TblActivity" resultMap="TblActivityResult">
+        <include refid="selectTblActivityVo"/>
+        <where>  
+            <if test="details != null  and details != ''"> and details = #{details}</if>
+            <if test="img != null  and img != ''"> and img = #{img}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="userName != null  and userName != ''"> and user_name like concat('%', #{userName}, '%')</if>
+            <if test="userTel != null  and userTel != ''"> and user_tel = #{userTel}</if>
+            <if test="hot != null "> and hot = #{hot}</if>
+            <if test="hbNum != null "> and hb_num = #{hbNum}</if>
+            <if test="top != null "> and top = #{top}</if>
+            <if test="givelike != null "> and givelike = #{givelike}</if>
+            <if test="views != null "> and views = #{views}</if>
+            <if test="money != null "> and money = #{money}</if>
+            <if test="typeId != null "> and type_id = #{typeId}</if>
+            <if test="state != null "> and state = #{state}</if>
+            <if test="time != null "> and time = #{time}</if>
+            <if test="address != null  and address != ''"> and address = #{address}</if>
+            <if test="hbKeyword != null  and hbKeyword != ''"> and hb_keyword = #{hbKeyword}</if>
+            <if test="hong != null  and hong != ''"> and hong = #{hong}</if>
+            <if test="userImg2 != null  and userImg2 != ''"> and user_img2 = #{userImg2}</if>
+            <if test="cityname != null  and cityname != ''"> and cityname like concat('%', #{cityname}, '%')</if>
+            <if test="lat != null  and lat != ''"> and lat = #{lat}</if>
+            <if test="lng != null  and lng != ''"> and lng = #{lng}</if>
+            <if test="qphone != null  and qphone != ''"> and qphone = #{qphone}</if>
+            <if test="str1 != null  and str1 != ''"> and str1 = #{str1}</if>
+            <if test="str2 != null  and str2 != ''"> and str2 = #{str2}</if>
+        </where>
+    </select>
+    
+    <select id="selectTblActivityById" parameterType="Long" resultMap="TblActivityResult">
+        <include refid="selectTblActivityVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTblActivity" parameterType="TblActivity" useGeneratedKeys="true" keyProperty="id">
+        insert into tbl_activity
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="details != null">details,</if>
+            <if test="img != null">img,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="userName != null">user_name,</if>
+            <if test="userTel != null">user_tel,</if>
+            <if test="hot != null">hot,</if>
+            <if test="hbNum != null">hb_num,</if>
+            <if test="top != null">top,</if>
+            <if test="givelike != null">givelike,</if>
+            <if test="views != null">views,</if>
+            <if test="money != null">money,</if>
+            <if test="typeId != null">type_id,</if>
+            <if test="state != null">state,</if>
+            <if test="time != null">time,</if>
+            <if test="address != null">address,</if>
+            <if test="hbKeyword != null">hb_keyword,</if>
+            <if test="hong != null">hong,</if>
+            <if test="userImg2 != null">user_img2,</if>
+            <if test="cityname != null">cityname,</if>
+            <if test="lat != null">lat,</if>
+            <if test="lng != null">lng,</if>
+            <if test="qphone != null">qphone,</if>
+            <if test="str1 != null">str1,</if>
+            <if test="str2 != null">str2,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="details != null">#{details},</if>
+            <if test="img != null">#{img},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="userName != null">#{userName},</if>
+            <if test="userTel != null">#{userTel},</if>
+            <if test="hot != null">#{hot},</if>
+            <if test="hbNum != null">#{hbNum},</if>
+            <if test="top != null">#{top},</if>
+            <if test="givelike != null">#{givelike},</if>
+            <if test="views != null">#{views},</if>
+            <if test="money != null">#{money},</if>
+            <if test="typeId != null">#{typeId},</if>
+            <if test="state != null">#{state},</if>
+            <if test="time != null">#{time},</if>
+            <if test="address != null">#{address},</if>
+            <if test="hbKeyword != null">#{hbKeyword},</if>
+            <if test="hong != null">#{hong},</if>
+            <if test="userImg2 != null">#{userImg2},</if>
+            <if test="cityname != null">#{cityname},</if>
+            <if test="lat != null">#{lat},</if>
+            <if test="lng != null">#{lng},</if>
+            <if test="qphone != null">#{qphone},</if>
+            <if test="str1 != null">#{str1},</if>
+            <if test="str2 != null">#{str2},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTblActivity" parameterType="TblActivity">
+        update tbl_activity
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="details != null">details = #{details},</if>
+            <if test="img != null">img = #{img},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="userName != null">user_name = #{userName},</if>
+            <if test="userTel != null">user_tel = #{userTel},</if>
+            <if test="hot != null">hot = #{hot},</if>
+            <if test="hbNum != null">hb_num = #{hbNum},</if>
+            <if test="top != null">top = #{top},</if>
+            <if test="givelike != null">givelike = #{givelike},</if>
+            <if test="views != null">views = #{views},</if>
+            <if test="money != null">money = #{money},</if>
+            <if test="typeId != null">type_id = #{typeId},</if>
+            <if test="state != null">state = #{state},</if>
+            <if test="time != null">time = #{time},</if>
+            <if test="address != null">address = #{address},</if>
+            <if test="hbKeyword != null">hb_keyword = #{hbKeyword},</if>
+            <if test="hong != null">hong = #{hong},</if>
+            <if test="userImg2 != null">user_img2 = #{userImg2},</if>
+            <if test="cityname != null">cityname = #{cityname},</if>
+            <if test="lat != null">lat = #{lat},</if>
+            <if test="lng != null">lng = #{lng},</if>
+            <if test="qphone != null">qphone = #{qphone},</if>
+            <if test="str1 != null">str1 = #{str1},</if>
+            <if test="str2 != null">str2 = #{str2},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTblActivityById" parameterType="Long">
+        delete from tbl_activity where id = #{id}
+    </delete>
+
+    <delete id="deleteTblActivityByIds" parameterType="String">
+        delete from tbl_activity where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

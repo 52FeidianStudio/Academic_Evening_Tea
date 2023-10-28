@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.TblRecommendCommnetMapper">
+    
+    <resultMap type="TblRecommendCommnet" id="TblRecommendCommnetResult">
+        <result property="id"    column="id"    />
+        <result property="comment"    column="comment"    />
+        <result property="userId"    column="user_id"    />
+        <result property="recommendId"    column="recommend_id"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createBy"    column="create_by"    />
+    </resultMap>
+
+    <sql id="selectTblRecommendCommnetVo">
+        select id, comment, user_id, recommend_id, update_time, update_by, create_time, create_by from tbl_recommend_commnet
+    </sql>
+
+    <select id="selectTblRecommendCommnetList" parameterType="TblRecommendCommnet" resultMap="TblRecommendCommnetResult">
+        <include refid="selectTblRecommendCommnetVo"/>
+        <where>  
+            <if test="comment != null  and comment != ''"> and comment = #{comment}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="recommendId != null "> and recommend_id = #{recommendId}</if>
+        </where>
+    </select>
+    
+    <select id="selectTblRecommendCommnetById" parameterType="Long" resultMap="TblRecommendCommnetResult">
+        <include refid="selectTblRecommendCommnetVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTblRecommendCommnet" parameterType="TblRecommendCommnet">
+        insert into tbl_recommend_commnet
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="comment != null">comment,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="recommendId != null">recommend_id,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="comment != null">#{comment},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="recommendId != null">#{recommendId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTblRecommendCommnet" parameterType="TblRecommendCommnet">
+        update tbl_recommend_commnet
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="comment != null">comment = #{comment},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="recommendId != null">recommend_id = #{recommendId},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTblRecommendCommnetById" parameterType="Long">
+        delete from tbl_recommend_commnet where id = #{id}
+    </delete>
+
+    <delete id="deleteTblRecommendCommnetByIds" parameterType="String">
+        delete from tbl_recommend_commnet where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

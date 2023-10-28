@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.TblGoodsUserMapper">
+    
+    <resultMap type="TblGoodsUser" id="TblGoodsUserResult">
+        <result property="id"    column="id"    />
+        <result property="goodsId"    column="goods_id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="nums"    column="nums"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createBy"    column="create_by"    />
+    </resultMap>
+
+    <sql id="selectTblGoodsUserVo">
+        select id, goods_id, user_id, nums, update_time, update_by, create_time, create_by from tbl_goods_user
+    </sql>
+
+    <select id="selectTblGoodsUserList" parameterType="TblGoodsUser" resultMap="TblGoodsUserResult">
+        <include refid="selectTblGoodsUserVo"/>
+        <where>  
+            <if test="goodsId != null "> and goods_id = #{goodsId}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="nums != null "> and nums = #{nums}</if>
+        </where>
+    </select>
+    
+    <select id="selectTblGoodsUserById" parameterType="Long" resultMap="TblGoodsUserResult">
+        <include refid="selectTblGoodsUserVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTblGoodsUser" parameterType="TblGoodsUser">
+        insert into tbl_goods_user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="goodsId != null">goods_id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="nums != null">nums,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="goodsId != null">#{goodsId},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="nums != null">#{nums},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTblGoodsUser" parameterType="TblGoodsUser">
+        update tbl_goods_user
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="goodsId != null">goods_id = #{goodsId},</if>
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="nums != null">nums = #{nums},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTblGoodsUserById" parameterType="Long">
+        delete from tbl_goods_user where id = #{id}
+    </delete>
+
+    <delete id="deleteTblGoodsUserByIds" parameterType="String">
+        delete from tbl_goods_user where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
