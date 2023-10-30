@@ -22,7 +22,7 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
- * 【请填写功能名称】Controller
+ * 我要推荐中用户评论Controller
  * 
  * @author ruoyi
  * @date 2023-10-25

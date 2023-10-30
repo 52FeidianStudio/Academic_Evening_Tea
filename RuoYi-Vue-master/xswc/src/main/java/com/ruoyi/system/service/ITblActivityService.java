@@ -28,9 +28,9 @@ public interface ITblActivityService
     public List<TblActivity> selectTblActivityList(TblActivity tblActivity);
 
     /**
-     * 新增商家发布文章
+     * 新增用户发布活动
      * 
-     * @param tblActivity 商家发布文章
+     * @param tblActivity 用户发布活动
      * @return 结果
      */
     public int insertTblActivity(TblActivity tblActivity);

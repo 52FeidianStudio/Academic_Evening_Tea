@@ -2,6 +2,7 @@ package com.ruoyi.system.mapper;
 
 import java.util.List;
 import com.ruoyi.system.domain.TblActivity;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 商家发布文章Mapper接口
@@ -9,6 +10,7 @@ import com.ruoyi.system.domain.TblActivity;
  * @author ruoyi
  * @date 2023-10-25
  */
+
 public interface TblActivityMapper 
 {
     /**

@@ -3,6 +3,9 @@ package com.ruoyi.common.core.domain.entity;
 import java.util.Date;
 import java.util.List;
 import javax.validation.constraints.*;
+
+import com.ruoyi.common.utils.ip.AddressUtils;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -17,6 +20,7 @@ import com.ruoyi.common.xss.Xss;
  * 
  * @author ruoyi
  */
+
 public class SysUser extends BaseEntity
 {
     private static final long serialVersionUID = 1L;
@@ -30,7 +34,7 @@ public class SysUser extends BaseEntity
     private Long deptId;
 
     /** 用户账号 */
-    @Excel(name = "登录名称")
+    @Excel(name = "用户账号")
     private String userName;
 
     /** 用户昵称 */
@@ -69,6 +73,27 @@ public class SysUser extends BaseEntity
     /** 最后登录时间 */
     @Excel(name = "最后登录时间", width = 30, dateFormat = "yyyy-MM-dd HH:mm:ss", type = Type.EXPORT)
     private Date loginDate;
+    /**创建者*/
+    private  String createBy;
+    /**创建时间*/
+    private  Date createTime;
+    /**更新者*/
+    private  String updateBy;
+    /** 更新时间 */
+    private  Date updateTime;
+    /**  备注*/
+    private  String remark;
+    /**  学号*/
+    private  String studentId;
+    /**  学院*/
+    private  String faculty;
+    /**  姓名*/
+    private  String name;
+    /**  地址*/
+    private String address;
+    /**  积分*/
+    private Double credit;
+
 
     /** 部门对象 */
     @Excels({
@@ -89,8 +114,7 @@ public class SysUser extends BaseEntity
     /** 角色ID */
     private Long roleId;
 
-    public SysUser()
-    {
+    public SysUser(){
 
     }
 
@@ -142,7 +166,7 @@ public class SysUser extends BaseEntity
     }
 
     @Xss(message = "用户账号不能包含脚本字符")
-    @NotBlank(message = "用户账号不能为空")
+@NotBlank(message = "用户账号不能为空")
     @Size(min = 0, max = 30, message = "用户账号长度不能超过30个字符")
     public String getUserName()
     {
@@ -318,7 +342,7 @@ public class SysUser extends BaseEntity
             .append("updateBy", getUpdateBy())
             .append("updateTime", getUpdateTime())
             .append("remark", getRemark())
-            .append("dept", getDept())
+//            .append("dept", getDept())
             .toString();
     }
 }

@@ -22,7 +22,7 @@ import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
- * 商家发布文章Controller
+ * 活动详情Controller
  * 
  * @author ruoyi
  * @date 2023-10-25
@@ -62,7 +62,7 @@ public class TblActivityController extends BaseController
     /**
      * 获取商家发布文章详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:activity:query')")
+//    @PreAuthorize("@ss.hasPermi('system:activity:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -70,10 +70,10 @@ public class TblActivityController extends BaseController
     }
 
     /**
-     * 新增商家发布文章
+     * 新增用户发布活动
      */
     @PreAuthorize("@ss.hasPermi('system:activity:add')")
-    @Log(title = "商家发布文章", businessType = BusinessType.INSERT)
+    @Log(title = "用户发布活动", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody TblActivity tblActivity)
     {

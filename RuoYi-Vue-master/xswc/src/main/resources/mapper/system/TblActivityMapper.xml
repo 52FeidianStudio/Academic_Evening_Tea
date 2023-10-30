@@ -10,6 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="img"    column="img"    />
         <result property="userId"    column="user_id"    />
         <result property="userName"    column="user_name"    />
+        <result property="speakerName"    column="speaker_name"    />
         <result property="userTel"    column="user_tel"    />
         <result property="hot"    column="hot"    />
         <result property="hbNum"    column="hb_num"    />
@@ -17,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="givelike"    column="givelike"    />
         <result property="views"    column="views"    />
         <result property="money"    column="money"    />
-        <result property="typeId"    column="type_id"    />
+        <result property="type"    column="type"    />
         <result property="state"    column="state"    />
         <result property="time"    column="time"    />
         <result property="address"    column="address"    />
@@ -33,7 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectTblActivityVo">
-        select id, details, img, user_id, user_name, user_tel, hot, hb_num, top, givelike, views, money, type_id, state, time, address, hb_keyword, hong, user_img2, cityname, lat, lng, qphone, str1, str2 from tbl_activity
+        select id, details, img, user_id, user_name,speaker_name, user_tel, hot, hb_num, top, givelike, views, money, type, state, time, address, hb_keyword, hong, user_img2, cityname, lat, lng, qphone, str1, str2 from tbl_activity
     </sql>
 
     <select id="selectTblActivityList" parameterType="TblActivity" resultMap="TblActivityResult">
@@ -43,6 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="img != null  and img != ''"> and img = #{img}</if>
             <if test="userId != null "> and user_id = #{userId}</if>
             <if test="userName != null  and userName != ''"> and user_name like concat('%', #{userName}, '%')</if>
+            <if test="speakerName != null  and speakerName != ''"> and speaker_name like concat('%', #{speakerName}, '%')</if>
             <if test="userTel != null  and userTel != ''"> and user_tel = #{userTel}</if>
             <if test="hot != null "> and hot = #{hot}</if>
             <if test="hbNum != null "> and hb_num = #{hbNum}</if>
@@ -50,7 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="givelike != null "> and givelike = #{givelike}</if>
             <if test="views != null "> and views = #{views}</if>
             <if test="money != null "> and money = #{money}</if>
-            <if test="typeId != null "> and type_id = #{typeId}</if>
+            <if test="type != null "> and type = #{type}</if>
             <if test="state != null "> and state = #{state}</if>
             <if test="time != null "> and time = #{time}</if>
             <if test="address != null  and address != ''"> and address = #{address}</if>
@@ -78,6 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="img != null">img,</if>
             <if test="userId != null">user_id,</if>
             <if test="userName != null">user_name,</if>
+            <if test="speakerName != null">speaker_name,</if>
             <if test="userTel != null">user_tel,</if>
             <if test="hot != null">hot,</if>
             <if test="hbNum != null">hb_num,</if>
@@ -85,7 +88,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="givelike != null">givelike,</if>
             <if test="views != null">views,</if>
             <if test="money != null">money,</if>
-            <if test="typeId != null">type_id,</if>
+            <if test="type != null">type,</if>
             <if test="state != null">state,</if>
             <if test="time != null">time,</if>
             <if test="address != null">address,</if>
@@ -104,6 +107,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="img != null">#{img},</if>
             <if test="userId != null">#{userId},</if>
             <if test="userName != null">#{userName},</if>
+            <if test="speakerName != null">#{speakerName},</if>
             <if test="userTel != null">#{userTel},</if>
             <if test="hot != null">#{hot},</if>
             <if test="hbNum != null">#{hbNum},</if>
@@ -111,7 +115,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="givelike != null">#{givelike},</if>
             <if test="views != null">#{views},</if>
             <if test="money != null">#{money},</if>
-            <if test="typeId != null">#{typeId},</if>
+            <if test="type != null">#{type},</if>
             <if test="state != null">#{state},</if>
             <if test="time != null">#{time},</if>
             <if test="address != null">#{address},</if>
@@ -134,6 +138,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="img != null">img = #{img},</if>
             <if test="userId != null">user_id = #{userId},</if>
             <if test="userName != null">user_name = #{userName},</if>
+            <if test="speakerName != null">user_name = #{speakerName},</if>
             <if test="userTel != null">user_tel = #{userTel},</if>
             <if test="hot != null">hot = #{hot},</if>
             <if test="hbNum != null">hb_num = #{hbNum},</if>
@@ -141,7 +146,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="givelike != null">givelike = #{givelike},</if>
             <if test="views != null">views = #{views},</if>
             <if test="money != null">money = #{money},</if>
-            <if test="typeId != null">type_id = #{typeId},</if>
+            <if test="type != null">type_id = #{type},</if>
             <if test="state != null">state = #{state},</if>
             <if test="time != null">time = #{time},</if>
             <if test="address != null">address = #{address},</if>
