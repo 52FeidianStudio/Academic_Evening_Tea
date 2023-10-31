@@ -34,6 +34,18 @@ public class TblUserActivityController extends BaseController
     @Autowired
     private ITblUserActivityService tblUserActivityService;
 
+
+    /**
+     * 用户报名活动
+     */
+    @PreAuthorize("@ss.hasPermi('system:activity:apliction')")
+    @PostMapping()
+    public AjaxResult application(@RequestBody TblUserActivity tblUserActivity)
+    {
+        return success(tblUserActivityService.insertTblUserActivity(tblUserActivity));
+    }
+
+
     /**
      * 查询【请填写功能名称】列表
      */
@@ -72,13 +84,13 @@ public class TblUserActivityController extends BaseController
     /**
      * 新增【请填写功能名称】
      */
-    @PreAuthorize("@ss.hasPermi('system:activity:add')")
-    @Log(title = "【请填写功能名称】", businessType = BusinessType.INSERT)
-    @PostMapping
-    public AjaxResult add(@RequestBody TblUserActivity tblUserActivity)
-    {
-        return toAjax(tblUserActivityService.insertTblUserActivity(tblUserActivity));
-    }
+//    @PreAuthorize("@ss.hasPermi('system:activity:add')")
+//    @Log(title = "【请填写功能名称】", businessType = BusinessType.INSERT)
+//    @PostMapping
+//    public AjaxResult add(@RequestBody TblUserActivity tblUserActivity)
+//    {
+//        return toAjax(tblUserActivityService.insertTblUserActivity(tblUserActivity));
+//    }
 
     /**
      * 修改【请填写功能名称】

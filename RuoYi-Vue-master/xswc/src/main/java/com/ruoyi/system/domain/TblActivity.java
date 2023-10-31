@@ -84,6 +84,9 @@ public class TblActivity extends BaseEntity
     @Excel(name = "发布时间*", width = 30, dateFormat = "yyyy-MM-dd")
     private String time;
 
+    /**学院 人数限制 数组* */
+    private DeptNum[]  deptNums;
+
     /** 1未精选2已精选* */
     @Excel(name = "1未精选2已精选*")
     private Long type;

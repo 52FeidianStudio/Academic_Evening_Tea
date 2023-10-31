@@ -2,12 +2,17 @@ package com.ruoyi.system.service.impl;
 
 import java.util.List;
 
+import com.ruoyi.system.domain.DeptActivity;
+import com.ruoyi.system.domain.DeptNum;
 import com.ruoyi.system.domain.vo.TblActivityVO;
+import com.ruoyi.system.mapper.DeptActivityMapper;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.TblActivityMapper;
 import com.ruoyi.system.domain.TblActivity;
 import com.ruoyi.system.service.ITblActivityService;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 商家发布文章Service业务层处理
@@ -21,10 +26,13 @@ public class TblActivityServiceImpl implements ITblActivityService
     @Autowired
     private TblActivityMapper tblActivityMapper;
 
+    @Autowired
+    private DeptActivityMapper deptActivityMapper;
+
     /**
-     * 查询商家发布文章
+     *  获取用户发布活动详细信息
      * 
-     * @param id 商家发布文章主键
+     * @param id  用户发布活动主键
      * @return 商家发布文章
      */
     @Override
@@ -34,10 +42,10 @@ public class TblActivityServiceImpl implements ITblActivityService
     }
 
     /**
-     * 查询商家发布文章列表
+     * 用户查询活动集合
      * 
-     * @param tblActivity 商家发布文章
-     * @return 商家发布文章
+     * @param tblActivity 用户查询活动
+     * @return 用户查询活动集合
      */
     @Override
     public List<TblActivityVO> selectTblActivityList(TblActivity tblActivity)
@@ -53,9 +61,21 @@ public class TblActivityServiceImpl implements ITblActivityService
      * @return 结果
      */
     @Override
+    @Transactional
     public int insertTblActivity(TblActivity tblActivity)
     {
-        return tblActivityMapper.insertTblActivity(tblActivity);
+        tblActivityMapper.insertTblActivity(tblActivity);
+        DeptNum[] deptNums=tblActivity.getDeptNums();
+        Long acticityId=tblActivity.getId();
+        for(DeptNum deptNum:deptNums){
+            DeptActivity deptActivity = new DeptActivity();
+            deptActivity.setActivityId(acticityId);
+            deptActivity.setDeptId(deptNum.getDeptId());
+            deptActivity.setMaxNum(deptNum.getMaxNum());
+            deptActivity.setResNum(deptNum.getMaxNum());
+            deptActivityMapper.insertDeptActivity(deptActivity);
+        }
+        return 1;
     }
 
     /**

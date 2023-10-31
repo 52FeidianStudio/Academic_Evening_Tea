@@ -2,11 +2,15 @@ package com.ruoyi.system.service.impl;
 
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.system.domain.DeptActivity;
+import com.ruoyi.system.mapper.DeptActivityMapper;
+import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.TblUserActivityMapper;
 import com.ruoyi.system.domain.TblUserActivity;
 import com.ruoyi.system.service.ITblUserActivityService;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 【请填写功能名称】Service业务层处理
@@ -19,6 +23,9 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
 {
     @Autowired
     private TblUserActivityMapper tblUserActivityMapper;
+
+    @Autowired
+    private DeptActivityMapper deptActivityMapper;
 
     /**
      * 查询【请填写功能名称】
@@ -51,10 +58,24 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
      * @return 结果
      */
     @Override
+    @Transactional
     public int insertTblUserActivity(TblUserActivity tblUserActivity)
     {
-        tblUserActivity.setCreateTime(DateUtils.getNowDate());
-        return tblUserActivityMapper.insertTblUserActivity(tblUserActivity);
+        DeptActivity deptActivity = new DeptActivity();
+        deptActivity.setActivityId(tblUserActivity.getActivityId());
+        deptActivity.setDeptId(tblUserActivity.getDeptId());
+        Long resNum = deptActivityMapper.getResNum(deptActivity);
+        if(resNum== null){
+            return tblUserActivityMapper.insertTblUserActivity(tblUserActivity);
+        }
+        if(resNum==0){
+            return 0;
+        }
+        else{
+            deptActivity.setResNum(resNum-1);
+            deptActivityMapper.updateDeptActivity(deptActivity);
+            return tblUserActivityMapper.insertTblUserActivity(tblUserActivity);
+        }
     }
 
     /**

@@ -15,18 +15,18 @@ import org.apache.ibatis.annotations.Mapper;
 public interface TblActivityMapper 
 {
     /**
-     * 查询商家发布文章
+     *  获取用户发布活动详细信息
      * 
-     * @param id 商家发布文章主键
-     * @return 商家发布文章
+     * @param id 用户发布活动主键
+     * @return 用户发布活动
      */
     public TblActivity selectTblActivityById(Long id);
 
     /**
-     * 查询商家发布文章列表
+     * 用户查询活动集合
      * 
-     * @param tblActivity 商家发布文章
-     * @return 商家发布文章集合
+     * @param tblActivity  用户查询活动
+     * @return  用户查询活动集合
      */
     public List<TblActivityVO> selectTblActivityList(TblActivity tblActivity);
 

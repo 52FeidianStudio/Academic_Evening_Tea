@@ -42,7 +42,7 @@ public class TblActivityController extends BaseController
     private ITblUserActivityService tblUserActivityService;
 
     /**
-     * 用户查询活动
+     * 用户查询活动集合
      */
     @PreAuthorize("@ss.hasPermi('system:activity:list')")
     @GetMapping("/list")
@@ -52,6 +52,8 @@ public class TblActivityController extends BaseController
         List<TblActivityVO> list = tblActivityService.selectTblActivityList(tblActivity);
         return getDataTable(list);
     }
+
+
 
     /**
      * 导出商家发布文章列表
@@ -69,12 +71,15 @@ public class TblActivityController extends BaseController
     /**
      * 获取用户发布活动详细信息
      */
-//    @PreAuthorize("@ss.hasPermi('system:activity:query')")
+    @PreAuthorize("@ss.hasPermi('system:activity:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
         return success(tblActivityService.selectTblActivityById(id));
     }
+
+
+
 
     /**
      * 新增用户发布活动

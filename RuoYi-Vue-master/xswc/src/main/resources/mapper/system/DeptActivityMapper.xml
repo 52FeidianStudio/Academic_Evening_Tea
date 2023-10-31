@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ruoyi.system.mapper.DeptActivityMapper">
+    <resultMap type="DeptActivity" id="DeptActivityVO">
+        <result property="id"    column="id"    />
+        <result property="deptId"    column="dept_id"    />
+        <result property="activityId"    column="activity_id"    />
+        <result property="resNum"    column="res_num"    />
+        <result property="maxNum"    column="max_num"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createBy"    column="create_by"    />
+    </resultMap>
+
+    <sql id="selectDeptActivityVO">
+        select id,dept_id,activity_id,res_num,max_num, update_time, update_by, create_time, create_by from dept_activity
+    </sql>
+
+    <insert id="insertDeptActivity">
+        insert into dept_activity
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+        <if test="activityId != null">activity_id,</if>
+        <if test="deptId != null">dept_id,</if>
+        <if test="maxNum != null">max_num,</if>
+        <if test="resNum != null">res_num,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+        <if test="id != null">id,</if>
+        <if test="activityId != null">#{activityId},</if>
+        <if test="deptId != null">#{deptId},</if>
+        <if test="maxNum != null">#{maxNum},</if>
+        <if test="resNum != null">#{resNum},</if>
+        <if test="updateTime != null">#{updateTime},</if>
+        <if test="updateBy != null">#{updateBy},</if>
+        <if test="createTime != null">#{createTime},</if>
+        <if test="createBy != null">#{createBy},</if>
+        </trim>
+    </insert>
+
+
+    <update id="updateDeptActivity">
+        update dept_activity
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="resNum != null">res_num,</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+        </trim>
+        where  activity_id=#{activityId} and deptId =#{deptId}
+    </update>
+
+    <select id="getResNum" resultType="java.lang.Long">
+      select res_num
+    from dept_activity
+      where activity_id=#{activityId} and deptId =#{deptId}
+    </select>
+
+</mapper>
