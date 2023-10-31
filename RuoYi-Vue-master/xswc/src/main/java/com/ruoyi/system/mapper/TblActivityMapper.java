@@ -2,6 +2,8 @@ package com.ruoyi.system.mapper;
 
 import java.util.List;
 import com.ruoyi.system.domain.TblActivity;
+import com.ruoyi.system.domain.vo.TblActivityVO;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 商家发布文章Mapper接口
@@ -9,7 +11,7 @@ import com.ruoyi.system.domain.TblActivity;
  * @author ruoyi
  * @date 2023-10-25
  */
-
+@Mapper
 public interface TblActivityMapper 
 {
     /**
@@ -26,7 +28,7 @@ public interface TblActivityMapper
      * @param tblActivity 商家发布文章
      * @return 商家发布文章集合
      */
-    public List<TblActivity> selectTblActivityList(TblActivity tblActivity);
+    public List<TblActivityVO> selectTblActivityList(TblActivity tblActivity);
 
     /**
      * 新增商家发布文章

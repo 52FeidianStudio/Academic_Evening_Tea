@@ -1,6 +1,8 @@
 package com.ruoyi.system.service.impl;
 
 import java.util.List;
+
+import com.ruoyi.system.domain.vo.TblActivityVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.TblActivityMapper;
@@ -38,9 +40,10 @@ public class TblActivityServiceImpl implements ITblActivityService
      * @return 商家发布文章
      */
     @Override
-    public List<TblActivity> selectTblActivityList(TblActivity tblActivity)
+    public List<TblActivityVO> selectTblActivityList(TblActivity tblActivity)
     {
-        return tblActivityMapper.selectTblActivityList(tblActivity);
+        List<TblActivityVO>list= tblActivityMapper.selectTblActivityList(tblActivity);
+        return list;
     }
 
     /**

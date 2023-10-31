@@ -2,6 +2,7 @@ package com.ruoyi.system.service;
 
 import java.util.List;
 import com.ruoyi.system.domain.TblActivity;
+import com.ruoyi.system.domain.vo.TblActivityVO;
 
 /**
  * 商家发布文章Service接口
@@ -25,7 +26,7 @@ public interface ITblActivityService
      * @param tblActivity 商家发布文章
      * @return 商家发布文章集合
      */
-    public List<TblActivity> selectTblActivityList(TblActivity tblActivity);
+    public List<TblActivityVO> selectTblActivityList(TblActivity tblActivity);
 
     /**
      * 新增用户发布活动

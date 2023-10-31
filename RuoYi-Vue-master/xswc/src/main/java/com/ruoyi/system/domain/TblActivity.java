@@ -40,7 +40,7 @@ public class TblActivity extends BaseEntity
     private String userName;
 
     /** 主讲人名字* */
-    @Excel(name = "发起人*")
+    @Excel(name = "主讲人人*")
     private String speakerName;
 
     /** 学院* */
@@ -91,7 +91,13 @@ public class TblActivity extends BaseEntity
     /** 1待举办2已举办* */
     @Excel(name = "1审核中2审核通过报名中3报名截止4活动进行中5活动已结束*")
     private Long state;
+    /** 1报名未结束2报名已结束* */
+    @Excel(name = "1审核中2审核通过*")
+    private Long isClose;
 
+    /** 1进行中2已结束* */
+    @Excel(name = "1审核中2审核通过*")
+    private Long isEnd;
 
     /** 预留字段1 报名二维码*/
     @Excel(name = "预留字段1")

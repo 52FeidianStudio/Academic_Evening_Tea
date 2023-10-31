@@ -20,6 +20,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="money"    column="money"    />
         <result property="type"    column="type"    />
         <result property="state"    column="state"    />
+        <result property="isEnd"    column="is_end"    />
+        <result property="isClose"    column="is_close"    />
         <result property="time"    column="time"    />
         <result property="address"    column="address"    />
         <result property="hbKeyword"    column="hb_keyword"    />
@@ -34,10 +36,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectTblActivityVo">
-        select id, details, img, user_id, user_name,speaker_name, user_tel, hot, hb_num, top, givelike, views, money, type, state, time, address, hb_keyword, hong, user_img2, cityname, lat, lng, qphone, str1, str2 from tbl_activity
+        select id, details, img, user_id, user_name,speaker_name, user_tel, hot, hb_num, top, givelike, views, money, type, state, is_end,is_close,time, address, hb_keyword, hong, user_img2, cityname, lat, lng, qphone, str1, str2 from tbl_activity
     </sql>
 
-    <select id="selectTblActivityList" parameterType="TblActivity" resultMap="TblActivityResult">
+    <select id="selectTblActivityList" parameterType="TblActivityVO" resultMap="TblActivityResult">
         <include refid="selectTblActivityVo"/>
         <where>  
             <if test="details != null  and details != ''"> and details = #{details}</if>
@@ -54,6 +56,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="money != null "> and money = #{money}</if>
             <if test="type != null "> and type = #{type}</if>
             <if test="state != null "> and state = #{state}</if>
+            <if test="isClose != null "> and is_close = #{isClose}</if>
+            <if test="isEnd != null "> and is_end = #{isEnd}</if>
             <if test="time != null "> and time = #{time}</if>
             <if test="address != null  and address != ''"> and address = #{address}</if>
             <if test="hbKeyword != null  and hbKeyword != ''"> and hb_keyword = #{hbKeyword}</if>
@@ -66,8 +70,43 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="str1 != null  and str1 != ''"> and str1 = #{str1}</if>
             <if test="str2 != null  and str2 != ''"> and str2 = #{str2}</if>
         </where>
+        order by lat asc
     </select>
-    
+
+<!--    <select id="selectTblActivityList" parameterType="TblActivityVO" resultMap="TblActivityResult">-->
+<!--        <include refid="selectTblActivityVo"/>-->
+<!--        <where>-->
+<!--            <if test="details != null  and details != ''"> and details = #{details}</if>-->
+<!--            <if test="img != null  and img != ''"> and img = #{img}</if>-->
+<!--            <if test="userId != null "> and user_id = #{userId}</if>-->
+<!--            <if test="userName != null  and userName != ''"> and user_name like concat('%', #{userName}, '%')</if>-->
+<!--            <if test="speakerName != null  and speakerName != ''"> and speaker_name like concat('%', #{speakerName}, '%')</if>-->
+<!--            <if test="userTel != null  and userTel != ''"> and user_tel = #{userTel}</if>-->
+<!--            <if test="hot != null "> and hot = #{hot}</if>-->
+<!--            <if test="hbNum != null "> and hb_num = #{hbNum}</if>-->
+<!--            <if test="top != null "> and top = #{top}</if>-->
+<!--            <if test="givelike != null "> and givelike = #{givelike}</if>-->
+<!--            <if test="views != null "> and views = #{views}</if>-->
+<!--            <if test="money != null "> and money = #{money}</if>-->
+<!--            <if test="type != null "> and type = #{type}</if>-->
+<!--            <if test="state != null "> and state = #{state}</if>-->
+<!--            <if test="isClose != null "> and is_close = #{isClose}</if>-->
+<!--            <if test="isEnd != null "> and is_end = #{isEnd}</if>-->
+<!--            <if test="time != null "> and time = #{time}</if>-->
+<!--            <if test="address != null  and address != ''"> and address = #{address}</if>-->
+<!--            <if test="hbKeyword != null  and hbKeyword != ''"> and hb_keyword = #{hbKeyword}</if>-->
+<!--            <if test="hong != null  and hong != ''"> and hong = #{hong}</if>-->
+<!--            <if test="userImg2 != null  and userImg2 != ''"> and user_img2 = #{userImg2}</if>-->
+<!--            <if test="cityname != null  and cityname != ''"> and cityname like concat('%', #{cityname}, '%')</if>-->
+<!--            <if test="lat != null  and lat != ''"> and lat = #{lat}</if>-->
+<!--            <if test="lng != null  and lng != ''"> and lng = #{lng}</if>-->
+<!--            <if test="qphone != null  and qphone != ''"> and qphone = #{qphone}</if>-->
+<!--            <if test="str1 != null  and str1 != ''"> and str1 = #{str1}</if>-->
+<!--            <if test="str2 != null  and str2 != ''"> and str2 = #{str2}</if>-->
+
+<!--        </where>-->
+<!--    </select>-->
+<!--    -->
     <select id="selectTblActivityById" parameterType="Long" resultMap="TblActivityResult">
         <include refid="selectTblActivityVo"/>
         where id = #{id}
