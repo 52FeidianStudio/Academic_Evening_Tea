@@ -47,19 +47,19 @@
     <update id="updateDeptActivity">
         update dept_activity
         <trim prefix="SET" suffixOverrides=",">
-            <if test="resNum != null">res_num,</if>
+            <if test="resNum != null">res_num=#{resNum},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="updateBy != null">update_by = #{updateBy},</if>
             <if test="createTime != null">create_time = #{createTime},</if>
             <if test="createBy != null">create_by = #{createBy},</if>
         </trim>
-        where  activity_id=#{activityId} and deptId =#{deptId}
+        where  activity_id=#{activityId} and dept_id =#{deptId}
     </update>
 
     <select id="getResNum" resultType="java.lang.Long">
       select res_num
     from dept_activity
-      where activity_id=#{activityId} and deptId =#{deptId}
+    where activity_id=#{activityId} and dept_id =#{deptId}
     </select>
 
 </mapper>

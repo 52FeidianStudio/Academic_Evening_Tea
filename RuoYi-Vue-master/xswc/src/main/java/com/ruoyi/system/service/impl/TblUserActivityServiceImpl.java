@@ -52,7 +52,7 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
     }
 
     /**
-     * 新增【请填写功能名称】
+     * 用户报名活动
      * 
      * @param tblUserActivity 【请填写功能名称】
      * @return 结果

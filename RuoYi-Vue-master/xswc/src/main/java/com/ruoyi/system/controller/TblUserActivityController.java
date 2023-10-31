@@ -38,11 +38,15 @@ public class TblUserActivityController extends BaseController
     /**
      * 用户报名活动
      */
-    @PreAuthorize("@ss.hasPermi('system:activity:apliction')")
+    @PreAuthorize("@ss.hasPermi('system:activity:application')")
     @PostMapping()
     public AjaxResult application(@RequestBody TblUserActivity tblUserActivity)
     {
-        return success(tblUserActivityService.insertTblUserActivity(tblUserActivity));
+      int res=  tblUserActivityService.insertTblUserActivity(tblUserActivity);
+       if(res==0){
+           return AjaxResult.error("您的学院报名人数达到上限");
+       }
+       return success();
     }
 
 
