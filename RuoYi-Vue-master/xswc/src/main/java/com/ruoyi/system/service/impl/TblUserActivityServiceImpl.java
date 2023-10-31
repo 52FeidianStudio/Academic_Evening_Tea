@@ -93,4 +93,9 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
     {
         return tblUserActivityMapper.deleteTblUserActivityById(id);
     }
+
+    @Override
+    public int deleteTblUserActivityByActivityIds(Long[] ids) {
+        return tblUserActivityMapper.deleteTblUserActivityByActivityIds(ids);
+    }
 }

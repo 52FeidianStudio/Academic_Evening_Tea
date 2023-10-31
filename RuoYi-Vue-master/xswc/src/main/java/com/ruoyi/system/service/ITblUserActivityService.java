@@ -20,7 +20,7 @@ public interface ITblUserActivityService
     public TblUserActivity selectTblUserActivityById(Long id);
 
     /**
-     * 查询【请填写功能名称】列表
+     * 查询：根据活动的信息查寻活动合集
      * 
      * @param tblUserActivity 【请填写功能名称】
      * @return 【请填写功能名称】集合
@@ -52,10 +52,16 @@ public interface ITblUserActivityService
     public int deleteTblUserActivityByIds(Long[] ids);
 
     /**
-     * 删除【请填写功能名称】信息
+     * 删除   根据user_activity_id 删除
      * 
      * @param id 【请填写功能名称】主键
      * @return 结果
      */
     public int deleteTblUserActivityById(Long id);
+
+    /**
+     * 批量删除   根据activity_id 删除
+     * @param ids
+     */
+    public int deleteTblUserActivityByActivityIds(Long[] ids);
 }

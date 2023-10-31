@@ -58,4 +58,6 @@ public interface TblUserActivityMapper
      * @return 结果
      */
     public int deleteTblUserActivityByIds(Long[] ids);
+
+    public int  deleteTblUserActivityByActivityIds(Long[] ids);
 }
