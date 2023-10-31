@@ -67,7 +67,7 @@ public class TblActivityController extends BaseController
     }
 
     /**
-     * 获取商家发布文章详细信息
+     * 获取用户发布活动详细信息
      */
 //    @PreAuthorize("@ss.hasPermi('system:activity:query')")
     @GetMapping(value = "/{id}")
