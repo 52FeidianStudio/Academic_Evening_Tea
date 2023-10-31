@@ -111,7 +111,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectTblActivityVo"/>
         where id = #{id}
     </select>
-        
+    <select id="getIsEndByActivityId" resultType="java.lang.Long">
+        select is_end
+        from tbl_activity
+       where id=#{activityId}
+    </select>
+
     <insert id="insertTblActivity" parameterType="TblActivity" useGeneratedKeys="true" keyProperty="id">
         insert into tbl_activity
         <trim prefix="(" suffix=")" suffixOverrides=",">

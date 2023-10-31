@@ -4,6 +4,7 @@ import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.system.domain.DeptActivity;
 import com.ruoyi.system.mapper.DeptActivityMapper;
+import com.ruoyi.system.mapper.TblActivityMapper;
 import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +27,9 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
 
     @Autowired
     private DeptActivityMapper deptActivityMapper;
+
+    @Autowired
+    private TblActivityMapper tblActivityMapper;
 
     /**
      * 查询【请填写功能名称】
@@ -79,16 +83,22 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
     }
 
     /**
-     * 修改【请填写功能名称】
+     * 用户签到
      * 
-     * @param tblUserActivity 【请填写功能名称】
+     * @param tblUserActivity 用户签到
      * @return 结果
      */
     @Override
+    //TODO在报名前扫一遍活动表，保证签到的时候活动没有结束
     public int updateTblUserActivity(TblUserActivity tblUserActivity)
     {
-        tblUserActivity.setUpdateTime(DateUtils.getNowDate());
-        return tblUserActivityMapper.updateTblUserActivity(tblUserActivity);
+         Long isEnd=tblActivityMapper.getIsEndByActivityId(tblUserActivity.getActivityId());
+         if(isEnd==1){
+             return tblUserActivityMapper.updateTblUserActivity(tblUserActivity);
+         }
+         else {
+             return 0;
+         }
     }
 
     /**

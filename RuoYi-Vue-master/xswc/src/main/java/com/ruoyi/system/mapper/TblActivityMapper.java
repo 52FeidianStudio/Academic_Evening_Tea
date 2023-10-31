@@ -61,4 +61,6 @@ public interface TblActivityMapper
      * @return 结果
      */
     public int deleteTblActivityByIds(Long[] ids);
+
+    Long getIsEndByActivityId(Long activityId);
 }

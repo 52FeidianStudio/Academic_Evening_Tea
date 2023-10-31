@@ -68,7 +68,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="updateBy != null">update_by = #{updateBy},</if>
         </trim>
-        where id = #{id}
+        where user_id=#{userId} and activity_id=#{activityId}
     </update>
 
     <delete id="deleteTblUserActivityById" parameterType="Long">

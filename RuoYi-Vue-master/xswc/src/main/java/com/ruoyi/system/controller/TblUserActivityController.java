@@ -97,11 +97,11 @@ public class TblUserActivityController extends BaseController
 //    }
 
     /**
-     * 修改【请填写功能名称】
+     *用户签到
      */
-    @PreAuthorize("@ss.hasPermi('system:activity:edit')")
-    @Log(title = "【请填写功能名称】", businessType = BusinessType.UPDATE)
-    @PutMapping
+    @PreAuthorize("@ss.hasPermi('system:activity:register')")
+    @Log(title = "用户签到", businessType = BusinessType.UPDATE)
+    @PutMapping("/register")
     public AjaxResult edit(@RequestBody TblUserActivity tblUserActivity)
     {
         return toAjax(tblUserActivityService.updateTblUserActivity(tblUserActivity));
