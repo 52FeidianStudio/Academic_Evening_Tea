@@ -2,7 +2,10 @@ package com.ruoyi.system.service.impl;
 
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.system.constant.ActivityConstant;
+import com.ruoyi.system.constant.ResultConstant;
 import com.ruoyi.system.domain.DeptActivity;
+import com.ruoyi.system.domain.TblActivity;
 import com.ruoyi.system.mapper.DeptActivityMapper;
 import com.ruoyi.system.mapper.TblActivityMapper;
 import org.apache.ibatis.jdbc.Null;
@@ -65,18 +68,35 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
     @Transactional
     public int insertTblUserActivity(TblUserActivity tblUserActivity)
     {
+
+
+        //检查用户的学院人数是否有限制
         DeptActivity deptActivity = new DeptActivity();
         deptActivity.setActivityId(tblUserActivity.getActivityId());
         deptActivity.setDeptId(tblUserActivity.getDeptId());
         Long resNum = deptActivityMapper.getResNum(deptActivity);
+
+        //该活动的已经报名人数不能超过总人数
+        TblActivity tblActivity = tblActivityMapper.selectTblActivityById(tblUserActivity.getActivityId());
+        Long hbNum = tblActivity.getHbNum();
+        Long hot = tblActivity.getHot();
+        Long res=hot-hbNum;
+
+        //学院剩余人数为0 或者活动报名人数达到上限
+        if(res<=0 || resNum==0){
+            return ResultConstant.ERROR;
+        }
+        //用户对应的学院没有限制报名人数
         if(resNum== null){
+            tblActivity.setHbNum(hbNum+1);
+            tblActivityMapper.updateTblActivity(tblActivity);
             return tblUserActivityMapper.insertTblUserActivity(tblUserActivity);
         }
-        if(resNum==0){
-            return 0;
-        }
+        //用户学院报名人数设有限制
         else{
             deptActivity.setResNum(resNum-1);
+            tblActivity.setHbNum(hbNum+1);
+            tblActivityMapper.updateTblActivity(tblActivity);
             deptActivityMapper.updateDeptActivity(deptActivity);
             return tblUserActivityMapper.insertTblUserActivity(tblUserActivity);
         }
@@ -93,11 +113,11 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
     public int updateTblUserActivity(TblUserActivity tblUserActivity)
     {
          Long isEnd=tblActivityMapper.getIsEndByActivityId(tblUserActivity.getActivityId());
-         if(isEnd==1){
+         if(isEnd.equals(ActivityConstant.ACTIVITYNOTEND) ){
              return tblUserActivityMapper.updateTblUserActivity(tblUserActivity);
          }
          else {
-             return 0;
+             return ResultConstant.ERROR;
          }
     }
 

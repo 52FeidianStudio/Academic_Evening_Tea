@@ -8,14 +8,7 @@ import com.ruoyi.system.service.ITblUserActivityService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -45,7 +38,7 @@ public class TblActivityController extends BaseController
      * 用户查询活动集合
      */
     @PreAuthorize("@ss.hasPermi('system:activity:list')")
-    @GetMapping("/list")
+    @PostMapping("/list")
     public TableDataInfo Userlist(@RequestBody TblActivity tblActivity)
     {
         startPage();
@@ -69,7 +62,7 @@ public class TblActivityController extends BaseController
     }
 
     /**
-     * 获取用户发布活动详细信息
+     * 用户获取发布活动详细信息
      */
     @PreAuthorize("@ss.hasPermi('system:activity:query')")
     @GetMapping(value = "/{id}")

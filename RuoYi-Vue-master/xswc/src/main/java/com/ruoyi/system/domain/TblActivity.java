@@ -2,6 +2,8 @@ package com.ruoyi.system.domain;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -86,6 +88,9 @@ public class TblActivity extends BaseEntity
 
     /**学院 人数限制 数组* */
     private DeptNum[]  deptNums;
+
+    //判断是否已经报过名
+    private List<TblUserActivity>  isApplication;
 
     /** 1未精选2已精选* */
     @Excel(name = "1未精选2已精选*")

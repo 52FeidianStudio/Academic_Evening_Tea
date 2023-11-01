@@ -2,12 +2,20 @@ package com.ruoyi.system.service.impl;
 
 import java.util.List;
 
+import com.fasterxml.jackson.databind.annotation.JsonAppend;
+import com.ruoyi.common.utils.SecurityUtils;
+import com.ruoyi.system.constant.ResultConstant;
 import com.ruoyi.system.domain.DeptActivity;
 import com.ruoyi.system.domain.DeptNum;
+import com.ruoyi.system.domain.TblUserActivity;
 import com.ruoyi.system.domain.vo.TblActivityVO;
 import com.ruoyi.system.mapper.DeptActivityMapper;
+import com.ruoyi.system.mapper.TblUserActivityMapper;
 import lombok.AllArgsConstructor;
+import netscape.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.TblActivityMapper;
 import com.ruoyi.system.domain.TblActivity;
@@ -27,10 +35,13 @@ public class TblActivityServiceImpl implements ITblActivityService
     private TblActivityMapper tblActivityMapper;
 
     @Autowired
+    private   TblUserActivityMapper tblUserActivityMapper;
+
+    @Autowired
     private DeptActivityMapper deptActivityMapper;
 
     /**
-     *  获取用户发布活动详细信息
+     *  用户获取发布活动详细信息
      * 
      * @param id  用户发布活动主键
      * @return 商家发布文章
@@ -38,7 +49,13 @@ public class TblActivityServiceImpl implements ITblActivityService
     @Override
     public TblActivity selectTblActivityById(Long id)
     {
-        return tblActivityMapper.selectTblActivityById(id);
+        TblActivity tblActivity = tblActivityMapper.selectTblActivityById(id);
+        TblUserActivity tblUserActivity = new TblUserActivity();
+        tblUserActivity.setActivityId(id);
+        tblUserActivity.setUserId(SecurityUtils.getUserId());
+        List<TblUserActivity> isApplication = tblUserActivityMapper.selectTblUserActivityList(tblUserActivity);
+        tblActivity.setIsApplication(isApplication);
+        return tblActivity;
     }
 
     /**
@@ -75,7 +92,7 @@ public class TblActivityServiceImpl implements ITblActivityService
             deptActivity.setResNum(deptNum.getMaxNum());
             deptActivityMapper.insertDeptActivity(deptActivity);
         }
-        return 1;
+        return ResultConstant.SUCEESS;
     }
 
     /**

@@ -111,6 +111,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectTblActivityVo"/>
         where id = #{id}
     </select>
+
     <select id="getIsEndByActivityId" resultType="java.lang.Long">
         select is_end
         from tbl_activity
