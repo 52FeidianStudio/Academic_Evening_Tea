@@ -11,11 +11,9 @@ import com.ruoyi.system.domain.TblUserActivity;
 import com.ruoyi.system.domain.vo.TblActivityVO;
 import com.ruoyi.system.mapper.DeptActivityMapper;
 import com.ruoyi.system.mapper.TblUserActivityMapper;
-import lombok.AllArgsConstructor;
-import netscape.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
+
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.TblActivityMapper;
 import com.ruoyi.system.domain.TblActivity;
