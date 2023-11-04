@@ -191,8 +191,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="givelike != null">givelike = #{givelike},</if>
             <if test="views != null">views = #{views},</if>
             <if test="money != null">money = #{money},</if>
-            <if test="type != null">type_id = #{type},</if>
+            <if test="type != null">type= #{type},</if>
             <if test="state != null">state = #{state},</if>
+            <if test="isClose != null">is_close = #{isClose},</if>
+            <if test="isEnd != null">is_end = #{isEnd},</if>
             <if test="time != null">time = #{time},</if>
             <if test="address != null">address = #{address},</if>
             <if test="hbKeyword != null">hb_keyword = #{hbKeyword},</if>
@@ -204,6 +206,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="qphone != null">qphone = #{qphone},</if>
             <if test="str1 != null">str1 = #{str1},</if>
             <if test="str2 != null">str2 = #{str2},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="createTime != null">#{createTime},</if>
         </trim>
         where id = #{id}
     </update>

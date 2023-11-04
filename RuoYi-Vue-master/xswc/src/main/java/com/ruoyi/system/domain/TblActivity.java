@@ -1,6 +1,7 @@
 package com.ruoyi.system.domain;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +23,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TblActivity extends BaseEntity
+public class TblActivity
 {
     private static final long serialVersionUID = 1L;
 
@@ -94,18 +95,18 @@ public class TblActivity extends BaseEntity
 
     /** 1未精选2已精选* */
     @Excel(name = "1未精选2已精选*")
-    private Long type;
+    private Integer type;
 
     /** 1待举办2已举办* */
     @Excel(name = "1审核中2审核通过报名中3报名截止4活动进行中5活动已结束*")
-    private Long state;
+    private Integer state;
     /** 1报名未结束2报名已结束* */
     @Excel(name = "1审核中2审核通过*")
-    private Long isClose;
+    private Integer isClose;
 
     /** 1进行中2已结束* */
     @Excel(name = "1审核中2审核通过*")
-    private Long isEnd;
+    private Integer isEnd;
 
     /** 预留字段1 报名二维码*/
     @Excel(name = "预留字段1")
@@ -114,6 +115,14 @@ public class TblActivity extends BaseEntity
     /** 预留字段2  签到二维码*/
     @Excel(name = "预留字段2")
     private String str2;
+    //创建时间
+    private LocalDateTime createTime;
+    //更新时间
+    private LocalDateTime updateTime;
+    //创建人
+    private  String createBy;
+    //更新人
+    private  String updateBy;
 
 
     /** 报名人数* */

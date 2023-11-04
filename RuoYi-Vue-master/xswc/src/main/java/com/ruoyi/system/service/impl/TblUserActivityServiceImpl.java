@@ -82,15 +82,15 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
         Long hot = tblActivity.getHot();
         Long res=hot-hbNum;
 
-        //学院剩余人数为0 或者活动报名人数达到上限
-        if(res<=0 || resNum==0){
-            return ResultConstant.ERROR;
-        }
         //用户对应的学院没有限制报名人数
-        if(resNum== null){
+        if(res>0&&resNum== null){
             tblActivity.setHbNum(hbNum+1);
             tblActivityMapper.updateTblActivity(tblActivity);
             return tblUserActivityMapper.insertTblUserActivity(tblUserActivity);
+        }
+        //学院剩余人数为0 或者活动报名人数达到上限
+        if(res<=0 || resNum==0){
+            return ResultConstant.ERROR;
         }
         //用户学院报名人数设有限制
         else{
@@ -113,7 +113,9 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
     public int updateTblUserActivity(TblUserActivity tblUserActivity)
     {
          Long isEnd=tblActivityMapper.getIsEndByActivityId(tblUserActivity.getActivityId());
-         if(isEnd.equals(ActivityConstant.ACTIVITYNOTEND) ){
+        List<TblUserActivity> tblUserActivities = tblUserActivityMapper.selectTblUserActivityList(tblUserActivity);
+        if(tblUserActivities !=null && isEnd.equals(ActivityConstant.ACTIVITYNOTEND) ){
+
              return tblUserActivityMapper.updateTblUserActivity(tblUserActivity);
          }
          else {

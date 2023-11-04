@@ -53,7 +53,7 @@ public class TblFeedbackServiceImpl implements ITblFeedbackService
     @Override
     public int insertTblFeedback(TblFeedback tblFeedback)
     {
-        tblFeedback.setCreateTime(DateUtils.getNowDate());
+//        tblFeedback.setCreateTime(DateUtils.getNowDate());
         return tblFeedbackMapper.insertTblFeedback(tblFeedback);
     }
 
@@ -66,7 +66,7 @@ public class TblFeedbackServiceImpl implements ITblFeedbackService
     @Override
     public int updateTblFeedback(TblFeedback tblFeedback)
     {
-        tblFeedback.setUpdateTime(DateUtils.getNowDate());
+//        tblFeedback.setUpdateTime(DateUtils.getNowDate());
         return tblFeedbackMapper.updateTblFeedback(tblFeedback);
     }
 

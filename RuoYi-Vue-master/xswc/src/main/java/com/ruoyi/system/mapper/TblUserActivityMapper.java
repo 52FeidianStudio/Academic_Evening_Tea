@@ -1,8 +1,12 @@
 package com.ruoyi.system.mapper;
 
 import java.util.List;
+
+import com.ruoyi.system.annotation.create;
 import com.ruoyi.system.domain.TblUserActivity;
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
 
 /**
  * 【请填写功能名称】Mapper接口
@@ -35,6 +39,7 @@ public interface TblUserActivityMapper
      * @param tblUserActivity 【请填写功能名称】
      * @return 结果
      */
+@create
     public int insertTblUserActivity(TblUserActivity tblUserActivity);
 
     /**

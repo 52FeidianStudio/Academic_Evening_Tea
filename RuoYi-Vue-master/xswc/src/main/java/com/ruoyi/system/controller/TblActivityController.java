@@ -42,7 +42,7 @@ public class TblActivityController extends BaseController
     public TableDataInfo Userlist(@RequestBody TblActivity tblActivity)
     {
         startPage();
-        List<TblActivityVO> list = tblActivityService.selectTblActivityList(tblActivity);
+        List<TblActivity> list = tblActivityService.selectTblActivityList(tblActivity);
         return getDataTable(list);
     }
 

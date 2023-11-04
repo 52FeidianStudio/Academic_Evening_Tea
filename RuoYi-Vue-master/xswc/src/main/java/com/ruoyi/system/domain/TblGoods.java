@@ -1,6 +1,8 @@
 package com.ruoyi.system.domain;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -12,7 +14,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * @author ruoyi
  * @date 2023-10-25
  */
-public class TblGoods extends BaseEntity
+public class TblGoods
 {
     private static final long serialVersionUID = 1L;
 
@@ -39,74 +41,84 @@ public class TblGoods extends BaseEntity
     @Excel(name = "商品封面")
     private String coverPicture;
 
-    public void setId(Long id) 
-    {
-        this.id = id;
-    }
 
-    public Long getId() 
-    {
-        return id;
-    }
-    public void setName(String name) 
-    {
-        this.name = name;
-    }
+    //创建时间
+    private LocalDateTime createTime;
+    //更新时间
+    private LocalDateTime updateTime;
+    //创建人
+    private  String createBy;
+    //更新人
+    private  String updateBy;
 
-    public String getName() 
-    {
-        return name;
-    }
-    public void setPrice(BigDecimal price) 
-    {
-        this.price = price;
-    }
-
-    public BigDecimal getPrice() 
-    {
-        return price;
-    }
-    public void setIntroduce(String introduce) 
-    {
-        this.introduce = introduce;
-    }
-
-    public String getIntroduce() 
-    {
-        return introduce;
-    }
-    public void setPicture(String picture) 
-    {
-        this.picture = picture;
-    }
-
-    public String getPicture() 
-    {
-        return picture;
-    }
-    public void setCoverPicture(String coverPicture) 
-    {
-        this.coverPicture = coverPicture;
-    }
-
-    public String getCoverPicture() 
-    {
-        return coverPicture;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("name", getName())
-            .append("price", getPrice())
-            .append("introduce", getIntroduce())
-            .append("picture", getPicture())
-            .append("coverPicture", getCoverPicture())
-            .append("updateTime", getUpdateTime())
-            .append("updateBy", getUpdateBy())
-            .append("createTime", getCreateTime())
-            .append("createBy", getCreateBy())
-            .toString();
-    }
+//    public void setId(Long id)
+//    {
+//        this.id = id;
+//    }
+//
+//    public Long getId()
+//    {
+//        return id;
+//    }
+//    public void setName(String name)
+//    {
+//        this.name = name;
+//    }
+//
+//    public String getName()
+//    {
+//        return name;
+//    }
+//    public void setPrice(BigDecimal price)
+//    {
+//        this.price = price;
+//    }
+//
+//    public BigDecimal getPrice()
+//    {
+//        return price;
+//    }
+//    public void setIntroduce(String introduce)
+//    {
+//        this.introduce = introduce;
+//    }
+//
+//    public String getIntroduce()
+//    {
+//        return introduce;
+//    }
+//    public void setPicture(String picture)
+//    {
+//        this.picture = picture;
+//    }
+//
+//    public String getPicture()
+//    {
+//        return picture;
+//    }
+//    public void setCoverPicture(String coverPicture)
+//    {
+//        this.coverPicture = coverPicture;
+//    }
+//
+//    public String getCoverPicture()
+//    {
+//        return coverPicture;
+//    }
+//
+//    @Override
+//    public String toString() {
+//        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+//            .append("id", getId())
+//            .append("name", getName())
+//            .append("price", getPrice())
+//            .append("introduce", getIntroduce())
+//            .append("picture", getPicture())
+//            .append("coverPicture", getCoverPicture())
+//            .append("updateTime", getUpdateTime())
+//            .append("updateBy", getUpdateBy())
+//            .append("createTime", getCreateTime())
+//            .append("createBy", getCreateBy())
+//            .toString();
+//    }
 }

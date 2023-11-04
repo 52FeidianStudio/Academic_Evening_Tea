@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TblActivityVO   extends BaseEntity {
+public class TblActivityVO    {
     private static final long serialVersionUID = 1L;
 
     /** $column.columnComment */

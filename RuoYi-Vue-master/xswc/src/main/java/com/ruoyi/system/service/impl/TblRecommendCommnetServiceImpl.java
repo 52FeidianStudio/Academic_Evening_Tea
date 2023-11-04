@@ -53,7 +53,7 @@ public class TblRecommendCommnetServiceImpl implements ITblRecommendCommnetServi
     @Override
     public int insertTblRecommendCommnet(TblRecommendCommnet tblRecommendCommnet)
     {
-        tblRecommendCommnet.setCreateTime(DateUtils.getNowDate());
+//        tblRecommendCommnet.setCreateTime(DateUtils.getNowDate());
         return tblRecommendCommnetMapper.insertTblRecommendCommnet(tblRecommendCommnet);
     }
 
@@ -66,7 +66,7 @@ public class TblRecommendCommnetServiceImpl implements ITblRecommendCommnetServi
     @Override
     public int updateTblRecommendCommnet(TblRecommendCommnet tblRecommendCommnet)
     {
-        tblRecommendCommnet.setUpdateTime(DateUtils.getNowDate());
+//        tblRecommendCommnet.setUpdateTime(DateUtils.getNowDate());
         return tblRecommendCommnetMapper.updateTblRecommendCommnet(tblRecommendCommnet);
     }
 

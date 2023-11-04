@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import com.ruoyi.common.utils.SecurityUtils;
+import com.ruoyi.system.annotation.updateActivity;
 import com.ruoyi.system.constant.ResultConstant;
 import com.ruoyi.system.domain.DeptActivity;
 import com.ruoyi.system.domain.DeptNum;
@@ -45,6 +46,7 @@ public class TblActivityServiceImpl implements ITblActivityService
      * @return 商家发布文章
      */
     @Override
+    @updateActivity
     public TblActivity selectTblActivityById(Long id)
     {
         TblActivity tblActivity = tblActivityMapper.selectTblActivityById(id);
@@ -62,10 +64,11 @@ public class TblActivityServiceImpl implements ITblActivityService
      * @param tblActivity 用户查询活动
      * @return 用户查询活动集合
      */
+    @updateActivity
     @Override
-    public List<TblActivityVO> selectTblActivityList(TblActivity tblActivity)
+    public List<TblActivity> selectTblActivityList(TblActivity tblActivity)
     {
-        List<TblActivityVO>list= tblActivityMapper.selectTblActivityList(tblActivity);
+        List<TblActivity>list= tblActivityMapper.selectTblActivityList(tblActivity);
         return list;
     }
 
@@ -77,6 +80,7 @@ public class TblActivityServiceImpl implements ITblActivityService
      */
     @Override
     @Transactional
+    @updateActivity
     public int insertTblActivity(TblActivity tblActivity)
     {
         tblActivityMapper.insertTblActivity(tblActivity);

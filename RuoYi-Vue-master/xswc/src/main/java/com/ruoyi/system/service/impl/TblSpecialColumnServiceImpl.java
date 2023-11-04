@@ -53,7 +53,7 @@ public class TblSpecialColumnServiceImpl implements ITblSpecialColumnService
     @Override
     public int insertTblSpecialColumn(TblSpecialColumn tblSpecialColumn)
     {
-        tblSpecialColumn.setCreateTime(DateUtils.getNowDate());
+//        tblSpecialColumn.setCreateTime(DateUtils.getNowDate());
         return tblSpecialColumnMapper.insertTblSpecialColumn(tblSpecialColumn);
     }
 
@@ -66,7 +66,7 @@ public class TblSpecialColumnServiceImpl implements ITblSpecialColumnService
     @Override
     public int updateTblSpecialColumn(TblSpecialColumn tblSpecialColumn)
     {
-        tblSpecialColumn.setUpdateTime(DateUtils.getNowDate());
+//        tblSpecialColumn.setUpdateTime(DateUtils.getNowDate());
         return tblSpecialColumnMapper.updateTblSpecialColumn(tblSpecialColumn);
     }
 

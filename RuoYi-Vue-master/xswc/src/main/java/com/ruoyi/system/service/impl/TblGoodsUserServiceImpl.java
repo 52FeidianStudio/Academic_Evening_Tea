@@ -53,7 +53,7 @@ public class TblGoodsUserServiceImpl implements ITblGoodsUserService
     @Override
     public int insertTblGoodsUser(TblGoodsUser tblGoodsUser)
     {
-        tblGoodsUser.setCreateTime(DateUtils.getNowDate());
+//        tblGoodsUser.setCreateTime(DateUtils.getNowDate());
         return tblGoodsUserMapper.insertTblGoodsUser(tblGoodsUser);
     }
 
@@ -66,7 +66,7 @@ public class TblGoodsUserServiceImpl implements ITblGoodsUserService
     @Override
     public int updateTblGoodsUser(TblGoodsUser tblGoodsUser)
     {
-        tblGoodsUser.setUpdateTime(DateUtils.getNowDate());
+//        tblGoodsUser.setUpdateTime(DateUtils.getNowDate());
         return tblGoodsUserMapper.updateTblGoodsUser(tblGoodsUser);
     }
 

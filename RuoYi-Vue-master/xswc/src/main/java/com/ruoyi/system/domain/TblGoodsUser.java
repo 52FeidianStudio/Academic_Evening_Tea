@@ -5,13 +5,15 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
+import java.time.LocalDateTime;
+
 /**
  * 【请填写功能名称】对象 tbl_goods_user
  * 
  * @author ruoyi
  * @date 2023-10-25
  */
-public class TblGoodsUser extends BaseEntity
+public class TblGoodsUser
 {
     private static final long serialVersionUID = 1L;
 
@@ -30,54 +32,64 @@ public class TblGoodsUser extends BaseEntity
     @Excel(name = "数量")
     private Integer nums;
 
-    public void setId(Long id) 
-    {
-        this.id = id;
-    }
 
-    public Long getId() 
-    {
-        return id;
-    }
-    public void setGoodsId(Integer goodsId) 
-    {
-        this.goodsId = goodsId;
-    }
-
-    public Integer getGoodsId() 
-    {
-        return goodsId;
-    }
-    public void setUserId(Integer userId) 
-    {
-        this.userId = userId;
-    }
-
-    public Integer getUserId() 
-    {
-        return userId;
-    }
-    public void setNums(Integer nums) 
-    {
-        this.nums = nums;
-    }
-
-    public Integer getNums() 
-    {
-        return nums;
-    }
-
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
-            .append("id", getId())
-            .append("goodsId", getGoodsId())
-            .append("userId", getUserId())
-            .append("nums", getNums())
-            .append("updateTime", getUpdateTime())
-            .append("updateBy", getUpdateBy())
-            .append("createTime", getCreateTime())
-            .append("createBy", getCreateBy())
-            .toString();
-    }
+    //创建时间
+    private LocalDateTime createTime;
+    //更新时间
+    private LocalDateTime updateTime;
+    //创建人
+    private  String createBy;
+    //更新人
+    private  String updateBy;
+//
+//    public void setId(Long id)
+//    {
+//        this.id = id;
+//    }
+//
+//    public Long getId()
+//    {
+//        return id;
+//    }
+//    public void setGoodsId(Integer goodsId)
+//    {
+//        this.goodsId = goodsId;
+//    }
+//
+//    public Integer getGoodsId()
+//    {
+//        return goodsId;
+//    }
+//    public void setUserId(Integer userId)
+//    {
+//        this.userId = userId;
+//    }
+//
+//    public Integer getUserId()
+//    {
+//        return userId;
+//    }
+//    public void setNums(Integer nums)
+//    {
+//        this.nums = nums;
+//    }
+//
+//    public Integer getNums()
+//    {
+//        return nums;
+//    }
+//
+//    @Override
+//    public String toString() {
+//        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+//            .append("id", getId())
+//            .append("goodsId", getGoodsId())
+//            .append("userId", getUserId())
+//            .append("nums", getNums())
+//            .append("updateTime", getUpdateTime())
+//            .append("updateBy", getUpdateBy())
+//            .append("createTime", getCreateTime())
+//            .append("createBy", getCreateBy())
+//            .toString();
+//    }
 }

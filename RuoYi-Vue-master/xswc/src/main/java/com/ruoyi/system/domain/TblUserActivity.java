@@ -8,6 +8,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 /**
  * 【请填写功能名称】对象 tbl_user_activity
  * 
@@ -18,7 +21,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TblUserActivity extends BaseEntity {
+public class TblUserActivity  {
 
     private static final long serialVersionUID = 1L;
 
@@ -51,7 +54,14 @@ public class TblUserActivity extends BaseEntity {
 
     //学院id
     public Long deptId;
-
+    //创建时间
+    private LocalDateTime createTime;
+    //更新时间
+    private LocalDateTime updateTime;
+    //创建人
+    private  String createBy;
+    //更新人
+    private  String updateBy;
 }
 //
 //    public Long getId()

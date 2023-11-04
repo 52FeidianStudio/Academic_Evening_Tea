@@ -26,7 +26,7 @@ public interface ITblActivityService
      * @param tblActivity 商家发布文章
      * @return 商家发布文章集合
      */
-    public List<TblActivityVO> selectTblActivityList(TblActivity tblActivity);
+    public List<TblActivity> selectTblActivityList(TblActivity tblActivity);
 
     /**
      * 新增用户发布活动

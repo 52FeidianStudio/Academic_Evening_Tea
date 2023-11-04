@@ -1,9 +1,13 @@
 package com.ruoyi.system.mapper;
 
 import java.util.List;
+
+import com.ruoyi.system.annotation.create;
+import com.ruoyi.system.annotation.updateActivity;
 import com.ruoyi.system.domain.TblActivity;
-import com.ruoyi.system.domain.vo.TblActivityVO;
+
 import org.apache.ibatis.annotations.Mapper;
+
 
 /**
  * 商家发布文章Mapper接口
@@ -20,6 +24,7 @@ public interface TblActivityMapper
      * @param id 用户发布活动主键
      * @return 用户发布活动
      */
+
     public TblActivity selectTblActivityById(Long id);
 
     /**
@@ -28,7 +33,8 @@ public interface TblActivityMapper
      * @param tblActivity  用户查询活动
      * @return  用户查询活动集合
      */
-    public List<TblActivityVO> selectTblActivityList(TblActivity tblActivity);
+
+    public List<TblActivity> selectTblActivityList(TblActivity tblActivity);
 
     /**
      * 新增商家发布文章
@@ -36,6 +42,7 @@ public interface TblActivityMapper
      * @param tblActivity 商家发布文章
      * @return 结果
      */
+    @create
     public int insertTblActivity(TblActivity tblActivity);
 
     /**
@@ -44,6 +51,7 @@ public interface TblActivityMapper
      * @param tblActivity 商家发布文章
      * @return 结果
      */
+
     public int updateTblActivity(TblActivity tblActivity);
 
     /**
@@ -52,6 +60,7 @@ public interface TblActivityMapper
      * @param id 商家发布文章主键
      * @return 结果
      */
+
     public int deleteTblActivityById(Long id);
 
     /**
@@ -60,7 +69,9 @@ public interface TblActivityMapper
      * @param ids 需要删除的数据主键集合
      * @return 结果
      */
+
     public int deleteTblActivityByIds(Long[] ids);
+
 
     Long getIsEndByActivityId(Long activityId);
 }

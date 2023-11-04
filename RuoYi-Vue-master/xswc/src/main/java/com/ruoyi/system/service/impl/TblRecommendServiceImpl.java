@@ -53,7 +53,7 @@ public class TblRecommendServiceImpl implements ITblRecommendService
     @Override
     public int insertTblRecommend(TblRecommend tblRecommend)
     {
-        tblRecommend.setCreateTime(DateUtils.getNowDate());
+//        tblRecommend.setCreateTime(DateUtils.getNowDate());
         return tblRecommendMapper.insertTblRecommend(tblRecommend);
     }
 
@@ -66,7 +66,7 @@ public class TblRecommendServiceImpl implements ITblRecommendService
     @Override
     public int updateTblRecommend(TblRecommend tblRecommend)
     {
-        tblRecommend.setUpdateTime(DateUtils.getNowDate());
+//        tblRecommend.setUpdateTime(DateUtils.getNowDate());
         return tblRecommendMapper.updateTblRecommend(tblRecommend);
     }
 

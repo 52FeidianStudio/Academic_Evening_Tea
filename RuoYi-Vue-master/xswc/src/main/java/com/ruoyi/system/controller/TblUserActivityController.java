@@ -44,7 +44,7 @@ public class TblUserActivityController extends BaseController
     {
       int res=  tblUserActivityService.insertTblUserActivity(tblUserActivity);
        if(res==0){
-           return AjaxResult.error("您的学院报名人数达到上限");
+           return AjaxResult.error("报名失败，人数达到上限");
        }
        return success();
     }
