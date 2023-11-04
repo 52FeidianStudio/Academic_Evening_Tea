@@ -90,7 +90,7 @@ public class TblActivity
     /**学院 人数限制 数组* */
     private DeptNum[]  deptNums;
 
-    //判断是否已经报过名
+    //判断该用户是否已经报过名
     private List<TblUserActivity>  isApplication;
 
     /** 1未精选2已精选* */

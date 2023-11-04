@@ -3,6 +3,7 @@ package com.ruoyi.system.controller;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.system.domain.vo.TblActivityVO;
 import com.ruoyi.system.service.ITblUserActivityService;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -41,7 +42,7 @@ public class TblActivityController extends BaseController
     @PostMapping("/list")
     public TableDataInfo Userlist(@RequestBody TblActivity tblActivity)
     {
-        startPage();
+//        startPage();
         List<TblActivity> list = tblActivityService.selectTblActivityList(tblActivity);
         return getDataTable(list);
     }
@@ -56,9 +57,9 @@ public class TblActivityController extends BaseController
     @PostMapping("/export")
     public void export(HttpServletResponse response, TblActivity tblActivity)
     {
-//        List<TblActivity> list = tblActivityService.selectTblActivityList(tblActivity);
-//        ExcelUtil<TblActivity> util = new ExcelUtil<TblActivity>(TblActivity.class);
-//        util.exportExcel(response, list, "商家发布文章数据");
+        List<TblActivity> list = tblActivityService.selectTblActivityList(tblActivity);
+        ExcelUtil<TblActivity> util = new ExcelUtil<TblActivity>(TblActivity.class);
+        util.exportExcel(response, list, "商家发布文章数据");
     }
 
     /**
@@ -82,6 +83,7 @@ public class TblActivityController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody TblActivity tblActivity)
     {
+        tblActivity.setUserId(SecurityUtils.getUserId());
         return toAjax(tblActivityService.insertTblActivity(tblActivity));
     }
 

@@ -1,14 +1,15 @@
 package com.ruoyi.system.service.impl;
 
 import java.util.List;
-import com.ruoyi.common.utils.DateUtils;
+
+import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.system.constant.ActivityConstant;
 import com.ruoyi.system.constant.ResultConstant;
 import com.ruoyi.system.domain.DeptActivity;
 import com.ruoyi.system.domain.TblActivity;
 import com.ruoyi.system.mapper.DeptActivityMapper;
 import com.ruoyi.system.mapper.TblActivityMapper;
-import org.apache.ibatis.jdbc.Null;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.TblUserActivityMapper;
@@ -112,16 +113,29 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
     //TODO在报名前扫一遍活动表，保证签到的时候活动没有结束
     public int updateTblUserActivity(TblUserActivity tblUserActivity)
     {
+        tblUserActivity.setUserId(SecurityUtils.getUserId());
          Long isEnd=tblActivityMapper.getIsEndByActivityId(tblUserActivity.getActivityId());
-        List<TblUserActivity> tblUserActivities = tblUserActivityMapper.selectTblUserActivityList(tblUserActivity);
-        if(tblUserActivities !=null && isEnd.equals(ActivityConstant.ACTIVITYNOTEND) ){
+        TblUserActivity tblUserActivityvo = tblUserActivityMapper.selectTblUserActivityByUA(tblUserActivity);
 
-             return tblUserActivityMapper.updateTblUserActivity(tblUserActivity);
-         }
-         else {
-             return ResultConstant.ERROR;
-         }
+        if (isEnd.equals(ActivityConstant.ACTIVITYISEND.longValue())){//过了签到时间
+            tblUserActivity.setStatus(ActivityConstant.NOSHOW);
+            tblUserActivityMapper.updateTblUserActivity(tblUserActivity);
+            return ActivityConstant.REFISTERTIMEOUT;
     }
+        if(tblUserActivityvo ==null ) {//没有报名该活动
+            return  ActivityConstant.NOREGISTERED;
+        }
+        if(tblUserActivityvo.getStatus().equals(ActivityConstant.REGISTER))//重复签到
+        {
+            return ActivityConstant.REPESTEDREGISTER;
+        }
+        //签到成功
+        tblUserActivity.setStatus(ActivityConstant.REGISTER);
+        tblUserActivityMapper.updateTblUserActivity(tblUserActivity);
+        return ActivityConstant.REGISTERSUCCESS;
+    }
+
+
 
     /**
      * 批量删除【请填写功能名称】

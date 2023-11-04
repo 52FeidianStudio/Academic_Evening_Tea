@@ -41,7 +41,7 @@ public interface ITblUserActivityService
      * @param tblUserActivity 【请填写功能名称】
      * @return 结果
      */
-    public int updateTblUserActivity(TblUserActivity tblUserActivity);
+    public int  updateTblUserActivity(TblUserActivity tblUserActivity);
 
     /**
      * 批量删除【请填写功能名称】

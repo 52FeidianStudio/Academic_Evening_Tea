@@ -32,7 +32,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectTblUserActivityVo"/>
         where id = #{id}
     </select>
-        
+    <select id="selectTblUserActivityByUA" resultType="com.ruoyi.system.domain.TblUserActivity">
+        <include refid="selectTblUserActivityVo"/>
+        <where>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="activityId != null "> and activity_id = #{activityId}</if>
+            <if test="status != null "> and status = #{status}</if>
+        </where>
+    </select>
+
     <insert id="insertTblUserActivity" parameterType="TblUserActivity">
         insert into tbl_user_activity
         <trim prefix="(" suffix=")" suffixOverrides=",">

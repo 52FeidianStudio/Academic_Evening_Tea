@@ -2,6 +2,8 @@ package com.ruoyi.system.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,6 +44,7 @@ public class TblUserActivityController extends BaseController
     @PostMapping()
     public AjaxResult application(@RequestBody TblUserActivity tblUserActivity)
     {
+        tblUserActivity.setUserId(SecurityUtils.getUserId());
       int res=  tblUserActivityService.insertTblUserActivity(tblUserActivity);
        if(res==0){
            return AjaxResult.error("报名失败，人数达到上限");
@@ -104,7 +107,7 @@ public class TblUserActivityController extends BaseController
     @PutMapping("/register")
     public AjaxResult edit(@RequestBody TblUserActivity tblUserActivity)
     {
-        return toAjax(tblUserActivityService.updateTblUserActivity(tblUserActivity));
+        return success(tblUserActivityService.updateTblUserActivity(tblUserActivity));
     }
 
     /**

@@ -25,6 +25,9 @@ public interface TblUserActivityMapper
      */
     public TblUserActivity selectTblUserActivityById(Long id);
 
+
+    public TblUserActivity selectTblUserActivityByUA(TblUserActivity tblUserActivity);
+
     /**
      * 查询【请填写功能名称】列表
      * 
