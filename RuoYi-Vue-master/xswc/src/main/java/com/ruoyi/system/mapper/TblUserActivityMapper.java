@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ruoyi.system.annotation.create;
 import com.ruoyi.system.domain.TblUserActivity;
+import com.ruoyi.system.domain.UserActivity;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -44,6 +45,14 @@ public interface TblUserActivityMapper
      */
 @create
     public int insertTblUserActivity(TblUserActivity tblUserActivity);
+
+    /**
+     * 个人中心 我的活动
+     * @param tblUserActivity
+     * @return
+     */
+    List<UserActivity> selectMyActivity(TblUserActivity tblUserActivity);
+
 
     /**
      * 修改【请填写功能名称】

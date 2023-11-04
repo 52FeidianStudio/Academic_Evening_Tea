@@ -2,6 +2,7 @@ package com.ruoyi.system.service;
 
 import java.util.List;
 import com.ruoyi.system.domain.TblUserActivity;
+import com.ruoyi.system.domain.UserActivity;
 
 /**
  * 【请填写功能名称】Service接口
@@ -64,4 +65,6 @@ public interface ITblUserActivityService
      * @param ids
      */
     public int deleteTblUserActivityByActivityIds(Long[] ids);
+
+    public List<UserActivity> selectMyActivity(TblUserActivity tblUserActivity);
 }

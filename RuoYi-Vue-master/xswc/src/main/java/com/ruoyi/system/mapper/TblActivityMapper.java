@@ -6,6 +6,8 @@ import com.ruoyi.system.annotation.create;
 import com.ruoyi.system.annotation.updateActivity;
 import com.ruoyi.system.domain.TblActivity;
 
+import com.ruoyi.system.domain.TblUserActivity;
+import com.ruoyi.system.domain.UserActivity;
 import org.apache.ibatis.annotations.Mapper;
 
 
@@ -74,4 +76,6 @@ public interface TblActivityMapper
 
 
     Long getIsEndByActivityId(Long activityId);
+
+
 }

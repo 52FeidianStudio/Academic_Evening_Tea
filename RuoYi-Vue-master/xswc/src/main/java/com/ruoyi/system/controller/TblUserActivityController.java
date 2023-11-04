@@ -4,6 +4,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ruoyi.common.utils.SecurityUtils;
+import com.ruoyi.system.domain.UserActivity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -111,6 +112,20 @@ public class TblUserActivityController extends BaseController
     }
 
     /**
+     * 个人中心  我的活动
+     * @return
+     */
+    @PreAuthorize("@ss.hasPermi('system:activity:myactivity')")
+    @Log(title = "我的活动", businessType = BusinessType.UPDATE)
+    @GetMapping("/myactivity")
+public  AjaxResult myactivity(){
+        TblUserActivity tblUserActivity = new TblUserActivity();
+        tblUserActivity.setUserId(SecurityUtils.getUserId());
+        return success(tblUserActivityService.selectMyActivity(tblUserActivity));
+    }
+
+
+    /**
      * 删除【请填写功能名称】
      */
     @PreAuthorize("@ss.hasPermi('system:activity:remove')")
@@ -120,4 +135,5 @@ public class TblUserActivityController extends BaseController
     {
         return toAjax(tblUserActivityService.deleteTblUserActivityByIds(ids));
     }
+
 }

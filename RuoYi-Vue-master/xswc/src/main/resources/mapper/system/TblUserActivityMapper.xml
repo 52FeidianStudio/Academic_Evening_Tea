@@ -40,6 +40,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="status != null "> and status = #{status}</if>
         </where>
     </select>
+    <select id="selectMyActivity" resultType="com.ruoyi.system.domain.UserActivity">
+select   tbl_user_activity.user_id, activity_id, status,  details, img, speaker_name,hot, hb_num,  type, state, is_end,is_close,time, address, hb_keyword, hong, user_img2, cityname
+from  tbl_user_activity
+join  tbl_activity on tbl_activity.id= tbl_user_activity.activity_id
+where  tbl_user_activity.user_id=#{userId}
+
+
+    </select>
 
     <insert id="insertTblUserActivity" parameterType="TblUserActivity">
         insert into tbl_user_activity

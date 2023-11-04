@@ -3,10 +3,12 @@ package com.ruoyi.system.service.impl;
 import java.util.List;
 
 import com.ruoyi.common.utils.SecurityUtils;
+import com.ruoyi.system.annotation.updateActivity;
 import com.ruoyi.system.constant.ActivityConstant;
 import com.ruoyi.system.constant.ResultConstant;
 import com.ruoyi.system.domain.DeptActivity;
 import com.ruoyi.system.domain.TblActivity;
+import com.ruoyi.system.domain.UserActivity;
 import com.ruoyi.system.mapper.DeptActivityMapper;
 import com.ruoyi.system.mapper.TblActivityMapper;
 
@@ -67,9 +69,9 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
      */
     @Override
     @Transactional
+    @updateActivity
     public int insertTblUserActivity(TblUserActivity tblUserActivity)
     {
-
 
         //检查用户的学院人数是否有限制
         DeptActivity deptActivity = new DeptActivity();
@@ -110,6 +112,8 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
      * @return 结果
      */
     @Override
+    @Transactional
+    @updateActivity
     //TODO在报名前扫一遍活动表，保证签到的时候活动没有结束
     public int updateTblUserActivity(TblUserActivity tblUserActivity)
     {
@@ -164,5 +168,11 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
     @Override
     public int deleteTblUserActivityByActivityIds(Long[] ids) {
         return tblUserActivityMapper.deleteTblUserActivityByActivityIds(ids);
+    }
+
+    @Override
+    public List<UserActivity> selectMyActivity(TblUserActivity tblUserActivity) {
+        List<UserActivity> list=tblUserActivityMapper.selectMyActivity(tblUserActivity);
+        return list;
     }
 }

@@ -118,6 +118,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
        where id=#{activityId}
     </select>
 
+
+
     <insert id="insertTblActivity" parameterType="TblActivity" useGeneratedKeys="true" keyProperty="id">
         insert into tbl_activity
         <trim prefix="(" suffix=")" suffixOverrides=",">
