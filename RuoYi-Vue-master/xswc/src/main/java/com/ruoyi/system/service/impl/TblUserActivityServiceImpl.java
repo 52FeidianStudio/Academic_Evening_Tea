@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.system.annotation.updateActivity;
+import com.ruoyi.system.annotation.updateUserActivity;
 import com.ruoyi.system.constant.ActivityConstant;
 import com.ruoyi.system.constant.ResultConstant;
 import com.ruoyi.system.domain.DeptActivity;
@@ -165,12 +166,23 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
         return tblUserActivityMapper.deleteTblUserActivityById(id);
     }
 
+    /**
+     * 批量删除
+     * @param ids
+     * @return
+     */
     @Override
     public int deleteTblUserActivityByActivityIds(Long[] ids) {
         return tblUserActivityMapper.deleteTblUserActivityByActivityIds(ids);
     }
 
+    /**
+     * 个人中心 我的活动
+     * @param tblUserActivity
+     * @return
+     */
     @Override
+    @updateUserActivity
     public List<UserActivity> selectMyActivity(TblUserActivity tblUserActivity) {
         List<UserActivity> list=tblUserActivityMapper.selectMyActivity(tblUserActivity);
         return list;

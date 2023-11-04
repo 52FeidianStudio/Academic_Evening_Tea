@@ -148,6 +148,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="qphone != null">qphone,</if>
             <if test="str1 != null">str1,</if>
             <if test="str2 != null">str2,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="createTime != null">create_time,</if>
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="details != null">#{details},</if>
@@ -175,6 +179,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="qphone != null">#{qphone},</if>
             <if test="str1 != null">#{str1},</if>
             <if test="str2 != null">#{str2},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="createTime != null">#{createTime},</if>
          </trim>
     </insert>
 
@@ -208,10 +216,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="qphone != null">qphone = #{qphone},</if>
             <if test="str1 != null">str1 = #{str1},</if>
             <if test="str2 != null">str2 = #{str2},</if>
-            <if test="updateBy != null">#{updateBy},</if>
-            <if test="createBy != null">#{createBy},</if>
-            <if test="updateTime != null">#{updateTime},</if>
-            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">update_by=#{updateBy},</if>
+            <if test="createBy != null">create_by#{createBy},</if>
+            <if test="updateTime != null">update_time#{updateTime},</if>
+            <if test="createTime != null">create_time#{createTime},</if>
         </trim>
         where id = #{id}
     </update>

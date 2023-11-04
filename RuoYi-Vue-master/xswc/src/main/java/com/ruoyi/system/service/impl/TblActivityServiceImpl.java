@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import com.ruoyi.common.utils.SecurityUtils;
+import com.ruoyi.system.annotation.update;
 import com.ruoyi.system.annotation.updateActivity;
 import com.ruoyi.system.constant.ResultConstant;
 import com.ruoyi.system.domain.DeptActivity;
@@ -13,6 +14,7 @@ import com.ruoyi.system.domain.vo.TblActivityVO;
 import com.ruoyi.system.mapper.DeptActivityMapper;
 import com.ruoyi.system.mapper.TblUserActivityMapper;
 
+import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
@@ -80,7 +82,6 @@ public class TblActivityServiceImpl implements ITblActivityService
      */
     @Override
     @Transactional
-    @updateActivity
     public int insertTblActivity(TblActivity tblActivity)
     {
         tblActivityMapper.insertTblActivity(tblActivity);
@@ -104,6 +105,7 @@ public class TblActivityServiceImpl implements ITblActivityService
      * @return 结果
      */
     @Override
+    @update
     public int updateTblActivity(TblActivity tblActivity)
     {
         return tblActivityMapper.updateTblActivity(tblActivity);
