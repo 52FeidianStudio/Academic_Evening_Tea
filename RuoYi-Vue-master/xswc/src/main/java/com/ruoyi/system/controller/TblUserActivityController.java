@@ -57,7 +57,7 @@ public class TblUserActivityController extends BaseController
     /**
      * 查询【请填写功能名称】列表
      */
-//    @PreAuthorize("@ss.hasPermi('system:activity:list')")
+    @PreAuthorize("@ss.hasPermi('system:useractivity:list')")
     @GetMapping("/list")
     public TableDataInfo list(TblUserActivity tblUserActivity)
     {

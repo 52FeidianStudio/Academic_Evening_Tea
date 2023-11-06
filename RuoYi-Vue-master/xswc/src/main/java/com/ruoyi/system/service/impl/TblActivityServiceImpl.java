@@ -87,13 +87,16 @@ public class TblActivityServiceImpl implements ITblActivityService
         tblActivityMapper.insertTblActivity(tblActivity);
         DeptNum[] deptNums=tblActivity.getDeptNums();
         Long acticityId=tblActivity.getId();
-        for(DeptNum deptNum:deptNums){
-            DeptActivity deptActivity = new DeptActivity();
-            deptActivity.setActivityId(acticityId);
-            deptActivity.setDeptId(deptNum.getDeptId());
-            deptActivity.setMaxNum(deptNum.getMaxNum());
-            deptActivity.setResNum(deptNum.getMaxNum());
-            deptActivityMapper.insertDeptActivity(deptActivity);
+        //有学院限制
+        if (deptNums!=null){
+            for(DeptNum deptNum:deptNums){
+                DeptActivity deptActivity = new DeptActivity();
+                deptActivity.setActivityId(acticityId);
+                deptActivity.setDeptId(deptNum.getDeptId());
+                deptActivity.setMaxNum(deptNum.getMaxNum());
+                deptActivity.setResNum(deptNum.getMaxNum());
+                deptActivityMapper.insertDeptActivity(deptActivity);
+            }
         }
         return ResultConstant.SUCEESS;
     }
