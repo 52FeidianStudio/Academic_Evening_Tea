@@ -59,3 +59,10 @@ spring:
                 wall:
                     config:
                         multi-statement-allow: true
+#xswc:
+#    alioss:
+#        emdpoint: oss-cn-hangzhou.aliyuncs.com
+#        access-key-id: LTAI5tGYRrYBPsmRP7zcytD7
+#        access-key-secret: W9zWoY3RGdbeme6z9u2LNnuLQewpPX
+#        bucket-name: xswc
+

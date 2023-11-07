@@ -35,7 +35,7 @@ public class TblFeedbackController extends BaseController
     private ITblFeedbackService tblFeedbackService;
 
     /**
-     * 查询【请填写功能名称】列表
+     * 查询意见反馈
      */
     @PreAuthorize("@ss.hasPermi('system:feedback:list')")
     @GetMapping("/list")
@@ -70,10 +70,10 @@ public class TblFeedbackController extends BaseController
     }
 
     /**
-     * 新增【请填写功能名称】
+     * 用户新增意见反馈
      */
     @PreAuthorize("@ss.hasPermi('system:feedback:add')")
-    @Log(title = "【请填写功能名称】", businessType = BusinessType.INSERT)
+    @Log(title = " 用户新增意见反馈", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody TblFeedback tblFeedback)
     {

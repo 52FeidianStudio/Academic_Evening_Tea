@@ -2,6 +2,7 @@ package com.ruoyi.system.service.impl;
 
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.system.annotation.create;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.TblFeedbackMapper;
@@ -21,7 +22,7 @@ public class TblFeedbackServiceImpl implements ITblFeedbackService
     private TblFeedbackMapper tblFeedbackMapper;
 
     /**
-     * 查询【请填写功能名称】
+     *查询意见反馈
      * 
      * @param id 【请填写功能名称】主键
      * @return 【请填写功能名称】
@@ -33,7 +34,7 @@ public class TblFeedbackServiceImpl implements ITblFeedbackService
     }
 
     /**
-     * 查询【请填写功能名称】列表
+     * 查询意见反馈
      * 
      * @param tblFeedback 【请填写功能名称】
      * @return 【请填写功能名称】
@@ -41,16 +42,24 @@ public class TblFeedbackServiceImpl implements ITblFeedbackService
     @Override
     public List<TblFeedback> selectTblFeedbackList(TblFeedback tblFeedback)
     {
+        List<TblFeedback> tblFeedbacks= tblFeedbackMapper.selectTblFeedbackList(tblFeedback);
+        if (tblFeedbacks!=null){
+            for (TblFeedback reTblFeedback:tblFeedbacks) {
+                String picture = reTblFeedback.getPicture();
+
+            }
+        }
         return tblFeedbackMapper.selectTblFeedbackList(tblFeedback);
     }
 
     /**
-     * 新增【请填写功能名称】
+     * 用户新增意见反馈
      * 
      * @param tblFeedback 【请填写功能名称】
      * @return 结果
      */
     @Override
+    @create
     public int insertTblFeedback(TblFeedback tblFeedback)
     {
 //        tblFeedback.setCreateTime(DateUtils.getNowDate());

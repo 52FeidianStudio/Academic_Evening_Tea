@@ -1,11 +1,15 @@
 package com.ruoyi.system.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 【请填写功能名称】对象 tbl_feedback
@@ -13,6 +17,9 @@ import java.time.LocalDateTime;
  * @author ruoyi
  * @date 2023-10-25
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class TblFeedback
 {
     private static final long serialVersionUID = 1L;
@@ -40,6 +47,9 @@ public class TblFeedback
     /** 图片存储 */
     @Excel(name = "图片存储")
     private String picture;
+
+    //给前端的图片合集
+    private List<String>  imgs;
 
 
     //创建时间

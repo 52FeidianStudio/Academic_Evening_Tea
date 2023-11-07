@@ -134,3 +134,17 @@ xss:
 app:
   appid: wx3bcba825f1b221e8
   appsecret: daaff5fa37b779b83285460af74571b9
+
+xswc:
+  alioss:
+    endpoint: oss-cn-hangzhou.aliyuncs.com
+    access-key-id: LTAI5tGYRrYBPsmRP7zcytD7
+    access-key-secret: W9zWoY3RGdbeme6z9u2LNnuLQewpPX
+    bucket-name: xswc
+#xswc:
+#  alioss:
+#    endpoint: ${xswc.alioss.endpoint}
+#    access-key-id: ${xswc.alioss.access-key-id}
+#    access-key-secret: ${xswc.alioss.access-key-secret}
+#    bucket-name: ${xswc.alioss.bucket-name}
+
