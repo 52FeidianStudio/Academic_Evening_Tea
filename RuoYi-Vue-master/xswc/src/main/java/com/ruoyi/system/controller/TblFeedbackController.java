@@ -2,6 +2,8 @@ package com.ruoyi.system.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,7 +40,7 @@ public class TblFeedbackController extends BaseController
      * 查询意见反馈
      */
     @PreAuthorize("@ss.hasPermi('system:feedback:list')")
-    @GetMapping("/list")
+    @PostMapping("/list")
     public TableDataInfo list(TblFeedback tblFeedback)
     {
         startPage();
@@ -77,6 +79,8 @@ public class TblFeedbackController extends BaseController
     @PostMapping
     public AjaxResult add(@RequestBody TblFeedback tblFeedback)
     {
+        Long userId = SecurityUtils.getUserId();
+        tblFeedback.setUserId(userId);
         return toAjax(tblFeedbackService.insertTblFeedback(tblFeedback));
     }
 

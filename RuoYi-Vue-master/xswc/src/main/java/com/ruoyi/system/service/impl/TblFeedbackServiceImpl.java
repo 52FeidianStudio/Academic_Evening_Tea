@@ -1,5 +1,6 @@
 package com.ruoyi.system.service.impl;
 
+import java.util.Arrays;
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.system.annotation.create;
@@ -46,10 +47,11 @@ public class TblFeedbackServiceImpl implements ITblFeedbackService
         if (tblFeedbacks!=null){
             for (TblFeedback reTblFeedback:tblFeedbacks) {
                 String picture = reTblFeedback.getPicture();
-
+                List<String> urlList = Arrays.asList(picture.split("&"));
+                reTblFeedback.setImgs(urlList);
             }
         }
-        return tblFeedbackMapper.selectTblFeedbackList(tblFeedback);
+        return tblFeedbacks;
     }
 
     /**

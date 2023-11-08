@@ -2,6 +2,7 @@ package com.ruoyi.system.service.impl;
 
 import java.util.List;
 
+import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.system.annotation.updateActivity;
 import com.ruoyi.system.annotation.updateUserActivity;
@@ -11,6 +12,7 @@ import com.ruoyi.system.domain.DeptActivity;
 import com.ruoyi.system.domain.TblActivity;
 import com.ruoyi.system.domain.UserActivity;
 import com.ruoyi.system.mapper.DeptActivityMapper;
+import com.ruoyi.system.mapper.SysUserMapper;
 import com.ruoyi.system.mapper.TblActivityMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +39,9 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
 
     @Autowired
     private TblActivityMapper tblActivityMapper;
+
+    @Autowired
+    private SysUserMapper sysUserMapper;
 
     /**
      * 查询【请填写功能名称】
@@ -65,7 +70,7 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
     /**
      * 用户报名活动
      * 
-     * @param tblUserActivity 【请填写功能名称】
+     * @param tblUserActivity 用户报名活动
      * @return 结果
      */
     @Override
@@ -73,11 +78,14 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
     @updateActivity
     public int insertTblUserActivity(TblUserActivity tblUserActivity)
     {
-
+        //得到用户的部门id
+//        Long userId = SecurityUtils.getUserId();
+//        SysUser sysUser = sysUserMapper.selectUserById(userId);
+//        Long deptId = sysUser.getDeptId();
         //检查用户的学院人数是否有限制
         DeptActivity deptActivity = new DeptActivity();
         deptActivity.setActivityId(tblUserActivity.getActivityId());
-        deptActivity.setDeptId(tblUserActivity.getDeptId());
+//        deptActivity.setDeptId(deptId);
         Long resNum = deptActivityMapper.getResNum(deptActivity);
 
         //该活动的已经报名人数不能超过总人数
@@ -115,7 +123,6 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
     @Override
     @Transactional
     @updateActivity
-    //TODO在报名前扫一遍活动表，保证签到的时候活动没有结束
     public int updateTblUserActivity(TblUserActivity tblUserActivity)
     {
         tblUserActivity.setUserId(SecurityUtils.getUserId());

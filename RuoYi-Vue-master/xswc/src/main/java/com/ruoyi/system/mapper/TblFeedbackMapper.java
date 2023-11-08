@@ -2,6 +2,7 @@ package com.ruoyi.system.mapper;
 
 import java.util.List;
 import com.ruoyi.system.domain.TblFeedback;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 【请填写功能名称】Mapper接口
@@ -9,6 +10,7 @@ import com.ruoyi.system.domain.TblFeedback;
  * @author ruoyi
  * @date 2023-10-25
  */
+@Mapper
 public interface TblFeedbackMapper 
 {
     /**
