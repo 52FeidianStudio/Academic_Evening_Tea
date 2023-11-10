@@ -35,10 +35,10 @@ public class TblSpecialColumnController extends BaseController
     private ITblSpecialColumnService tblSpecialColumnService;
 
     /**
-     * 查询【请填写功能名称】列表
+     * 查询文章列表
      */
     @PreAuthorize("@ss.hasPermi('system:column:list')")
-    @GetMapping("/list")
+    @PostMapping("/list")
     public TableDataInfo list(TblSpecialColumn tblSpecialColumn)
     {
         startPage();
@@ -60,7 +60,7 @@ public class TblSpecialColumnController extends BaseController
     }
 
     /**
-     * 获取【请填写功能名称】详细信息
+     * 获取文章详细信息
      */
     @PreAuthorize("@ss.hasPermi('system:column:query')")
     @GetMapping(value = "/{id}")

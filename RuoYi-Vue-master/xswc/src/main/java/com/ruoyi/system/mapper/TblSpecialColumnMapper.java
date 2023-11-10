@@ -2,6 +2,7 @@ package com.ruoyi.system.mapper;
 
 import java.util.List;
 import com.ruoyi.system.domain.TblSpecialColumn;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 【请填写功能名称】Mapper接口
@@ -9,10 +10,11 @@ import com.ruoyi.system.domain.TblSpecialColumn;
  * @author ruoyi
  * @date 2023-10-25
  */
+@Mapper
 public interface TblSpecialColumnMapper 
 {
     /**
-     * 查询【请填写功能名称】
+     * 查询某个文章
      * 
      * @param id 【请填写功能名称】主键
      * @return 【请填写功能名称】
@@ -20,7 +22,7 @@ public interface TblSpecialColumnMapper
     public TblSpecialColumn selectTblSpecialColumnById(Long id);
 
     /**
-     * 查询【请填写功能名称】列表
+     * 查询文章列表
      * 
      * @param tblSpecialColumn 【请填写功能名称】
      * @return 【请填写功能名称】集合

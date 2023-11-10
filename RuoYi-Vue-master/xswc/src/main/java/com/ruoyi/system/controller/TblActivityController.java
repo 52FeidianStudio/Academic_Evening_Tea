@@ -47,6 +47,12 @@ public class TblActivityController extends BaseController
         return getDataTable(list);
     }
 
+    //查看是否具有发布活动的权限
+    @PreAuthorize("@ss.hasPermi('system:activity:add')")
+    @GetMapping("/menu")
+    public  AjaxResult menu(){
+        return success("可以访问");
+    }
 
 
     /**

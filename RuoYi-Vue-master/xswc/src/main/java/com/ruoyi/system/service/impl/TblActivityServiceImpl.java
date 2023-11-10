@@ -6,11 +6,13 @@ import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.system.annotation.update;
 import com.ruoyi.system.annotation.updateActivity;
+import com.ruoyi.system.constant.ActivityConstant;
 import com.ruoyi.system.constant.ResultConstant;
 import com.ruoyi.system.domain.DeptActivity;
 import com.ruoyi.system.domain.DeptNum;
 import com.ruoyi.system.domain.TblUserActivity;
 import com.ruoyi.system.domain.vo.TblActivityVO;
+import com.ruoyi.system.example.HttpPostRequestExample;
 import com.ruoyi.system.mapper.DeptActivityMapper;
 import com.ruoyi.system.mapper.TblUserActivityMapper;
 
@@ -111,6 +113,17 @@ public class TblActivityServiceImpl implements ITblActivityService
     @update
     public int updateTblActivity(TblActivity tblActivity)
     {
+        Long activityId = tblActivity.getId();
+        if (tblActivity.getState().equals(ActivityConstant.PASS))
+        {
+            HttpPostRequestExample httpPostRequestExample = new HttpPostRequestExample();
+            String accessToken = httpPostRequestExample.postSendAccessToken();
+            String applicationFilePath = httpPostRequestExample.postApplication(accessToken,activityId);
+            String signinFilePath = httpPostRequestExample.postSignIn(accessToken, activityId);
+            tblActivity.setSigninFilePath(signinFilePath);
+            tblActivity.setApplicationFilePath(applicationFilePath);
+        }
+
         return tblActivityMapper.updateTblActivity(tblActivity);
     }
 

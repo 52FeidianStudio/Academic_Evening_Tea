@@ -13,7 +13,8 @@ public class ActivityConstant {
     public static final Integer REPESTEDREGISTER= 2;
     public static final Integer REGISTERSUCCESS= 3;
     public static final Integer REFISTERTIMEOUT= 4;
-
+    public static final Integer NOPASS= 1;
+    public static final Integer PASS= 2;
 
 
 

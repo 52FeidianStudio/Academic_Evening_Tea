@@ -109,12 +109,12 @@ public class TblActivity
     private Integer isEnd;
 
     /** 预留字段1 报名二维码*/
-    @Excel(name = "预留字段1")
-    private String str1;
+    @Excel(name = "签到二维码路径")
+    private String signinFilePath;
 
     /** 预留字段2  签到二维码*/
-    @Excel(name = "预留字段2")
-    private String str2;
+    @Excel(name = "报名二维码路径")
+    private String applicationFilePath;
     //创建时间
     private LocalDateTime createTime;
     //更新时间

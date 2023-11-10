@@ -31,7 +31,11 @@ public class TblFeedbackServiceImpl implements ITblFeedbackService
     @Override
     public TblFeedback selectTblFeedbackById(Long id)
     {
-        return tblFeedbackMapper.selectTblFeedbackById(id);
+        TblFeedback tblFeedback=tblFeedbackMapper.selectTblFeedbackById(id);
+        String picture = tblFeedback.getPicture();
+        List<String> urlList = Arrays.asList(picture.split("&"));
+        tblFeedback.setImgs(urlList);
+        return tblFeedback;
     }
 
     /**

@@ -31,12 +31,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="lat"    column="lat"    />
         <result property="lng"    column="lng"    />
         <result property="qphone"    column="qphone"    />
-        <result property="str1"    column="str1"    />
-        <result property="str2"    column="str2"    />
+        <result property="signinFilePath"    column="signin_file_path"    />
+        <result property="applicationFilePath"    column="application_file_path"    />
     </resultMap>
 
     <sql id="selectTblActivityVo">
-        select id, details, img, user_id, user_name,speaker_name, user_tel, hot, hb_num, top, givelike, views, money, type, state, is_end,is_close,time, address, hb_keyword, hong, user_img2, cityname, lat, lng, qphone, str1, str2 from tbl_activity
+        select id, details, img, user_id, user_name,speaker_name, user_tel, hot, hb_num, top, givelike, views, money, type, state, is_end,is_close,time, address, hb_keyword, hong, user_img2, cityname, lat, lng, qphone, application_file_path, signin_file_path from tbl_activity
     </sql>
 
     <select id="selectTblActivityList" parameterType="TblActivityVO" resultMap="TblActivityResult">
@@ -67,8 +67,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="lat != null  and lat != ''"> and lat = #{lat}</if>
             <if test="lng != null  and lng != ''"> and lng = #{lng}</if>
             <if test="qphone != null  and qphone != ''"> and qphone = #{qphone}</if>
-            <if test="str1 != null  and str1 != ''"> and str1 = #{str1}</if>
-            <if test="str2 != null  and str2 != ''"> and str2 = #{str2}</if>
+            <if test="signinFilePath != null  and signinFilePath != ''"> and signin_file_path = #{signinFilePath}</if>
+            <if test="applicationFilePath != null  and applicationFilePath != ''"> and application_file_path = #{applicationFilePath}</if>
         </where>
         order by lat asc
     </select>
@@ -146,8 +146,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="lat != null">lat,</if>
             <if test="lng != null">lng,</if>
             <if test="qphone != null">qphone,</if>
-            <if test="str1 != null">str1,</if>
-            <if test="str2 != null">str2,</if>
+            <if test="signinFilePath != null">signin_file_path,</if>
+            <if test="applicationFilePath != null">application_file_path,</if>
             <if test="updateBy != null">update_by,</if>
             <if test="createBy != null">create_by,</if>
             <if test="updateTime != null">update_time,</if>
@@ -177,8 +177,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="lat != null">#{lat},</if>
             <if test="lng != null">#{lng},</if>
             <if test="qphone != null">#{qphone},</if>
-            <if test="str1 != null">#{str1},</if>
-            <if test="str2 != null">#{str2},</if>
+            <if test="signinFilePath!= null">#{signinFilePath},</if>
+            <if test="applicationFilePath!= null">#{applicationFilePath},</if>
             <if test="updateBy != null">#{updateBy},</if>
             <if test="createBy != null">#{createBy},</if>
             <if test="updateTime != null">#{updateTime},</if>
@@ -214,12 +214,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="lat != null">lat = #{lat},</if>
             <if test="lng != null">lng = #{lng},</if>
             <if test="qphone != null">qphone = #{qphone},</if>
-            <if test="str1 != null">str1 = #{str1},</if>
-            <if test="str2 != null">str2 = #{str2},</if>
+            <if test="signinFilePath != null">signin_file_path = #{signinFilePath},</if>
+            <if test="applicationFilePath != null">application_file_path = #{applicationFilePath},</if>
             <if test="updateBy != null">update_by=#{updateBy},</if>
-            <if test="createBy != null">create_by#{createBy},</if>
-            <if test="updateTime != null">update_time#{updateTime},</if>
-            <if test="createTime != null">create_time#{createTime},</if>
+            <if test="createBy != null">create_by=#{createBy},</if>
+            <if test="updateTime != null">update_time=#{updateTime},</if>
+            <if test="createTime != null">create_time=#{createTime},</if>
         </trim>
         where id = #{id}
     </update>

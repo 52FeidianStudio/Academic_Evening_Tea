@@ -79,9 +79,9 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
     public int insertTblUserActivity(TblUserActivity tblUserActivity)
     {
         //得到用户的部门id
-//        Long userId = SecurityUtils.getUserId();
-//        SysUser sysUser = sysUserMapper.selectUserById(userId);
-//        Long deptId = sysUser.getDeptId();
+        Long userId = SecurityUtils.getUserId();
+        SysUser sysUser = sysUserMapper.selectUserById(userId);
+        Long deptId = sysUser.getDeptId();
         //检查用户的学院人数是否有限制
         DeptActivity deptActivity = new DeptActivity();
         deptActivity.setActivityId(tblUserActivity.getActivityId());

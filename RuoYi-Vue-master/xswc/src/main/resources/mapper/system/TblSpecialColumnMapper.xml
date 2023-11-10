@@ -32,6 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="likeCount != null "> and like_count = #{likeCount}</if>
             <if test="viewsNums != null "> and views_nums = #{viewsNums}</if>
         </where>
+        order by create_time asc
     </select>
     
     <select id="selectTblSpecialColumnById" parameterType="Long" resultMap="TblSpecialColumnResult">
