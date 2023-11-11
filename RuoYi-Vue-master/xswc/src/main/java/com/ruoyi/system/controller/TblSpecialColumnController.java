@@ -70,7 +70,7 @@ public class TblSpecialColumnController extends BaseController
     }
 
     /**
-     * 新增【请填写功能名称】
+     * 新增文章
      */
     @PreAuthorize("@ss.hasPermi('system:column:add')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.INSERT)

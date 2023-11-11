@@ -10,6 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="kind"    column="kind"    />
         <result property="summary"    column="summary"    />
         <result property="content"    column="content"    />
+        <result property="img"    column="img"    />
         <result property="likeCount"    column="like_count"    />
         <result property="viewsNums"    column="views_nums"    />
         <result property="updateTime"    column="update_time"    />
@@ -19,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectTblSpecialColumnVo">
-        select id, title, kind, summary, content, like_count, views_nums, update_time, update_by, create_time, create_by from tbl_special_column
+        select id, title, kind, summary, content, like_count, views_nums, update_time, img,update_by, create_time, create_by from tbl_special_column
     </sql>
 
     <select id="selectTblSpecialColumnList" parameterType="TblSpecialColumn" resultMap="TblSpecialColumnResult">
@@ -28,6 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="title != null  and title != ''"> and title = #{title}</if>
             <if test="kind != null "> and kind = #{kind}</if>
             <if test="summary != null  and summary != ''"> and summary = #{summary}</if>
+            <if test="img != null  and img != ''"> and img = #{img}</if>
             <if test="content != null  and content != ''"> and content = #{content}</if>
             <if test="likeCount != null "> and like_count = #{likeCount}</if>
             <if test="viewsNums != null "> and views_nums = #{viewsNums}</if>
@@ -50,6 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="content != null">content,</if>
             <if test="likeCount != null">like_count,</if>
             <if test="viewsNums != null">views_nums,</if>
+            <if test="img != null">img,</if>
             <if test="updateTime != null">update_time,</if>
             <if test="updateBy != null">update_by,</if>
             <if test="createTime != null">create_time,</if>
@@ -62,6 +65,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="summary != null">#{summary},</if>
             <if test="content != null">#{content},</if>
             <if test="likeCount != null">#{likeCount},</if>
+            <if test="img != null">#{img},</if>
             <if test="viewsNums != null">#{viewsNums},</if>
             <if test="updateTime != null">#{updateTime},</if>
             <if test="updateBy != null">#{updateBy},</if>
@@ -77,6 +81,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="kind != null">kind = #{kind},</if>
             <if test="summary != null">summary = #{summary},</if>
             <if test="content != null">content = #{content},</if>
+            <if test="img != null">img = #{img},</if>
             <if test="likeCount != null">like_count = #{likeCount},</if>
             <if test="viewsNums != null">views_nums = #{viewsNums},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>

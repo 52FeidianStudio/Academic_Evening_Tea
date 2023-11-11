@@ -60,7 +60,7 @@ public class SysNoticeController extends BaseController
     @PreAuthorize("@ss.hasPermi('system:notice:add')")
     @Log(title = "通知公告", businessType = BusinessType.INSERT)
     @PostMapping
-    public AjaxResult add(@Validated @RequestBody SysNotice notice)
+    public AjaxResult add(@RequestBody SysNotice notice)
     {
         notice.setCreateBy(getUsername());
         return toAjax(noticeService.insertNotice(notice));
