@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
  * @date 2023-10-25
  */
 
-@Component
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -65,6 +65,8 @@ public class TblSpecialColumn
     private  String createBy;
     //更新人
     private  String updateBy;
+
+
 //
 //    public void setId(Long id)
 //    {

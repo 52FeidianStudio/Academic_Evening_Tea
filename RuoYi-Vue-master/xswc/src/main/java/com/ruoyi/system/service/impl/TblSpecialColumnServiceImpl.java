@@ -1,5 +1,7 @@
 package com.ruoyi.system.service.impl;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +47,7 @@ public class TblSpecialColumnServiceImpl implements ITblSpecialColumnService
     }
 
     /**
-     * 新增【请填写功能名称】
+     * 新增文章
      * 
      * @param tblSpecialColumn 【请填写功能名称】
      * @return 结果
@@ -54,6 +56,9 @@ public class TblSpecialColumnServiceImpl implements ITblSpecialColumnService
     public int insertTblSpecialColumn(TblSpecialColumn tblSpecialColumn)
     {
 //        tblSpecialColumn.setCreateTime(DateUtils.getNowDate());
+        String content = tblSpecialColumn.getContent();
+        byte[] contentBytes= Base64.getDecoder().decode(content);
+        tblSpecialColumn.setContent(new String(contentBytes, StandardCharsets.UTF_8));
         return tblSpecialColumnMapper.insertTblSpecialColumn(tblSpecialColumn);
     }
 
