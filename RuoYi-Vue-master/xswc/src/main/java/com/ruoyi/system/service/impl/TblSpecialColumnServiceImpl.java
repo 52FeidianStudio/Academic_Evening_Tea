@@ -73,6 +73,12 @@ public class TblSpecialColumnServiceImpl implements ITblSpecialColumnService
     @Override
     public int updateTblSpecialColumn(TblSpecialColumn tblSpecialColumn)
     {
+        if (tblSpecialColumn.getContent()!=null)
+        {
+            String content = tblSpecialColumn.getContent();
+            byte[] contentBytes= Base64.getDecoder().decode(content);
+            tblSpecialColumn.setContent(new String(contentBytes, StandardCharsets.UTF_8));
+        }
 //        tblSpecialColumn.setUpdateTime(DateUtils.getNowDate());
         return tblSpecialColumnMapper.updateTblSpecialColumn(tblSpecialColumn);
     }
