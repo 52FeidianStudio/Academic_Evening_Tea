@@ -4,6 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.system.annotation.create;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.TblSpecialColumnMapper;
@@ -53,6 +54,7 @@ public class TblSpecialColumnServiceImpl implements ITblSpecialColumnService
      * @return 结果
      */
     @Override
+    @create
     public int insertTblSpecialColumn(TblSpecialColumn tblSpecialColumn)
     {
 //        tblSpecialColumn.setCreateTime(DateUtils.getNowDate());
