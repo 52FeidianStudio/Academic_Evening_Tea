@@ -60,7 +60,7 @@ public class TblSpecialColumnController extends BaseController
     }
 
     /**
-     * 获取文章详细信息
+     * 浏览文章详细信息
      */
     @PreAuthorize("@ss.hasPermi('system:column:query')")
     @GetMapping(value = "/{id}")
