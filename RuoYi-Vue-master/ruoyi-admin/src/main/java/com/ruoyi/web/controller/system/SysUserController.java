@@ -248,4 +248,9 @@ public class SysUserController extends BaseController
     {
         return success(deptService.selectDeptTreeList(dept));
     }
+
+    @GetMapping
+    public AjaxResult updateUserInfo(Long id, String username,String oldPassword,String newPassword){
+        return success(userService.updateUserInfo(id, username, oldPassword, newPassword));
+    }
 }

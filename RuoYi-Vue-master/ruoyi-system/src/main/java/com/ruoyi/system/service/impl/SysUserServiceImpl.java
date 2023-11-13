@@ -541,4 +541,9 @@ public class SysUserServiceImpl implements ISysUserService
         }
         return successMsg.toString();
     }
+
+    @Override
+    public String updateUserInfo(Long id, String username, String oldPassword, String newPassword) {
+        return null;
+    }
 }
