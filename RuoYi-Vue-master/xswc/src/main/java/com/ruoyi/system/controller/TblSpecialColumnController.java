@@ -2,8 +2,11 @@ package com.ruoyi.system.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -34,6 +37,9 @@ public class TblSpecialColumnController extends BaseController
     @Autowired
     private ITblSpecialColumnService tblSpecialColumnService;
 
+    @Autowired
+    private ThreadPoolTaskExecutor threadPoolTaskExecutor;
+
     /**
      * 查询文章列表
      */
@@ -63,10 +69,23 @@ public class TblSpecialColumnController extends BaseController
      * 浏览文章详细信息
      */
     @PreAuthorize("@ss.hasPermi('system:column:query')")
-    @GetMapping(value = "/{id}")
-    public AjaxResult getInfo(@PathVariable("id") Long id)
+    @GetMapping(value = "/{id}/{type}")
+    @Transactional
+    public AjaxResult getInfo(@PathVariable("id") Long id,@PathVariable("type") Long type)
     {
-        return success(tblSpecialColumnService.selectTblSpecialColumnById(id));
+        if(type==1)
+        {
+            return success(tblSpecialColumnService.selectTblSpecialColumnById(id));
+        }
+        final TblSpecialColumn[] tblSpecialColumnHolder = new TblSpecialColumn[1];
+        Runnable runnable = new Runnable(){
+            @Override
+            public void run() {
+               tblSpecialColumnHolder[0]= tblSpecialColumnService.selectTblSpecialColumnByIdView(id);
+            }
+        };
+        threadPoolTaskExecutor.execute(runnable);
+        return success(tblSpecialColumnHolder[0]);
     }
 
     /**
@@ -81,7 +100,7 @@ public class TblSpecialColumnController extends BaseController
     }
 
     /**
-     * 修改【请填写功能名称】
+     * 修改文章
      */
     @PreAuthorize("@ss.hasPermi('system:column:edit')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.UPDATE)
@@ -91,6 +110,18 @@ public class TblSpecialColumnController extends BaseController
         return toAjax(tblSpecialColumnService.updateTblSpecialColumn(tblSpecialColumn));
     }
 
+    /**
+     * 点赞
+     * @param tblSpecialColumn
+     * @return
+     */
+    @PreAuthorize("@ss.hasPermi('system:column:like')")
+    @Log(title = "【请填写功能名称】", businessType = BusinessType.UPDATE)
+    @PutMapping("/like")
+    public AjaxResult like(@RequestBody TblSpecialColumn tblSpecialColumn)
+    {
+        return toAjax(tblSpecialColumnService.updateTblSpecialColumn(tblSpecialColumn));
+    }
     /**
      * 删除【请填写功能名称】
      */

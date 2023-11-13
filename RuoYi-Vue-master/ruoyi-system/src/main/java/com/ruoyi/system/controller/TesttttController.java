@@ -14,13 +14,14 @@ public class TesttttController {
 
     @GetMapping("/test")
     public String testController(String id,Integer flag) {
+        Runnable sssss = new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("sssss");
+            }
+        };
         if(flag==1) {
-            executior.execute(new Runnable() {
-                @Override
-                public void run() {
-                    System.out.println("sssss");
-                }
-            });
+            executior.execute(sssss);
         }
         return  "test";
     }
