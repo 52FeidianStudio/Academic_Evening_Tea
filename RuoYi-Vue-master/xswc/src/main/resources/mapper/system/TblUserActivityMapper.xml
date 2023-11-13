@@ -15,6 +15,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="updateBy"    column="update_by"    />
     </resultMap>
 
+
+    <resultMap type="UserActivity" id="UserActivityResult">
+        <id property="userId" column="user_id"/>
+        <result property="activityId" column="activity_id"/>
+        <result property="status" column="status"/>
+        <result property="userImg2" column="user_img2"/>
+        <result property="speakerName" column="speaker_name"/>
+        <result property="hbKeyword" column="hb_keyword"/>
+        <result property="lat" column="lat"/>
+        <result property="address" column="address"/>
+        <result property="hot" column="hot"/>
+        <result property="cityname" column="cityname"/>
+        <result property="details" column="details"/>
+        <result property="img" column="img"/>
+        <result property="type" column="type"/>
+        <result property="state" column="state"/>
+        <result property="isClose" column="is_close"/>
+        <result property="isEnd" column="is_end"/>
+    </resultMap>
+
+
     <sql id="selectTblUserActivityVo">
         select id, user_id, activity_id, status, create_time, create_by, update_time, update_by from tbl_user_activity
     </sql>
@@ -40,12 +61,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="status != null "> and status = #{status}</if>
         </where>
     </select>
-    <select id="selectMyActivity" resultType="com.ruoyi.system.domain.UserActivity">
-select   tbl_user_activity.user_id, activity_id, status,  details, img, speaker_name,hot, hb_num,  type, state, is_end,is_close,time, address, hb_keyword, hong, user_img2, cityname
-from  tbl_user_activity
-join  tbl_activity on tbl_activity.id= tbl_user_activity.activity_id
-where  tbl_user_activity.user_id=#{userId}
-
+    <select id="selectMyActivity" resultType="com.ruoyi.system.domain.UserActivity"  resultMap="UserActivityResult">
+        select   tbl_user_activity.user_id, activity_id, status,  details, img, speaker_name,hot, hb_num,  type, state, is_end,is_close,time, address, hb_keyword, hong, user_img2, cityname,lat
+        from  tbl_user_activity
+        join  tbl_activity on tbl_activity.id= tbl_user_activity.activity_id
+        where  tbl_user_activity.user_id=#{userId}
 
     </select>
 
