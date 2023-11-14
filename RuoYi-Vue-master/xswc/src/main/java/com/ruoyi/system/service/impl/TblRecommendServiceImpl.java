@@ -1,8 +1,16 @@
 package com.ruoyi.system.service.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
+
+import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.common.utils.SecurityUtils;
+import com.ruoyi.system.constant.CreditConstant;
+import com.ruoyi.system.domain.TblCreditUser;
 import com.ruoyi.system.domain.TblRecommendCommnet;
+import com.ruoyi.system.mapper.SysUserMapper;
+import com.ruoyi.system.mapper.TblCreditUserMapper;
 import com.ruoyi.system.mapper.TblRecommendCommnetMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +33,10 @@ public class TblRecommendServiceImpl implements ITblRecommendService
     @Autowired
     private TblRecommendCommnetMapper tblRecommendCommnetMapper;
 
+    @Autowired
+    private SysUserMapper sysUserMapper;
+    @Autowired
+    private TblCreditUserMapper tblCreditUserMapper;
     /**
      * id查询推荐
      * 
@@ -76,13 +88,39 @@ public class TblRecommendServiceImpl implements ITblRecommendService
     @Override
     public int updateTblRecommend(TblRecommend tblRecommend)
     {
+        Long userId = SecurityUtils.getUserId();
         TblRecommend pretblRecommend = tblRecommendMapper.selectTblRecommendById(tblRecommend.getId());
         Integer status = tblRecommend.getStatus();
         if(pretblRecommend.getStatus()==status)
         {
             return tblRecommendMapper.updateTblRecommend(tblRecommend);
         }
-        //TODO加积分
+        if(status==2)
+        {
+            //加积分
+            SysUser sysUser = sysUserMapper.selectUserById(userId);
+            sysUser.setCredit(sysUser.getCredit().add(new BigDecimal(1)));
+            sysUserMapper.updateUser(sysUser);
+            //加积分记录
+            TblCreditUser tblCreditUser = new TblCreditUser();
+            tblCreditUser.setUserId(userId);
+            tblCreditUser.setCreditNum(new BigDecimal(1));
+            tblCreditUser.setCreditType(CreditConstant.RECOMMEND.longValue());
+            tblCreditUserMapper.insertTblCreditUser(tblCreditUser);
+        }
+        if (status==3)
+        {
+            //加积分
+            SysUser sysUser = sysUserMapper.selectUserById(userId);
+            sysUser.setCredit(sysUser.getCredit().add(new BigDecimal(2)));
+            sysUserMapper.updateUser(sysUser);
+            //加积分记录
+            TblCreditUser tblCreditUser = new TblCreditUser();
+            tblCreditUser.setUserId(userId);
+            tblCreditUser.setCreditNum(new BigDecimal(2));
+            tblCreditUser.setCreditType(CreditConstant.RECOMMEND.longValue());
+            tblCreditUserMapper.insertTblCreditUser(tblCreditUser);
+        }
         return tblRecommendMapper.updateTblRecommend(tblRecommend);
     }
 
