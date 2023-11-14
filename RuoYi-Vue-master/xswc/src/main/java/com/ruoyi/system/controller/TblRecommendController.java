@@ -99,7 +99,7 @@ public class TblRecommendController extends BaseController
 
 
     /**
-     * 修改【请填写功能名称】
+     * 修改推荐状态
      */
 //    @PreAuthorize("@ss.hasPermi('system:recommend:edit')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.UPDATE)

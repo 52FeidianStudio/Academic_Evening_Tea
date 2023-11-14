@@ -68,7 +68,7 @@ public class TblRecommendServiceImpl implements ITblRecommendService
     }
 
     /**
-     * 修改【请填写功能名称】
+     * 修改推荐状态
      * 
      * @param tblRecommend 【请填写功能名称】
      * @return 结果
@@ -76,7 +76,13 @@ public class TblRecommendServiceImpl implements ITblRecommendService
     @Override
     public int updateTblRecommend(TblRecommend tblRecommend)
     {
-//        tblRecommend.setUpdateTime(DateUtils.getNowDate());
+        TblRecommend pretblRecommend = tblRecommendMapper.selectTblRecommendById(tblRecommend.getId());
+        Integer status = tblRecommend.getStatus();
+        if(pretblRecommend.getStatus()==status)
+        {
+            return tblRecommendMapper.updateTblRecommend(tblRecommend);
+        }
+        //TODO加积分
         return tblRecommendMapper.updateTblRecommend(tblRecommend);
     }
 

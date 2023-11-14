@@ -41,7 +41,7 @@ public class TblRecommend
 
     /** 状态1已推荐2已采纳3有效推荐 */
     @Excel(name = "状态1已推荐2已采纳3有效推荐")
-    private String status;
+    private Integer status;
 
     /** 点赞数 */
     @Excel(name = "点赞数")
