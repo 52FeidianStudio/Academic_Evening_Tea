@@ -59,6 +59,9 @@ public class TblActivityServiceImpl implements ITblActivityService
         tblUserActivity.setUserId(SecurityUtils.getUserId());
         List<TblUserActivity> isApplication = tblUserActivityMapper.selectTblUserActivityList(tblUserActivity);
         tblActivity.setIsApplication(isApplication);
+        DeptActivity deptActivity = new DeptActivity();
+        deptActivity.setActivityId(tblActivity.getId());
+        tblActivity.setDeptActivities(deptActivityMapper.selectDeptActivityList(deptActivity));
         return tblActivity;
     }
 
@@ -73,6 +76,11 @@ public class TblActivityServiceImpl implements ITblActivityService
     public List<TblActivity> selectTblActivityList(TblActivity tblActivity)
     {
         List<TblActivity>list= tblActivityMapper.selectTblActivityList(tblActivity);
+        for(TblActivity tblActivity1:list){
+            DeptActivity deptActivity = new DeptActivity();
+            deptActivity.setActivityId(tblActivity1.getId());
+            tblActivity1.setDeptActivities(deptActivityMapper.selectDeptActivityList(deptActivity));
+        }
         return list;
     }
 

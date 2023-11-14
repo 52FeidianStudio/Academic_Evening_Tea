@@ -37,7 +37,7 @@ public class TblGoodsController extends BaseController
     /**
      * 查询【请填写功能名称】列表
      */
-    @PreAuthorize("@ss.hasPermi('system:goods:list')")
+//    @PreAuthorize("@ss.hasPermi('system:goods:list')")
     @GetMapping("/list")
     public TableDataInfo list(TblGoods tblGoods)
     {
@@ -49,7 +49,7 @@ public class TblGoodsController extends BaseController
     /**
      * 导出【请填写功能名称】列表
      */
-    @PreAuthorize("@ss.hasPermi('system:goods:export')")
+//    @PreAuthorize("@ss.hasPermi('system:goods:export')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, TblGoods tblGoods)
@@ -62,7 +62,7 @@ public class TblGoodsController extends BaseController
     /**
      * 获取【请填写功能名称】详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:goods:query')")
+//    @PreAuthorize("@ss.hasPermi('system:goods:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -72,7 +72,7 @@ public class TblGoodsController extends BaseController
     /**
      * 新增【请填写功能名称】
      */
-    @PreAuthorize("@ss.hasPermi('system:goods:add')")
+//    @PreAuthorize("@ss.hasPermi('system:goods:add')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody TblGoods tblGoods)
@@ -83,7 +83,7 @@ public class TblGoodsController extends BaseController
     /**
      * 修改【请填写功能名称】
      */
-    @PreAuthorize("@ss.hasPermi('system:goods:edit')")
+//    @PreAuthorize("@ss.hasPermi('system:goods:edit')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody TblGoods tblGoods)
@@ -94,7 +94,7 @@ public class TblGoodsController extends BaseController
     /**
      * 删除【请填写功能名称】
      */
-    @PreAuthorize("@ss.hasPermi('system:goods:remove')")
+//    @PreAuthorize("@ss.hasPermi('system:goods:remove')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

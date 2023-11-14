@@ -37,7 +37,7 @@ public class TblRecommendController extends BaseController
     /**
      * 查询【请填写功能名称】列表
      */
-    @PreAuthorize("@ss.hasPermi('system:recommend:list')")
+//    @PreAuthorize("@ss.hasPermi('system:recommend:list')")
     @GetMapping("/list")
     public TableDataInfo list(TblRecommend tblRecommend)
     {
@@ -49,7 +49,7 @@ public class TblRecommendController extends BaseController
     /**
      * 导出【请填写功能名称】列表
      */
-    @PreAuthorize("@ss.hasPermi('system:recommend:export')")
+//    @PreAuthorize("@ss.hasPermi('system:recommend:export')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, TblRecommend tblRecommend)
@@ -62,7 +62,7 @@ public class TblRecommendController extends BaseController
     /**
      * 获取【请填写功能名称】详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:recommend:query')")
+//    @PreAuthorize("@ss.hasPermi('system:recommend:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -72,7 +72,7 @@ public class TblRecommendController extends BaseController
     /**
      * 新增【请填写功能名称】
      */
-    @PreAuthorize("@ss.hasPermi('system:recommend:add')")
+//    @PreAuthorize("@ss.hasPermi('system:recommend:add')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody TblRecommend tblRecommend)
@@ -83,7 +83,7 @@ public class TblRecommendController extends BaseController
     /**
      * 修改【请填写功能名称】
      */
-    @PreAuthorize("@ss.hasPermi('system:recommend:edit')")
+//    @PreAuthorize("@ss.hasPermi('system:recommend:edit')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody TblRecommend tblRecommend)
@@ -94,7 +94,7 @@ public class TblRecommendController extends BaseController
     /**
      * 删除【请填写功能名称】
      */
-    @PreAuthorize("@ss.hasPermi('system:recommend:remove')")
+//    @PreAuthorize("@ss.hasPermi('system:recommend:remove')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

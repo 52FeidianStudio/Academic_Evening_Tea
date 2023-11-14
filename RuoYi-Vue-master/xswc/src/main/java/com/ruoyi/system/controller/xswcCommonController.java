@@ -23,7 +23,7 @@ public class xswcCommonController {
     private  AliOssUtil aliOssUtil;
 
     @PostMapping("/upload")
-    @PreAuthorize("@ss.hasPermi('system:common:upload')")
+//    @PreAuthorize("@ss.hasPermi('system:common:upload')")
 public AjaxResult upload(MultipartFile file){
         try {
             //文件原始名

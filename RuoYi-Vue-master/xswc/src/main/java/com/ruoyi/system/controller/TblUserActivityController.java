@@ -41,7 +41,7 @@ public class TblUserActivityController extends BaseController
     /**
      * 用户报名活动
      */
-    @PreAuthorize("@ss.hasPermi('system:activity:application')")
+//    @PreAuthorize("@ss.hasPermi('system:activity:application')")
     @PostMapping()
     public AjaxResult application(@RequestBody TblUserActivity tblUserActivity)
     {
@@ -57,7 +57,7 @@ public class TblUserActivityController extends BaseController
     /**
      * 查询【请填写功能名称】列表
      */
-    @PreAuthorize("@ss.hasPermi('system:useractivity:list')")
+//    @PreAuthorize("@ss.hasPermi('system:useractivity:list')")
     @GetMapping("/list")
     public TableDataInfo list(TblUserActivity tblUserActivity)
     {
@@ -69,7 +69,7 @@ public class TblUserActivityController extends BaseController
     /**
      * 导出【请填写功能名称】列表
      */
-    @PreAuthorize("@ss.hasPermi('system:activity:export')")
+//    @PreAuthorize("@ss.hasPermi('system:activity:export')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, TblUserActivity tblUserActivity)
@@ -82,7 +82,7 @@ public class TblUserActivityController extends BaseController
     /**
      * 获取【请填写功能名称】详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:activity:query')")
+//    @PreAuthorize("@ss.hasPermi('system:activity:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -103,7 +103,7 @@ public class TblUserActivityController extends BaseController
     /**
      *用户签到
      */
-    @PreAuthorize("@ss.hasPermi('system:activity:register')")
+//    @PreAuthorize("@ss.hasPermi('system:activity:register')")
     @Log(title = "用户签到", businessType = BusinessType.UPDATE)
     @PutMapping("/register")
     public AjaxResult edit(@RequestBody TblUserActivity tblUserActivity)
@@ -115,7 +115,7 @@ public class TblUserActivityController extends BaseController
      * 个人中心  我的活动
      * @return
      */
-    @PreAuthorize("@ss.hasPermi('system:activity:myactivity')")
+//    @PreAuthorize("@ss.hasPermi('system:activity:myactivity')")
     @Log(title = "我的活动", businessType = BusinessType.UPDATE)
     @GetMapping("/myactivity")
 public  AjaxResult myactivity(){
@@ -128,7 +128,7 @@ public  AjaxResult myactivity(){
     /**
      * 删除【请填写功能名称】
      */
-    @PreAuthorize("@ss.hasPermi('system:activity:remove')")
+//    @PreAuthorize("@ss.hasPermi('system:activity:remove')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

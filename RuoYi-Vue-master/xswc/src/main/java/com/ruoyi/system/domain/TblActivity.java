@@ -88,8 +88,8 @@ public class TblActivity
     private String time;
 
     /**学院 人数限制 数组* */
+    private  List<DeptActivity> deptActivities;
     private DeptNum[]  deptNums;
-
     //判断该用户是否已经报过名
     private List<TblUserActivity>  isApplication;
 

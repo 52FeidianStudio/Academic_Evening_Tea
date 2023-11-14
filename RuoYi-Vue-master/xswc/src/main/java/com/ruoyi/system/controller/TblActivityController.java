@@ -38,7 +38,7 @@ public class TblActivityController extends BaseController
     /**
      * 用户查询活动集合
      */
-    @PreAuthorize("@ss.hasPermi('system:activity:list')")
+//    @PreAuthorize("@ss.hasPermi('system:activity:list')")
     @PostMapping("/list")
     public TableDataInfo Userlist(@RequestBody TblActivity tblActivity)
     {
@@ -48,7 +48,7 @@ public class TblActivityController extends BaseController
     }
 
     //查看是否具有发布活动的权限
-    @PreAuthorize("@ss.hasPermi('system:activity:add')")
+//    @PreAuthorize("@ss.hasPermi('system:activity:add')")
     @GetMapping("/menu")
     public  AjaxResult menu(){
         return success("可以访问");
@@ -58,7 +58,7 @@ public class TblActivityController extends BaseController
     /**
      * 导出商家发布文章列表
      */
-    @PreAuthorize("@ss.hasPermi('system:activity:export')")
+//    @PreAuthorize("@ss.hasPermi('system:activity:export')")
     @Log(title = "商家发布文章", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, TblActivity tblActivity)
@@ -71,7 +71,7 @@ public class TblActivityController extends BaseController
     /**
      * 用户获取发布活动详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:activity:query')")
+//    @PreAuthorize("@ss.hasPermi('system:activity:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -84,7 +84,7 @@ public class TblActivityController extends BaseController
     /**
      * 新增用户发布活动
      */
-    @PreAuthorize("@ss.hasPermi('system:activity:add')")
+//    @PreAuthorize("@ss.hasPermi('system:activity:add')")
     @Log(title = "用户发布活动", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody TblActivity tblActivity)
@@ -94,10 +94,10 @@ public class TblActivityController extends BaseController
     }
 
     /**
-     * 修改商家发布文章
+     * 修改商家发布活动
      */
-    @PreAuthorize("@ss.hasPermi('system:activity:edit')")
-    @Log(title = "商家发布文章", businessType = BusinessType.UPDATE)
+//    @PreAuthorize("@ss.hasPermi('system:activity:edit')")
+    @Log(title = "修改商家发布活动", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody TblActivity tblActivity)
     {
@@ -105,10 +105,10 @@ public class TblActivityController extends BaseController
     }
 
     /**
-     * 删除商家发布文章
+     * 删除商家发布活动
      */
-    @PreAuthorize("@ss.hasPermi('system:activity:remove')")
-    @Log(title = "商家发布文章", businessType = BusinessType.DELETE)
+//    @PreAuthorize("@ss.hasPermi('system:activity:remove')")
+    @Log(title = "删除商家发布活动", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     @Transactional
     public AjaxResult remove(@PathVariable Long[] ids)

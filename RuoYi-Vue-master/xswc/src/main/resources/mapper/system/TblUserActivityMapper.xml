@@ -71,7 +71,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <insert id="insertTblUserActivity" parameterType="TblUserActivity">
         insert into tbl_user_activity
-        <trim prefix="(" suffix=")" suffixOverrides=",">haoixia
+        <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
             <if test="userId != null">user_id,</if>
             <if test="activityId != null">activity_id,</if>

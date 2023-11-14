@@ -43,7 +43,7 @@ public class TblSpecialColumnController extends BaseController
     /**
      * 查询文章列表
      */
-    @PreAuthorize("@ss.hasPermi('system:column:list')")
+//    @PreAuthorize("@ss.hasPermi('system:column:list')")
     @PostMapping("/list")
     public TableDataInfo list(TblSpecialColumn tblSpecialColumn)
     {
@@ -55,7 +55,7 @@ public class TblSpecialColumnController extends BaseController
     /**
      * 导出【请填写功能名称】列表
      */
-    @PreAuthorize("@ss.hasPermi('system:column:export')")
+//    @PreAuthorize("@ss.hasPermi('system:column:export')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, TblSpecialColumn tblSpecialColumn)
@@ -68,7 +68,7 @@ public class TblSpecialColumnController extends BaseController
     /**
      * 浏览文章详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:column:query')")
+//    @PreAuthorize("@ss.hasPermi('system:column:query')")
     @GetMapping(value = "/{id}/{type}")
     @Transactional
     public AjaxResult getInfo(@PathVariable("id") Long id,@PathVariable("type") Long type)
@@ -91,7 +91,7 @@ public class TblSpecialColumnController extends BaseController
     /**
      * 新增文章
      */
-    @PreAuthorize("@ss.hasPermi('system:column:add')")
+//    @PreAuthorize("@ss.hasPermi('system:column:add')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody TblSpecialColumn tblSpecialColumn)
@@ -102,30 +102,39 @@ public class TblSpecialColumnController extends BaseController
     /**
      * 修改文章
      */
-    @PreAuthorize("@ss.hasPermi('system:column:edit')")
-    @Log(title = "【请填写功能名称】", businessType = BusinessType.UPDATE)
-    @PutMapping
-    public AjaxResult edit(@RequestBody TblSpecialColumn tblSpecialColumn)
-    {
-        return toAjax(tblSpecialColumnService.updateTblSpecialColumn(tblSpecialColumn));
-    }
+//    @PreAuthorize("@ss.hasPermi('system:column:edit')")
+//    @Log(title = "【请填写功能名称】", businessType = BusinessType.UPDATE)
+//    @PutMapping("/like")
+//    public AjaxResult edit(@RequestBody TblSpecialColumn tblSpecialColumn)
+//    {
+//        return toAjax(tblSpecialColumnService.updateTblSpecialColumn(tblSpecialColumn));
+//    }
+
 
     /**
      * 点赞
      * @param tblSpecialColumn
      * @return
      */
-    @PreAuthorize("@ss.hasPermi('system:column:like')")
+//    @PreAuthorize("@ss.hasPermi('system:column:like')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.UPDATE)
     @PutMapping("/like")
     public AjaxResult like(@RequestBody TblSpecialColumn tblSpecialColumn)
     {
-        return toAjax(tblSpecialColumnService.updateTblSpecialColumn(tblSpecialColumn));
+        Runnable runnable = new Runnable(){
+            @Override
+            public void run() {
+                tblSpecialColumnService.updateTblSpecialColumn(tblSpecialColumn);
+            }
+        };
+        threadPoolTaskExecutor.execute(runnable);
+
+        return success();
     }
     /**
      * 删除【请填写功能名称】
      */
-    @PreAuthorize("@ss.hasPermi('system:column:remove')")
+//    @PreAuthorize("@ss.hasPermi('system:column:remove')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

@@ -28,7 +28,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @date 2023-10-25
  */
 @RestController
-@RequestMapping("/system/usergoods")
+//@RequestMapping("/system/usergoods")
 public class TblGoodsUserController extends BaseController
 {
     @Autowired
@@ -37,7 +37,7 @@ public class TblGoodsUserController extends BaseController
     /**
      * 查询【请填写功能名称】列表
      */
-    @PreAuthorize("@ss.hasPermi('system:user:list')")
+//    @PreAuthorize("@ss.hasPermi('system:user:list')")
     @GetMapping("/list")
     public TableDataInfo list(TblGoodsUser tblGoodsUser)
     {
@@ -49,7 +49,7 @@ public class TblGoodsUserController extends BaseController
     /**
      * 导出【请填写功能名称】列表
      */
-    @PreAuthorize("@ss.hasPermi('system:user:export')")
+//    @PreAuthorize("@ss.hasPermi('system:user:export')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, TblGoodsUser tblGoodsUser)
@@ -62,7 +62,7 @@ public class TblGoodsUserController extends BaseController
     /**
      * 获取【请填写功能名称】详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:user:query')")
+//    @PreAuthorize("@ss.hasPermi('system:user:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -72,7 +72,7 @@ public class TblGoodsUserController extends BaseController
     /**
      * 新增【请填写功能名称】
      */
-    @PreAuthorize("@ss.hasPermi('system:user:add')")
+//    @PreAuthorize("@ss.hasPermi('system:user:add')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody TblGoodsUser tblGoodsUser)
@@ -83,7 +83,7 @@ public class TblGoodsUserController extends BaseController
     /**
      * 修改【请填写功能名称】
      */
-    @PreAuthorize("@ss.hasPermi('system:user:edit')")
+//    @PreAuthorize("@ss.hasPermi('system:user:edit')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody TblGoodsUser tblGoodsUser)
@@ -94,7 +94,7 @@ public class TblGoodsUserController extends BaseController
     /**
      * 删除【请填写功能名称】
      */
-    @PreAuthorize("@ss.hasPermi('system:user:remove')")
+//    @PreAuthorize("@ss.hasPermi('system:user:remove')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

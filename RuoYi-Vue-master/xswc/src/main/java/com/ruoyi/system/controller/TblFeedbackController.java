@@ -39,7 +39,7 @@ public class TblFeedbackController extends BaseController
     /**
      * 查询意见反馈
      */
-    @PreAuthorize("@ss.hasPermi('system:feedback:list')")
+//    @PreAuthorize("@ss.hasPermi('system:feedback:list')")
     @PostMapping("/list")
     public TableDataInfo list(TblFeedback tblFeedback)
     {
@@ -51,7 +51,7 @@ public class TblFeedbackController extends BaseController
     /**
      * 导出【请填写功能名称】列表
      */
-    @PreAuthorize("@ss.hasPermi('system:feedback:export')")
+//    @PreAuthorize("@ss.hasPermi('system:feedback:export')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, TblFeedback tblFeedback)
@@ -64,7 +64,7 @@ public class TblFeedbackController extends BaseController
     /**
      * 获取【请填写功能名称】详细信息
      */
-    @PreAuthorize("@ss.hasPermi('system:feedback:query')")
+//    @PreAuthorize("@ss.hasPermi('system:feedback:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -74,7 +74,7 @@ public class TblFeedbackController extends BaseController
     /**
      * 用户新增意见反馈
      */
-    @PreAuthorize("@ss.hasPermi('system:feedback:add')")
+//    @PreAuthorize("@ss.hasPermi('system:feedback:add')")
     @Log(title = " 用户新增意见反馈", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody TblFeedback tblFeedback)
@@ -87,7 +87,7 @@ public class TblFeedbackController extends BaseController
     /**
      * 修改【请填写功能名称】
      */
-    @PreAuthorize("@ss.hasPermi('system:feedback:edit')")
+//    @PreAuthorize("@ss.hasPermi('system:feedback:edit')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody TblFeedback tblFeedback)
@@ -98,7 +98,7 @@ public class TblFeedbackController extends BaseController
     /**
      * 删除【请填写功能名称】
      */
-    @PreAuthorize("@ss.hasPermi('system:feedback:remove')")
+//    @PreAuthorize("@ss.hasPermi('system:feedback:remove')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

@@ -86,9 +86,9 @@ public class HttpPostRequestExample {
         List<String> list2 = null;
         try {
             String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="
-                    + "wx3bcba825f1b221e8"
+                    + "wx78c9c71118355827"
                     + "&secret="
-                    + "daaff5fa37b779b83285460af74571b9";
+                    + "3b8e912b8054e4282da847eb6e43165f";
             URL obj = new URL(url);
             System.out.println(obj);
             HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
