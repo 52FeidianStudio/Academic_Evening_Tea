@@ -58,4 +58,6 @@ public interface ITblRecommendService
      * @return 结果
      */
     public int deleteTblRecommendById(Long id);
+
+    void addLike(Long id);
 }

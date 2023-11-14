@@ -103,4 +103,15 @@ public class TblRecommendServiceImpl implements ITblRecommendService
     {
         return tblRecommendMapper.deleteTblRecommendById(id);
     }
+
+    /**
+     * 点赞
+     * @param id
+     */
+    @Override
+    public void addLike(Long id) {
+        TblRecommend tblRecommend = tblRecommendMapper.selectTblRecommendById(id);
+        tblRecommend.setLikeCount(tblRecommend.getLikeCount()+1);
+        tblRecommendMapper.updateTblRecommend(tblRecommend);
+    }
 }

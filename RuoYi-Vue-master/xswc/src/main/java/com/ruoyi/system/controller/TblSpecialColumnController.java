@@ -111,6 +111,7 @@ public class TblSpecialColumnController extends BaseController
 //    @PreAuthorize("@ss.hasPermi('system:column:like')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.UPDATE)
     @GetMapping("/like/{id}")
+    @Transactional
     public AjaxResult like(@PathVariable("id") Long id)
     {
         Runnable runnable = new Runnable(){
