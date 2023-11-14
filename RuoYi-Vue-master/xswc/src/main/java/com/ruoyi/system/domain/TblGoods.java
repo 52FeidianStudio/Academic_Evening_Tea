@@ -2,7 +2,11 @@ package com.ruoyi.system.domain;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -14,6 +18,9 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * @author ruoyi
  * @date 2023-10-25
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TblGoods
 {
     private static final long serialVersionUID = 1L;
@@ -41,6 +48,7 @@ public class TblGoods
     @Excel(name = "商品封面")
     private String coverPicture;
 
+    private List<String> imgs;
 
     //创建时间
     private LocalDateTime createTime;

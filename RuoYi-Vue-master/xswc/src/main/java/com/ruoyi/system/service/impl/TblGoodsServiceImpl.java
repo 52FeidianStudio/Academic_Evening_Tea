@@ -1,7 +1,9 @@
 package com.ruoyi.system.service.impl;
 
+import java.util.Arrays;
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.system.domain.TblFeedback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.TblGoodsMapper;
@@ -29,7 +31,11 @@ public class TblGoodsServiceImpl implements ITblGoodsService
     @Override
     public TblGoods selectTblGoodsById(Long id)
     {
-        return tblGoodsMapper.selectTblGoodsById(id);
+      TblGoods tblGoods=  tblGoodsMapper.selectTblGoodsById(id);
+        String picture = tblGoods.getPicture();
+        List<String> urlList = Arrays.asList(picture.split("&"));
+        tblGoods.setImgs(urlList);
+        return tblGoods;
     }
 
     /**
@@ -41,7 +47,15 @@ public class TblGoodsServiceImpl implements ITblGoodsService
     @Override
     public List<TblGoods> selectTblGoodsList(TblGoods tblGoods)
     {
-        return tblGoodsMapper.selectTblGoodsList(tblGoods);
+        List<TblGoods>  tblGoodsList= tblGoodsMapper.selectTblGoodsList(tblGoods);
+        if (tblGoodsList!=null){
+            for (TblGoods reTblGood:tblGoodsList) {
+                String picture = reTblGood.getPicture();
+                List<String> urlList = Arrays.asList(picture.split("&"));
+                reTblGood.setImgs(urlList);
+            }
+        }
+        return tblGoodsList;
     }
 
     /**
