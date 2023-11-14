@@ -38,6 +38,18 @@ public class TblSpecialColumnServiceImpl implements ITblSpecialColumnService
     }
 
     /**
+     * 点赞
+     * @param id
+     */
+    @Override
+    public void addLike(Long id) {
+        TblSpecialColumn tblSpecialColumn = tblSpecialColumnMapper.selectTblSpecialColumnById(id);
+        tblSpecialColumn.setLikeCount(tblSpecialColumn.getLikeCount()+1);
+        tblSpecialColumnMapper.updateTblSpecialColumn(tblSpecialColumn);
+        return ;
+    }
+
+    /**
      * 浏览文章详细信息
      *
      * @param id 【请填写功能名称】主键
