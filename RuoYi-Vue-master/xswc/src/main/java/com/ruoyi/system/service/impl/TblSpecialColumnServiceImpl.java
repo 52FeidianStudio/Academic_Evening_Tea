@@ -24,22 +24,21 @@ public class TblSpecialColumnServiceImpl implements ITblSpecialColumnService
     private TblSpecialColumnMapper tblSpecialColumnMapper;
 
     /**
-     * 小程序浏览文章详细信息
-     * 
+     * 增加文章浏览量
      * @param id 【请填写功能名称】主键
      * @return 【请填写功能名称】
      */
     @Override
-    public TblSpecialColumn selectTblSpecialColumnByIdView(Long id)
+    public void addViewNum(Long id)
     {
         TblSpecialColumn tblSpecialColumn = tblSpecialColumnMapper.selectTblSpecialColumnById(id);
         tblSpecialColumn.setViewsNums(tblSpecialColumn.getViewsNums()+1);
         tblSpecialColumnMapper.updateTblSpecialColumn(tblSpecialColumn);
-        return tblSpecialColumn;
+        return ;
     }
 
     /**
-     * 后台浏览文章详细信息
+     * 浏览文章详细信息
      *
      * @param id 【请填写功能名称】主键
      * @return 【请填写功能名称】

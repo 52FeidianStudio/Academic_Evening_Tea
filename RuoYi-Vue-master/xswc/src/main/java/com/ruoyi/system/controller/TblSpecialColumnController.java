@@ -73,19 +73,18 @@ public class TblSpecialColumnController extends BaseController
     @Transactional
     public AjaxResult getInfo(@PathVariable("id") Long id,@PathVariable("type") Long type)
     {
-        if(type==1)
+        if(type==2)
         {
-            return success(tblSpecialColumnService.selectTblSpecialColumnById(id));
+            Runnable runnable = new Runnable(){
+                @Override
+                public void run() {
+                   tblSpecialColumnService.addViewNum(id);
+                }
+            };
+            threadPoolTaskExecutor.execute(runnable);
         }
-        final TblSpecialColumn[] tblSpecialColumnHolder = new TblSpecialColumn[1];
-        Runnable runnable = new Runnable(){
-            @Override
-            public void run() {
-               tblSpecialColumnHolder[0]= tblSpecialColumnService.selectTblSpecialColumnByIdView(id);
-            }
-        };
-        threadPoolTaskExecutor.execute(runnable);
-        return success(tblSpecialColumnHolder[0]);
+
+        return success(tblSpecialColumnService.selectTblSpecialColumnById(id));
     }
 
     /**
@@ -102,13 +101,13 @@ public class TblSpecialColumnController extends BaseController
     /**
      * 修改文章
      */
-//    @PreAuthorize("@ss.hasPermi('system:column:edit')")
-//    @Log(title = "【请填写功能名称】", businessType = BusinessType.UPDATE)
-//    @PutMapping("/like")
-//    public AjaxResult edit(@RequestBody TblSpecialColumn tblSpecialColumn)
-//    {
-//        return toAjax(tblSpecialColumnService.updateTblSpecialColumn(tblSpecialColumn));
-//    }
+    @PreAuthorize("@ss.hasPermi('system:column:edit')")
+    @Log(title = "【请填写功能名称】", businessType = BusinessType.UPDATE)
+    @PutMapping()
+    public AjaxResult edit(@RequestBody TblSpecialColumn tblSpecialColumn)
+    {
+        return toAjax(tblSpecialColumnService.updateTblSpecialColumn(tblSpecialColumn));
+    }
 
 
     /**
@@ -124,7 +123,7 @@ public class TblSpecialColumnController extends BaseController
         Runnable runnable = new Runnable(){
             @Override
             public void run() {
-                tblSpecialColumnService.updateTblSpecialColumn(tblSpecialColumn);
+//                tblSpecialColumnService.addLike(id);
             }
         };
         threadPoolTaskExecutor.execute(runnable);

@@ -19,7 +19,13 @@ public interface ITblSpecialColumnService
      */
     public TblSpecialColumn selectTblSpecialColumnById(Long id);
 
-    public TblSpecialColumn selectTblSpecialColumnByIdView(Long id);
+    /**
+     * 增加浏览量
+     * @param id
+     */
+    public void addViewNum(Long id);
+
+
     /**
      * 查询【请填写功能名称】列表
      * 
