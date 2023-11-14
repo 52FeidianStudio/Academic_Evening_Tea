@@ -1,5 +1,8 @@
 package com.ruoyi.system.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
@@ -13,6 +16,9 @@ import java.time.LocalDateTime;
  * @author ruoyi
  * @date 2023-10-25
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TblRecommendCommnet
 {
     private static final long serialVersionUID = 1L;

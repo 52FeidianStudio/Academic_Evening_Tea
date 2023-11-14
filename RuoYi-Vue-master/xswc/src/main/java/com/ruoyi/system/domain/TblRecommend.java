@@ -1,11 +1,15 @@
 package com.ruoyi.system.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.core.domain.BaseEntity;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 【请填写功能名称】对象 tbl_recommend
@@ -13,6 +17,9 @@ import java.time.LocalDateTime;
  * @author ruoyi
  * @date 2023-10-25
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TblRecommend
 {
     private static final long serialVersionUID = 1L;
@@ -39,6 +46,11 @@ public class TblRecommend
     /** 点赞数 */
     @Excel(name = "点赞数")
     private Integer likeCount;
+
+
+    //评论
+    private List<TblRecommendCommnet> tblRecommendCommnets;
+
 
     //创建时间
     private LocalDateTime createTime;

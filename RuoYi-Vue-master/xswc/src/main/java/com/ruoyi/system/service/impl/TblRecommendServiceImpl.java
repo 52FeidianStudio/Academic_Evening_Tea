@@ -2,6 +2,9 @@ package com.ruoyi.system.service.impl;
 
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.system.domain.TblRecommendCommnet;
+import com.ruoyi.system.mapper.TblRecommendCommnetMapper;
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.TblRecommendMapper;
@@ -19,9 +22,11 @@ public class TblRecommendServiceImpl implements ITblRecommendService
 {
     @Autowired
     private TblRecommendMapper tblRecommendMapper;
+    @Autowired
+    private TblRecommendCommnetMapper tblRecommendCommnetMapper;
 
     /**
-     * 查询【请填写功能名称】
+     * id查询推荐
      * 
      * @param id 【请填写功能名称】主键
      * @return 【请填写功能名称】
@@ -29,7 +34,12 @@ public class TblRecommendServiceImpl implements ITblRecommendService
     @Override
     public TblRecommend selectTblRecommendById(Long id)
     {
-        return tblRecommendMapper.selectTblRecommendById(id);
+        TblRecommend tblRecommend= tblRecommendMapper.selectTblRecommendById(id);
+        TblRecommendCommnet tblRecommendCommnet = new TblRecommendCommnet();
+        tblRecommendCommnet.setRecommendId(id);
+        List<TblRecommendCommnet> tblRecommendCommnets = tblRecommendCommnetMapper.selectTblRecommendCommnetList(tblRecommendCommnet);
+        tblRecommend.setTblRecommendCommnets(tblRecommendCommnets);
+        return tblRecommend;
     }
 
     /**

@@ -35,7 +35,7 @@ public class TblRecommendController extends BaseController
     private ITblRecommendService tblRecommendService;
 
     /**
-     * 查询【请填写功能名称】列表
+     * 查询推荐列表
      */
 //    @PreAuthorize("@ss.hasPermi('system:recommend:list')")
     @GetMapping("/list")
@@ -60,7 +60,7 @@ public class TblRecommendController extends BaseController
     }
 
     /**
-     * 获取【请填写功能名称】详细信息
+     * id查询推荐
      */
 //    @PreAuthorize("@ss.hasPermi('system:recommend:query')")
     @GetMapping(value = "/{id}")
