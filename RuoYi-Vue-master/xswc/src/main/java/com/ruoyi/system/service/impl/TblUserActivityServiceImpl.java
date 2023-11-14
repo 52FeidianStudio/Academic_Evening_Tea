@@ -1,5 +1,6 @@
 package com.ruoyi.system.service.impl;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.ruoyi.common.core.domain.entity.SysUser;
@@ -7,18 +8,13 @@ import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.system.annotation.updateActivity;
 import com.ruoyi.system.annotation.updateUserActivity;
 import com.ruoyi.system.constant.ActivityConstant;
+import com.ruoyi.system.constant.CreditConstant;
 import com.ruoyi.system.constant.ResultConstant;
-import com.ruoyi.system.domain.DeptActivity;
-import com.ruoyi.system.domain.TblActivity;
-import com.ruoyi.system.domain.UserActivity;
-import com.ruoyi.system.mapper.DeptActivityMapper;
-import com.ruoyi.system.mapper.SysUserMapper;
-import com.ruoyi.system.mapper.TblActivityMapper;
+import com.ruoyi.system.domain.*;
+import com.ruoyi.system.mapper.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.ruoyi.system.mapper.TblUserActivityMapper;
-import com.ruoyi.system.domain.TblUserActivity;
 import com.ruoyi.system.service.ITblUserActivityService;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +38,9 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
 
     @Autowired
     private SysUserMapper sysUserMapper;
+
+    @Autowired
+    private TblCreditUserMapper tblCreditUserMapper;
 
     /**
      * 查询【请填写功能名称】
@@ -125,25 +124,39 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
     @updateActivity
     public int updateTblUserActivity(TblUserActivity tblUserActivity)
     {
-        tblUserActivity.setUserId(SecurityUtils.getUserId());
+       Long userId= SecurityUtils.getUserId();
+        tblUserActivity.setUserId(userId);
          Long isEnd=tblActivityMapper.getIsEndByActivityId(tblUserActivity.getActivityId());
         TblUserActivity tblUserActivityvo = tblUserActivityMapper.selectTblUserActivityByUA(tblUserActivity);
 
-        if (isEnd.equals(ActivityConstant.ACTIVITYISEND.longValue())){//过了签到时间
+        //过了签到时间
+        if (isEnd.equals(ActivityConstant.ACTIVITYISEND.longValue())){
             tblUserActivity.setStatus(ActivityConstant.NOSHOW);
             tblUserActivityMapper.updateTblUserActivity(tblUserActivity);
             return ActivityConstant.REFISTERTIMEOUT;
     }
-        if(tblUserActivityvo ==null ) {//没有报名该活动
+        //没有报名该活动
+        if(tblUserActivityvo ==null ) {
             return  ActivityConstant.NOREGISTERED;
         }
-        if(tblUserActivityvo.getStatus().equals(ActivityConstant.REGISTER))//重复签到
-        {
+        //重复签到
+        if(tblUserActivityvo.getStatus().equals(ActivityConstant.REGISTER)){
             return ActivityConstant.REPESTEDREGISTER;
         }
+
         //签到成功
         tblUserActivity.setStatus(ActivityConstant.REGISTER);
         tblUserActivityMapper.updateTblUserActivity(tblUserActivity);
+        //加积分
+        SysUser sysUser = sysUserMapper.selectUserById(userId);
+        sysUser.setCredit(sysUser.getCredit().add(new BigDecimal(1)));
+        sysUserMapper.updateUser(sysUser);
+        //加积分记录
+        TblCreditUser tblCreditUser = new TblCreditUser();
+        tblCreditUser.setUserId(userId);
+        tblCreditUser.setCreditNum(new BigDecimal(1));
+        tblCreditUser.setCreditType(CreditConstant.ACTIVITY.longValue());
+        tblCreditUserMapper.insertTblCreditUser(tblCreditUser);
         return ActivityConstant.REGISTERSUCCESS;
     }
 

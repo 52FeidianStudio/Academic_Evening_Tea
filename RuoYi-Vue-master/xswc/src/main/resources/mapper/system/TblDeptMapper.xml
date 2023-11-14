@@ -98,8 +98,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			<if test="phone != null and phone != ''">phone,</if>
  			<if test="email != null and email != ''">email,</if>
  			<if test="status != null">status,</if>
- 			<if test="createBy != null and createBy != ''">create_by,</if>
- 			create_time
+		<if test="updateTime != null and updateTime != ''">update_time,</if>
+		<if test="updateBy != null and updateBy != ''">update_by,</if>
+		<if test="createTime != null">create_time,</if>
+		<if test="createBy != null and createBy != ''">create_by,</if>
  		)values(
  			<if test="deptId != null and deptId != 0">#{deptId},</if>
  			<if test="parentId != null and parentId != 0">#{parentId},</if>
@@ -110,7 +112,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  			<if test="phone != null and phone != ''">#{phone},</if>
  			<if test="email != null and email != ''">#{email},</if>
  			<if test="status != null">#{status},</if>
- 			<if test="createBy != null and createBy != ''">#{createBy},</if>
+		<if test="updateTime != null and updateTime != ''">#{updateTime},</if>
+		<if test="updateBy != null and updateBy != ''">#{updateBy},</if>
+		<if test="createTime != null">#{createTime},</if>
+		<if test="createBy != null and createBy != ''">#{createBy},</if>
  			sysdate()
  		)
 	</insert>
