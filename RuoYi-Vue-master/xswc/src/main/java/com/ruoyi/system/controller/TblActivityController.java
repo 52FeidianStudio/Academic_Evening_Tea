@@ -4,9 +4,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ruoyi.common.utils.SecurityUtils;
-import com.ruoyi.system.domain.vo.TblActivityVO;
 import com.ruoyi.system.service.ITblUserActivityService;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +38,7 @@ public class TblActivityController extends BaseController
      */
 //    @PreAuthorize("@ss.hasPermi('system:activity:list')")
     @PostMapping("/list")
-    public TableDataInfo Userlist(@RequestBody TblActivity tblActivity)
+    public TableDataInfo Userlist( TblActivity tblActivity)
     {
 //        startPage();
         List<TblActivity> list = tblActivityService.selectTblActivityList(tblActivity);
@@ -63,6 +61,7 @@ public class TblActivityController extends BaseController
     @PostMapping("/export")
     public void export(HttpServletResponse response, TblActivity tblActivity)
     {
+
         List<TblActivity> list = tblActivityService.selectTblActivityList(tblActivity);
         ExcelUtil<TblActivity> util = new ExcelUtil<TblActivity>(TblActivity.class);
         util.exportExcel(response, list, "商家发布文章数据");

@@ -9,6 +9,7 @@ import com.ruoyi.system.domain.TblActivity;
 import com.ruoyi.system.domain.TblUserActivity;
 import com.ruoyi.system.domain.UserActivity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 
 /**

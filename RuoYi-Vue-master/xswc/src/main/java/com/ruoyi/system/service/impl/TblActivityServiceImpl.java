@@ -2,7 +2,6 @@ package com.ruoyi.system.service.impl;
 
 import java.util.List;
 
-import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.system.annotation.update;
 import com.ruoyi.system.annotation.updateActivity;
@@ -11,12 +10,10 @@ import com.ruoyi.system.constant.ResultConstant;
 import com.ruoyi.system.domain.DeptActivity;
 import com.ruoyi.system.domain.DeptNum;
 import com.ruoyi.system.domain.TblUserActivity;
-import com.ruoyi.system.domain.vo.TblActivityVO;
 import com.ruoyi.system.example.HttpPostRequestExample;
 import com.ruoyi.system.mapper.DeptActivityMapper;
 import com.ruoyi.system.mapper.TblUserActivityMapper;
 
-import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
@@ -67,19 +64,26 @@ public class TblActivityServiceImpl implements ITblActivityService
 
     /**
      * 用户查询活动集合
-     * 
+     *
      * @param tblActivity 用户查询活动
+     * @param pageNum
+     * @param pageSize
      * @return 用户查询活动集合
      */
     @updateActivity
     @Override
     public List<TblActivity> selectTblActivityList(TblActivity tblActivity)
     {
+
+        System.out.println(tblActivity.getPageNum());
+        System.out.println(tblActivity.getPageSize());
         List<TblActivity>list= tblActivityMapper.selectTblActivityList(tblActivity);
+
         for(TblActivity tblActivity1:list){
             DeptActivity deptActivity = new DeptActivity();
             deptActivity.setActivityId(tblActivity1.getId());
             tblActivity1.setDeptActivities(deptActivityMapper.selectDeptActivityList(deptActivity));
+
         }
         return list;
     }

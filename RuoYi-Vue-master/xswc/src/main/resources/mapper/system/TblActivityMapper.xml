@@ -33,10 +33,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="qphone"    column="qphone"    />
         <result property="signinFilePath"    column="signin_file_path"    />
         <result property="applicationFilePath"    column="application_file_path"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateBy"    column="update_by"    />
     </resultMap>
 
     <sql id="selectTblActivityVo">
-        select id, details, img, user_id, user_name,speaker_name, user_tel, hot, hb_num, top, givelike, views, money, type, state, is_end,is_close,time, address, hb_keyword, hong, user_img2, cityname, lat, lng, qphone, application_file_path, signin_file_path from tbl_activity
+        select id, details, img, user_id, user_name,speaker_name, user_tel, hot, hb_num, top, givelike, views, money, type, state, is_end,is_close,time, address, hb_keyword, hong, user_img2, cityname, lat, lng, qphone, application_file_path, signin_file_path,create_time,create_by,update_by,update_time from tbl_activity
     </sql>
 
     <select id="selectTblActivityList" parameterType="TblActivityVO" resultMap="TblActivityResult">
@@ -71,6 +75,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="applicationFilePath != null  and applicationFilePath != ''"> and application_file_path = #{applicationFilePath}</if>
         </where>
         order by lat asc
+<!--        &lt;!&ndash; 添加分页 &ndash;&gt;-->
+<!--        <if test="pageSize != null and pageNum != null">-->
+<!--            limit #{pageSize}  offset (#{pageNum} - 1)* #{pageSize}-->
+<!--        </if>-->
     </select>
 
 <!--    <select id="selectTblActivityList" parameterType="TblActivityVO" resultMap="TblActivityResult">-->

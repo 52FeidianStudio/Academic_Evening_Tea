@@ -114,4 +114,8 @@ public class TblActivityVO    {
     /** 活动照片* */
     @Excel(name = "活动照片*")
     private String lng;
+
+    private Integer pageNum;
+    private Integer pageSize;
+
 }
