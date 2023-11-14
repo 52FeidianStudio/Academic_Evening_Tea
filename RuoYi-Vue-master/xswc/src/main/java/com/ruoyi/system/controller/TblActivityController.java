@@ -38,7 +38,7 @@ public class TblActivityController extends BaseController
      */
 //    @PreAuthorize("@ss.hasPermi('system:activity:list')")
     @PostMapping("/list")
-    public TableDataInfo Userlist( TblActivity tblActivity)
+    public TableDataInfo Userlist(@RequestBody TblActivity tblActivity)
     {
 //        startPage();
         List<TblActivity> list = tblActivityService.selectTblActivityList(tblActivity);

@@ -115,9 +115,13 @@ public class TblActivity
     /** 预留字段2  签到二维码*/
     @Excel(name = "报名二维码路径")
     private String applicationFilePath;
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss ")
+    @Excel(name = "发布时间*", width = 30, dateFormat = "yyyy-MM-dd hh:mm:ss")
     //创建时间
     private LocalDateTime createTime;
     //更新时间
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss ")
+    @Excel(name = "发布时间*", width = 30, dateFormat = "yyyy-MM-dd hh:mm:ss")
     private LocalDateTime updateTime;
     //创建人
     private  String createBy;

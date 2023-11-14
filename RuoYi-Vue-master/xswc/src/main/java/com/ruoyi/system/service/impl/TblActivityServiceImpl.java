@@ -21,6 +21,7 @@ import com.ruoyi.system.mapper.TblActivityMapper;
 import com.ruoyi.system.domain.TblActivity;
 import com.ruoyi.system.service.ITblActivityService;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * 商家发布文章Service业务层处理
@@ -72,7 +73,7 @@ public class TblActivityServiceImpl implements ITblActivityService
      */
     @updateActivity
     @Override
-    public List<TblActivity> selectTblActivityList(TblActivity tblActivity)
+    public List<TblActivity> selectTblActivityList(@RequestBody TblActivity tblActivity)
     {
 
         System.out.println(tblActivity.getPageNum());
