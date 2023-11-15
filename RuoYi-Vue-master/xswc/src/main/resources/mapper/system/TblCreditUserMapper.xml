@@ -38,5 +38,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</trim>
 	</insert>
 
+	<sql id="selectCreditUserVo">
+		select id, user_id, credit_num, credit_type,update_time, update_by, create_time, create_by from tbl_credit_user
+	</sql>
+    <select id="selectTblCreditUserList" resultType="com.ruoyi.system.domain.TblCreditUser">
+		<include refid="selectCreditUserVo"/>
+		<where>
+			<if test="creditNum != null  and creditNum != ''"> and credit_num = #{creditNum}</if>
+			<if test="userId != null "> and user_id = #{userId}</if>
+			<if test="creditType != null  and creditType != ''"> and credit_type = #{creditType}</if>
+			<if test="id != null  and id != ''"> and id = #{id}</if>
+		</where>
+	</select>
+
 
 </mapper> 

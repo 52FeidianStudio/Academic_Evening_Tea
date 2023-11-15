@@ -123,7 +123,6 @@ public class TblActivityServiceImpl implements ITblActivityService
      * @return 结果
      */
     @Override
-    @update
     public int updateTblActivity(TblActivity tblActivity)
     {
         Long activityId = tblActivity.getId();

@@ -141,7 +141,7 @@ public class HttpPostRequestExample {
                 "\"check_path\":false," +
                 "\"env_version\":\"release\"" +
                 "}";
-
+        System.out.println(requestBody);
         try {
             // 创建 HttpClient 对象
             HttpClient httpClient = HttpClients.createDefault();
@@ -191,7 +191,7 @@ public class HttpPostRequestExample {
                 "\"check_path\":false," +
                 "\"env_version\":\"release\"" +
                 "}";
-
+        System.out.println(requestBody);
         try {
             // 创建 HttpClient 对象
             HttpClient httpClient = HttpClients.createDefault();

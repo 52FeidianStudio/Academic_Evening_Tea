@@ -2,7 +2,6 @@ package com.ruoyi.system.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -90,6 +89,7 @@ public class TblGoodsController extends BaseController
     {
         return toAjax(tblGoodsService.updateTblGoods(tblGoods));
     }
+
 
     /**
      * 删除【请填写功能名称】
