@@ -53,9 +53,9 @@ public class TblRecommend
 
 
     //创建时间
-    private LocalDateTime createTime;
+    private String createTime;
     //更新时间
-    private LocalDateTime updateTime;
+    private String updateTime;
     //创建人
     private  String createBy;
     //更新人

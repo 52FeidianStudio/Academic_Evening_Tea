@@ -41,7 +41,7 @@ public class TblFeedbackController extends BaseController
      */
 //    @PreAuthorize("@ss.hasPermi('system:feedback:list')")
     @PostMapping("/list")
-    public TableDataInfo list(TblFeedback tblFeedback)
+    public TableDataInfo list( TblFeedback tblFeedback)
     {
         startPage();
         List<TblFeedback> list = tblFeedbackService.selectTblFeedbackList(tblFeedback);

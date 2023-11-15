@@ -117,17 +117,16 @@ public class TblActivity
     private String applicationFilePath;
 
 //    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss ")
-    @Excel(name = "发布时间*", width = 30, dateFormat = "yyyy-MM-dd hh:mm:ss")
-    //创建时间
-    private LocalDateTime createTime;
+//    @Excel(name = "发布时间*", width = 30, dateFormat = "yyyy-MM-dd hh:mm:ss")
+//创建时间
+private String createTime;
     //更新时间
-//    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss ")
-    @Excel(name = "发布时间*", width = 30, dateFormat = "yyyy-MM-dd hh:mm:ss")
-    private LocalDateTime updateTime;
+    private String updateTime;
     //创建人
     private  String createBy;
     //更新人
     private  String updateBy;
+
 
 
     /** 报名人数* */

@@ -2,8 +2,11 @@ package com.ruoyi.system.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
+
+import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -28,7 +31,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
  * @date 2023-10-25
  */
 @RestController
-//@RequestMapping("/system/usergoods")
+@RequestMapping("/system/usergoods")
 public class TblGoodsUserController extends BaseController
 {
     @Autowired
@@ -75,9 +78,13 @@ public class TblGoodsUserController extends BaseController
 //    @PreAuthorize("@ss.hasPermi('system:user:add')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.INSERT)
     @PostMapping
+    @Transactional
     public AjaxResult add(@RequestBody TblGoodsUser tblGoodsUser)
     {
-        return toAjax(tblGoodsUserService.insertTblGoodsUser(tblGoodsUser));
+        Long userId = SecurityUtils.getUserId();
+        tblGoodsUser.setUserId(userId);
+        int res=tblGoodsUserService.insertTblGoodsUser(tblGoodsUser);
+        return success(res);
     }
 
     /**

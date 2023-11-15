@@ -22,11 +22,13 @@ public class TblCreditUser {
 
     private BigDecimal creditNum;
 
-    private LocalDateTime createTime;
+    //创建时间
+    private String createTime;
     //更新时间
-    private LocalDateTime updateTime;
+    private String updateTime;
     //创建人
     private  String createBy;
     //更新人
     private  String updateBy;
+
 }

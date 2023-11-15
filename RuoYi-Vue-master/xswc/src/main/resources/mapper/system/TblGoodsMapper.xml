@@ -9,6 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="name"    column="name"    />
         <result property="price"    column="price"    />
         <result property="introduce"    column="introduce"    />
+        <result property="allnums"    column="allnums"    />
         <result property="picture"    column="picture"    />
         <result property="coverPicture"    column="cover_picture"    />
         <result property="updateTime"    column="update_time"    />
@@ -18,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectTblGoodsVo">
-        select id, name, price, introduce, picture, cover_picture, update_time, update_by, create_time, create_by from tbl_goods
+        select id, name, price, introduce, picture, cover_picture,allnums, update_time, update_by, create_time, create_by from tbl_goods
     </sql>
 
     <select id="selectTblGoodsList" parameterType="TblGoods" resultMap="TblGoodsResult">
@@ -28,6 +29,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="price != null "> and price = #{price}</if>
             <if test="introduce != null  and introduce != ''"> and introduce = #{introduce}</if>
             <if test="picture != null  and picture != ''"> and picture = #{picture}</if>
+            <if test="allnums != null  and allnums != ''"> and allnums = #{allnums}</if>
             <if test="coverPicture != null  and coverPicture != ''"> and cover_picture = #{coverPicture}</if>
         </where>
     </select>
@@ -45,6 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="price != null">price,</if>
             <if test="introduce != null">introduce,</if>
             <if test="picture != null">picture,</if>
+            <if test="allnums != null">allnums,</if>
             <if test="coverPicture != null">cover_picture,</if>
             <if test="updateTime != null">update_time,</if>
             <if test="updateBy != null">update_by,</if>
@@ -57,6 +60,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="price != null">#{price},</if>
             <if test="introduce != null">#{introduce},</if>
             <if test="picture != null">#{picture},</if>
+            <if test="allnums != null">#{allnums},</if>
             <if test="coverPicture != null">#{coverPicture},</if>
             <if test="updateTime != null">#{updateTime},</if>
             <if test="updateBy != null">#{updateBy},</if>
@@ -71,6 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="name != null">name = #{name},</if>
             <if test="price != null">price = #{price},</if>
             <if test="introduce != null">introduce = #{introduce},</if>
+            <if test="allnums != null">allnums = #{allnums},</if>
             <if test="picture != null">picture = #{picture},</if>
             <if test="coverPicture != null">cover_picture = #{coverPicture},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>

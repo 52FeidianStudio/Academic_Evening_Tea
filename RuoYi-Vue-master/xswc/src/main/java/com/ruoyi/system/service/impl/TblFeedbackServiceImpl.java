@@ -65,7 +65,7 @@ public class TblFeedbackServiceImpl implements ITblFeedbackService
      * @return 结果
      */
     @Override
-    @create
+//    @create
     public int insertTblFeedback(TblFeedback tblFeedback)
     {
 //        tblFeedback.setCreateTime(DateUtils.getNowDate());

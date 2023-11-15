@@ -1,7 +1,10 @@
 package com.ruoyi.system.mapper;
 
 import java.util.List;
+
+import com.ruoyi.system.annotation.create;
 import com.ruoyi.system.domain.TblGoodsUser;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * 【请填写功能名称】Mapper接口
@@ -9,6 +12,7 @@ import com.ruoyi.system.domain.TblGoodsUser;
  * @author ruoyi
  * @date 2023-10-25
  */
+@Mapper
 public interface TblGoodsUserMapper 
 {
     /**
@@ -33,6 +37,7 @@ public interface TblGoodsUserMapper
      * @param tblGoodsUser 【请填写功能名称】
      * @return 结果
      */
+    @create
     public int insertTblGoodsUser(TblGoodsUser tblGoodsUser);
 
     /**

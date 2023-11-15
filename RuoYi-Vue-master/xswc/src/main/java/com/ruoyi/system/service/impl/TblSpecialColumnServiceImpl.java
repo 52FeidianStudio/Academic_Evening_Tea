@@ -83,7 +83,7 @@ public class TblSpecialColumnServiceImpl implements ITblSpecialColumnService
      * @return 结果
      */
     @Override
-    @create
+//    @create
     public int insertTblSpecialColumn(TblSpecialColumn tblSpecialColumn)
     {
 //        tblSpecialColumn.setCreateTime(DateUtils.getNowDate());

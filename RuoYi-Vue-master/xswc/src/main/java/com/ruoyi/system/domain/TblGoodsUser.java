@@ -1,11 +1,11 @@
 package com.ruoyi.system.domain;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-import com.ruoyi.common.annotation.Excel;
-import com.ruoyi.common.core.domain.BaseEntity;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import com.ruoyi.common.annotation.Excel;
+
 
 /**
  * 【请填写功能名称】对象 tbl_goods_user
@@ -13,6 +13,9 @@ import java.time.LocalDateTime;
  * @author ruoyi
  * @date 2023-10-25
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class TblGoodsUser
 {
     private static final long serialVersionUID = 1L;
@@ -22,11 +25,11 @@ public class TblGoodsUser
 
     /** 商品编号 */
     @Excel(name = "商品编号")
-    private Integer goodsId;
+    private Long goodsId;
 
     /** 用户编号 */
     @Excel(name = "用户编号")
-    private Integer userId;
+    private Long userId;
 
     /** 数量 */
     @Excel(name = "数量")
@@ -34,9 +37,9 @@ public class TblGoodsUser
 
 
     //创建时间
-    private LocalDateTime createTime;
+    private String createTime;
     //更新时间
-    private LocalDateTime updateTime;
+    private String updateTime;
     //创建人
     private  String createBy;
     //更新人

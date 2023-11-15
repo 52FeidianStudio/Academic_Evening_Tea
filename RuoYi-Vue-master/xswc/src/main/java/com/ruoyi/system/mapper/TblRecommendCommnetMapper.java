@@ -1,6 +1,8 @@
 package com.ruoyi.system.mapper;
 
 import java.util.List;
+
+import com.ruoyi.system.annotation.create;
 import com.ruoyi.system.domain.TblRecommendCommnet;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -35,6 +37,7 @@ public interface TblRecommendCommnetMapper
      * @param tblRecommendCommnet 【请填写功能名称】
      * @return 结果
      */
+    @create
     public int insertTblRecommendCommnet(TblRecommendCommnet tblRecommendCommnet);
 
     /**
