@@ -77,6 +77,8 @@ public class UserController extends BaseController
     @PutMapping
     public AjaxResult edit(@Validated @RequestBody SysUser user)
     {
+        Long userId = SecurityUtils.getUserId();
+        user.setUserId(userId);
         userService.checkUserAllowed(user);
 //        userService.checkUserDataScope(user.getUserId());
         if (!userService.checkUserNameUnique(user))
