@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.system.service.ITblUserActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import com.ruoyi.common.annotation.Log;
@@ -46,7 +47,7 @@ public class TblActivityController extends BaseController
     }
 
     //查看是否具有发布活动的权限
-//    @PreAuthorize("@ss.hasPermi('system:activity:add')")
+    @PreAuthorize("@ss.hasPermi('system:activity:add')")
     @GetMapping("/menu")
     public  AjaxResult menu(){
         return success("可以访问");
@@ -83,7 +84,7 @@ public class TblActivityController extends BaseController
     /**
      * 新增用户发布活动
      */
-//    @PreAuthorize("@ss.hasPermi('system:activity:add')")
+    @PreAuthorize("@ss.hasPermi('system:activity:add')")
     @Log(title = "用户发布活动", businessType = BusinessType.INSERT)
     @PostMapping
     public AjaxResult add(@RequestBody TblActivity tblActivity)
