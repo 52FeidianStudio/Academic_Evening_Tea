@@ -51,12 +51,20 @@ public class TblActivityServiceImpl implements ITblActivityService
     @updateActivity
     public TblActivity selectTblActivityById(Long id)
     {
+        //查询活动详情
         TblActivity tblActivity = tblActivityMapper.selectTblActivityById(id);
+        //未登录情况
+        if(SecurityUtils.getUserId()==null){
+            return tblActivity;
+        }
+        //登录 情况 判断用户是否报过该活动
         TblUserActivity tblUserActivity = new TblUserActivity();
         tblUserActivity.setActivityId(id);
         tblUserActivity.setUserId(SecurityUtils.getUserId());
         List<TblUserActivity> isApplication = tblUserActivityMapper.selectTblUserActivityList(tblUserActivity);
         tblActivity.setIsApplication(isApplication);
+
+        //展示活动 的学院限制
         DeptActivity deptActivity = new DeptActivity();
         deptActivity.setActivityId(tblActivity.getId());
         tblActivity.setDeptActivities(deptActivityMapper.selectDeptActivityList(deptActivity));

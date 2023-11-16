@@ -1,19 +1,13 @@
 package com.ruoyi.system.controller;
 
 import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
@@ -40,8 +34,8 @@ public class TblFeedbackController extends BaseController
      * 查询意见反馈
      */
 //    @PreAuthorize("@ss.hasPermi('system:feedback:list')")
-    @PostMapping("/list")
-    public TableDataInfo list( TblFeedback tblFeedback)
+    @GetMapping("/list")
+    public TableDataInfo list(TblFeedback tblFeedback, HttpServletRequest request)
     {
         startPage();
         List<TblFeedback> list = tblFeedbackService.selectTblFeedbackList(tblFeedback);
