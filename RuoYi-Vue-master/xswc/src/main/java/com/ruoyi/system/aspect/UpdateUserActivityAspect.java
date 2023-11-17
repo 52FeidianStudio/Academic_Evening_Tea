@@ -34,6 +34,7 @@ public class UpdateUserActivityAspect {
         preTblUserActivity.setStatus(ActivityConstant.NOREGISTERED);
         List<TblUserActivity> tblUserActivities = tblUserActivityMapper.selectTblUserActivityList(preTblUserActivity);
         for(TblUserActivity tblUserActivity:tblUserActivities){
+            //活动结束 将未签到的人改为失约
             Long isEnd = tblActivityMapper.getIsEndByActivityId(tblUserActivity.getActivityId());
             if(isEnd.equals(ActivityConstant.ACTIVITYISEND.longValue())){
                 tblUserActivity.setStatus(ActivityConstant.NOSHOW);

@@ -26,6 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="lat" column="lat"/>
         <result property="address" column="address"/>
         <result property="hot" column="hot"/>
+        <result property="hbNum" column="hb_num"/>
         <result property="cityname" column="cityname"/>
         <result property="details" column="details"/>
         <result property="img" column="img"/>
