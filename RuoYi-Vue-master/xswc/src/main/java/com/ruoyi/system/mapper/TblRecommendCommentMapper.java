@@ -3,7 +3,7 @@ package com.ruoyi.system.mapper;
 import java.util.List;
 
 import com.ruoyi.system.annotation.create;
-import com.ruoyi.system.domain.TblRecommendCommnet;
+import com.ruoyi.system.domain.TblRecommendComment;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -13,7 +13,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @date 2023-10-25
  */
 @Mapper
-public interface TblRecommendCommnetMapper 
+public interface TblRecommendCommentMapper
 {
     /**
      * 查询【请填写功能名称】
@@ -21,7 +21,7 @@ public interface TblRecommendCommnetMapper
      * @param id 【请填写功能名称】主键
      * @return 【请填写功能名称】
      */
-    public TblRecommendCommnet selectTblRecommendCommnetById(Long id);
+    public TblRecommendComment selectTblRecommendCommnetById(Long id);
 
     /**
      * 查询【请填写功能名称】列表
@@ -29,7 +29,7 @@ public interface TblRecommendCommnetMapper
      * @param tblRecommendCommnet 【请填写功能名称】
      * @return 【请填写功能名称】集合
      */
-    public List<TblRecommendCommnet> selectTblRecommendCommnetList(TblRecommendCommnet tblRecommendCommnet);
+    public List<TblRecommendComment> selectTblRecommendCommnetList(TblRecommendComment tblRecommendCommnet);
 
     /**
      * 新增【请填写功能名称】
@@ -38,7 +38,7 @@ public interface TblRecommendCommnetMapper
      * @return 结果
      */
     @create
-    public int insertTblRecommendCommnet(TblRecommendCommnet tblRecommendCommnet);
+    public int insertTblRecommendCommnet(TblRecommendComment tblRecommendCommnet);
 
     /**
      * 修改【请填写功能名称】
@@ -46,7 +46,7 @@ public interface TblRecommendCommnetMapper
      * @param tblRecommendCommnet 【请填写功能名称】
      * @return 结果
      */
-    public int updateTblRecommendCommnet(TblRecommendCommnet tblRecommendCommnet);
+    public int updateTblRecommendCommnet(TblRecommendComment tblRecommendCommnet);
 
     /**
      * 删除【请填写功能名称】

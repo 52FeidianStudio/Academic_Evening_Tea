@@ -4,15 +4,13 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import com.ruoyi.common.core.domain.entity.SysUser;
-import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.system.constant.CreditConstant;
 import com.ruoyi.system.domain.TblCreditUser;
-import com.ruoyi.system.domain.TblRecommendCommnet;
+import com.ruoyi.system.domain.TblRecommendComment;
 import com.ruoyi.system.mapper.SysUserMapper;
 import com.ruoyi.system.mapper.TblCreditUserMapper;
-import com.ruoyi.system.mapper.TblRecommendCommnetMapper;
-import org.apache.ibatis.annotations.Mapper;
+import com.ruoyi.system.mapper.TblRecommendCommentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.TblRecommendMapper;
@@ -31,7 +29,7 @@ public class TblRecommendServiceImpl implements ITblRecommendService
     @Autowired
     private TblRecommendMapper tblRecommendMapper;
     @Autowired
-    private TblRecommendCommnetMapper tblRecommendCommnetMapper;
+    private TblRecommendCommentMapper tblRecommendCommnetMapper;
 
     @Autowired
     private SysUserMapper sysUserMapper;
@@ -47,9 +45,9 @@ public class TblRecommendServiceImpl implements ITblRecommendService
     public TblRecommend selectTblRecommendById(Long id)
     {
         TblRecommend tblRecommend= tblRecommendMapper.selectTblRecommendById(id);
-        TblRecommendCommnet tblRecommendCommnet = new TblRecommendCommnet();
+        TblRecommendComment tblRecommendCommnet = new TblRecommendComment();
         tblRecommendCommnet.setRecommendId(id);
-        List<TblRecommendCommnet> tblRecommendCommnets = tblRecommendCommnetMapper.selectTblRecommendCommnetList(tblRecommendCommnet);
+        List<TblRecommendComment> tblRecommendCommnets = tblRecommendCommnetMapper.selectTblRecommendCommnetList(tblRecommendCommnet);
         tblRecommend.setTblRecommendCommnets(tblRecommendCommnets);
         return tblRecommend;
     }
@@ -76,6 +74,8 @@ public class TblRecommendServiceImpl implements ITblRecommendService
     public int insertTblRecommend(TblRecommend tblRecommend)
     {
 //        tblRecommend.setCreateTime(DateUtils.getNowDate());
+        Long userId = SecurityUtils.getUserId();
+        tblRecommend.setUserId(userId);
         return tblRecommendMapper.insertTblRecommend(tblRecommend);
     }
 

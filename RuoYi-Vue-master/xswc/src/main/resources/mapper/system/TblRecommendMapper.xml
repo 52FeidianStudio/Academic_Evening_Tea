@@ -6,6 +6,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     
     <resultMap type="TblRecommend" id="TblRecommendResult">
         <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="nickName"    column="nick_name"    />
         <result property="content"    column="content"    />
         <result property="lecturerName"    column="lecturer_name"    />
         <result property="theme"    column="theme"    />
@@ -18,15 +20,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectTblRecommendVo">
-        select id, content, lecturer_name, theme, status, like_count, update_time, update_by, create_time, create_by from tbl_recommend
+        select id, content, user_id,lecturer_name, nick_name,theme, status, like_count, update_time, update_by, create_time, create_by from tbl_recommend
     </sql>
 
     <select id="selectTblRecommendList" parameterType="TblRecommend" resultMap="TblRecommendResult">
-        <include refid="selectTblRecommendVo"/>
---            select *
---            from tbl_recommend
---            join  sys_user on
-        <where>  
+<!--       <include refid="selectTblRecommendVo"/>-->
+           select tr.*,avatar,nick_name
+           from tbl_recommend tr
+           join  sys_user  su on su.user_id=tr.user_id
+        <where>
+            <if test="id != null  and id != ''"> and id = #{id}</if>
+            <if test="userId != null  and userId != ''"> and user_id = #{userId}</if>
             <if test="content != null  and content != ''"> and content = #{content}</if>
             <if test="lecturerName != null  and lecturerName != ''"> and lecturer_name like concat('%', #{lecturerName}, '%')</if>
             <if test="theme != null  and theme != ''"> and theme = #{theme}</if>
@@ -36,7 +40,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     
     <select id="selectTblRecommendById" parameterType="Long" resultMap="TblRecommendResult">
-        <include refid="selectTblRecommendVo"/>
+<!--   <include refid="selectTblRecommendVo"/>-->
+        select tr.*,avatar,nick_name
+        from tbl_recommend tr
+        join  sys_user  su on su.user_id=tr.user_id
         where id = #{id}
     </select>
         
@@ -44,6 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         insert into tbl_recommend
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
+            <if test="userId != null">user_id,</if>
             <if test="content != null">content,</if>
             <if test="lecturerName != null">lecturer_name,</if>
             <if test="theme != null">theme,</if>
@@ -56,6 +64,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
+            <if test="userId != null">#{user_id},</if>
             <if test="content != null">#{content},</if>
             <if test="lecturerName != null">#{lecturerName},</if>
             <if test="theme != null">#{theme},</if>
@@ -71,6 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <update id="updateTblRecommend" parameterType="TblRecommend">
         update tbl_recommend
         <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null "> user_id = #{userId},</if>
             <if test="content != null">content = #{content},</if>
             <if test="lecturerName != null">lecturer_name = #{lecturerName},</if>
             <if test="theme != null">theme = #{theme},</if>

@@ -3,12 +3,7 @@ package com.ruoyi.system.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
-import com.ruoyi.common.core.domain.BaseEntity;
-
-import java.time.LocalDateTime;
 
 /**
  * 【请填写功能名称】对象 tbl_recommend_commnet
@@ -19,12 +14,14 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TblRecommendCommnet
+public class TblRecommendComment
 {
     private static final long serialVersionUID = 1L;
 
     /** 联表编号 */
     private Long id;
+    private String nickName;
+    private String avatar;
 
     /** 评论 */
     @Excel(name = "评论")

@@ -3,12 +3,8 @@ package com.ruoyi.system.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.annotation.Excel;
-import com.ruoyi.common.core.domain.BaseEntity;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -27,6 +23,10 @@ public class TblRecommend
     /** 编号 */
     private Long id;
 
+    private  Long userId;
+    private String nickName;
+
+private String avatar;
     /** 推荐理由 */
     @Excel(name = "推荐理由")
     private String content;
@@ -49,7 +49,7 @@ public class TblRecommend
 
 
     //评论
-    private List<TblRecommendCommnet> tblRecommendCommnets;
+    private List<TblRecommendComment> tblRecommendCommnets;
 
 
     //创建时间

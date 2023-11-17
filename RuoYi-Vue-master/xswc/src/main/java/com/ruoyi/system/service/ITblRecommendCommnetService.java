@@ -1,7 +1,7 @@
 package com.ruoyi.system.service;
 
 import java.util.List;
-import com.ruoyi.system.domain.TblRecommendCommnet;
+import com.ruoyi.system.domain.TblRecommendComment;
 
 /**
  * 【请填写功能名称】Service接口
@@ -17,7 +17,7 @@ public interface ITblRecommendCommnetService
      * @param id 【请填写功能名称】主键
      * @return 【请填写功能名称】
      */
-    public TblRecommendCommnet selectTblRecommendCommnetById(Long id);
+    public TblRecommendComment selectTblRecommendCommnetById(Long id);
 
     /**
      * 查询【请填写功能名称】列表
@@ -25,7 +25,7 @@ public interface ITblRecommendCommnetService
      * @param tblRecommendCommnet 【请填写功能名称】
      * @return 【请填写功能名称】集合
      */
-    public List<TblRecommendCommnet> selectTblRecommendCommnetList(TblRecommendCommnet tblRecommendCommnet);
+    public List<TblRecommendComment> selectTblRecommendCommnetList(TblRecommendComment tblRecommendCommnet);
 
     /**
      * 新增【请填写功能名称】
@@ -33,7 +33,7 @@ public interface ITblRecommendCommnetService
      * @param tblRecommendCommnet 【请填写功能名称】
      * @return 结果
      */
-    public int insertTblRecommendCommnet(TblRecommendCommnet tblRecommendCommnet);
+    public int insertTblRecommendCommnet(TblRecommendComment tblRecommendCommnet);
 
     /**
      * 修改【请填写功能名称】
@@ -41,7 +41,7 @@ public interface ITblRecommendCommnetService
      * @param tblRecommendCommnet 【请填写功能名称】
      * @return 结果
      */
-    public int updateTblRecommendCommnet(TblRecommendCommnet tblRecommendCommnet);
+    public int updateTblRecommendCommnet(TblRecommendComment tblRecommendCommnet);
 
     /**
      * 批量删除【请填写功能名称】

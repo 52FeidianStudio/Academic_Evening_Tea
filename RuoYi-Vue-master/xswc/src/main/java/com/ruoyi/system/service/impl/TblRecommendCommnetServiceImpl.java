@@ -1,11 +1,11 @@
 package com.ruoyi.system.service.impl;
 
 import java.util.List;
-import com.ruoyi.common.utils.DateUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.ruoyi.system.mapper.TblRecommendCommnetMapper;
-import com.ruoyi.system.domain.TblRecommendCommnet;
+import com.ruoyi.system.mapper.TblRecommendCommentMapper;
+import com.ruoyi.system.domain.TblRecommendComment;
 import com.ruoyi.system.service.ITblRecommendCommnetService;
 
 /**
@@ -18,7 +18,7 @@ import com.ruoyi.system.service.ITblRecommendCommnetService;
 public class TblRecommendCommnetServiceImpl implements ITblRecommendCommnetService 
 {
     @Autowired
-    private TblRecommendCommnetMapper tblRecommendCommnetMapper;
+    private TblRecommendCommentMapper tblRecommendCommnetMapper;
 
     /**
      * 查询【请填写功能名称】
@@ -27,7 +27,7 @@ public class TblRecommendCommnetServiceImpl implements ITblRecommendCommnetServi
      * @return 【请填写功能名称】
      */
     @Override
-    public TblRecommendCommnet selectTblRecommendCommnetById(Long id)
+    public TblRecommendComment selectTblRecommendCommnetById(Long id)
     {
         return tblRecommendCommnetMapper.selectTblRecommendCommnetById(id);
     }
@@ -39,7 +39,7 @@ public class TblRecommendCommnetServiceImpl implements ITblRecommendCommnetServi
      * @return 【请填写功能名称】
      */
     @Override
-    public List<TblRecommendCommnet> selectTblRecommendCommnetList(TblRecommendCommnet tblRecommendCommnet)
+    public List<TblRecommendComment> selectTblRecommendCommnetList(TblRecommendComment tblRecommendCommnet)
     {
         return tblRecommendCommnetMapper.selectTblRecommendCommnetList(tblRecommendCommnet);
     }
@@ -51,7 +51,7 @@ public class TblRecommendCommnetServiceImpl implements ITblRecommendCommnetServi
      * @return 结果
      */
     @Override
-    public int insertTblRecommendCommnet(TblRecommendCommnet tblRecommendCommnet)
+    public int insertTblRecommendCommnet(TblRecommendComment tblRecommendCommnet)
     {
 //        tblRecommendCommnet.setCreateTime(DateUtils.getNowDate());
         return tblRecommendCommnetMapper.insertTblRecommendCommnet(tblRecommendCommnet);
@@ -64,7 +64,7 @@ public class TblRecommendCommnetServiceImpl implements ITblRecommendCommnetServi
      * @return 结果
      */
     @Override
-    public int updateTblRecommendCommnet(TblRecommendCommnet tblRecommendCommnet)
+    public int updateTblRecommendCommnet(TblRecommendComment tblRecommendCommnet)
     {
 //        tblRecommendCommnet.setUpdateTime(DateUtils.getNowDate());
         return tblRecommendCommnetMapper.updateTblRecommendCommnet(tblRecommendCommnet);
