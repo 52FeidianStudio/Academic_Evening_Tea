@@ -67,6 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         from  tbl_user_activity
         join  tbl_activity on tbl_activity.id= tbl_user_activity.activity_id
         where  tbl_user_activity.user_id=#{userId}
+order by lat desc
 
     </select>
 

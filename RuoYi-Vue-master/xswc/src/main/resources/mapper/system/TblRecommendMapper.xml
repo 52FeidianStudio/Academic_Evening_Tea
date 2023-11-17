@@ -23,6 +23,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectTblRecommendList" parameterType="TblRecommend" resultMap="TblRecommendResult">
         <include refid="selectTblRecommendVo"/>
+--            select *
+--            from tbl_recommend
+--            join  sys_user on
         <where>  
             <if test="content != null  and content != ''"> and content = #{content}</if>
             <if test="lecturerName != null  and lecturerName != ''"> and lecturer_name like concat('%', #{lecturerName}, '%')</if>

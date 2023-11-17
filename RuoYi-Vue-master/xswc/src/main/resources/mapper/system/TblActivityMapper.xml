@@ -74,7 +74,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="signinFilePath != null  and signinFilePath != ''"> and signin_file_path = #{signinFilePath}</if>
             <if test="applicationFilePath != null  and applicationFilePath != ''"> and application_file_path = #{applicationFilePath}</if>
         </where>
-        order by lat asc
+        order by lat desc
 <!--        &lt;!&ndash; 添加分页 &ndash;&gt;-->
 <!--        <if test="pageSize != null and pageNum != null">-->
 <!--            limit #{pageSize}  offset (#{pageNum} - 1)* #{pageSize}-->
