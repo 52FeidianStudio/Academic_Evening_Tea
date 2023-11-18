@@ -14,7 +14,7 @@ public interface TblLikeMapper {
 
 
     public TblLike selectTblLike(TblLike tblLike);
-    public int deleteTblLikeById(Long id);
+    public int deleteTblLike(TblLike tblLike);
 
 //    public int deleteTblLikeByIds(Long[] ids);
 }

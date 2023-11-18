@@ -65,4 +65,6 @@ public interface ITblSpecialColumnService
      * @return 结果
      */
     public int deleteTblSpecialColumnById(Long id);
+
+    public int disLike(Long id);
 }

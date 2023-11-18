@@ -8,13 +8,10 @@ import java.util.List;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.system.constant.CreditConstant;
-import com.ruoyi.system.domain.TblCreditUser;
-import com.ruoyi.system.domain.TblLike;
-import com.ruoyi.system.domain.TblRecommendComment;
+import com.ruoyi.system.domain.*;
 import com.ruoyi.system.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.ruoyi.system.domain.TblRecommend;
 import com.ruoyi.system.service.ITblRecommendService;
 
 /**
@@ -57,8 +54,8 @@ public class TblRecommendServiceImpl implements ITblRecommendService
         TblLike tblLike = new TblLike();
         tblLike.setUserId(SecurityUtils.getUserId());
         tblLike.setRecommendId(id);
-        tblLikeMapper.selectTblLike(tblLike);
-        tblRecommend.setTblLike(tblLike);
+        TblLike tblLike1 = tblLikeMapper.selectTblLike(tblLike);
+        tblRecommend.setTblLike(tblLike1);
         return tblRecommend;
     }
 
@@ -169,7 +166,7 @@ public class TblRecommendServiceImpl implements ITblRecommendService
         tblRecommendMapper.updateTblRecommend(tblRecommend);
         //增加点赞记录
         TblLike tblLike = new TblLike();
-        tblLike.setSpecialId(id);
+        tblLike.setRecommendId(id);
         tblLike.setUserId(userId);
         tblLike.setCreateBy(userName);
         LocalDateTime createTime = LocalDateTime.now();
@@ -179,5 +176,24 @@ public class TblRecommendServiceImpl implements ITblRecommendService
         String formattedDateTime = createTime.format(formatter);
         tblLike.setCreateTime(formattedDateTime);
         tblLikeMapper.insertTblLike(tblLike);
+    }
+
+    /**
+     * 取消点赞
+     * @param id
+     * @return
+     */
+    @Override
+    public int dislike(Long id) {
+        //减少点赞数
+        TblRecommend tblRecommend = tblRecommendMapper.selectTblRecommendById(id);
+        tblRecommend.setLikeCount(tblRecommend.getLikeCount()-1);
+        //删除点赞记录
+        Long userId = SecurityUtils.getUserId();
+        TblLike tblLike = new TblLike();
+        tblLike.setUserId(userId);
+        tblLike.setRecommendId(id);
+        tblLikeMapper.deleteTblLike(tblLike);
+        return tblRecommendMapper.updateTblRecommend(tblRecommend);
     }
 }

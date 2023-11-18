@@ -96,6 +96,19 @@ public class TblRecommendController extends BaseController
         return success();
     }
 
+    /**
+     * 取消点赞
+     * @param id
+     * @return
+     */
+    @Log(title = "【请填写功能名称】", businessType = BusinessType.UPDATE)
+    @DeleteMapping("/like/{id}")
+    @Transactional
+    public AjaxResult dislike(@PathVariable("id") Long id)
+    {
+        return success(tblRecommendService.dislike(id));
+    }
+
 
     /**
      * 修改推荐状态

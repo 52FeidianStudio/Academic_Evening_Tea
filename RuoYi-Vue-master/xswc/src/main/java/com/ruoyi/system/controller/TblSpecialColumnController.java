@@ -123,6 +123,21 @@ public class TblSpecialColumnController extends BaseController
         return success();
     }
     /**
+     * 点赞
+     * @param
+     * @return
+     */
+//    @PreAuthorize("@ss.hasPermi('system:column:like')")
+    @Log(title = "【请填写功能名称】", businessType = BusinessType.UPDATE)
+    @DeleteMapping("/like/{id}")
+    @Transactional
+    public AjaxResult dislike(@PathVariable("id") Long id)
+    {
+        return success(tblSpecialColumnService.disLike(id));
+    }
+
+
+    /**
      * 删除【请填写功能名称】
      */
 //    @PreAuthorize("@ss.hasPermi('system:column:remove')")

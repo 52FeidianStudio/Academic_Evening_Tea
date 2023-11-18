@@ -60,4 +60,6 @@ public interface ITblRecommendService
     public int deleteTblRecommendById(Long id);
 
     void addLike(Long id,Long userId,String userName);
+
+    public int dislike(Long id);
 }

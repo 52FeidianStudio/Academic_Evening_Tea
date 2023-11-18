@@ -82,7 +82,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!--        where id = #{id}-->
 <!--    </update>-->
 
-    <delete id="deleteTblLikeById" parameterType="tblLike">
+    <delete id="deleteTblLike" parameterType="tblLike">
         delete from tbl_like
         <where>
             <if test="id != null "> and id = #{id}</if>

@@ -11,6 +11,7 @@ import com.ruoyi.system.annotation.create;
 import com.ruoyi.system.domain.TblLike;
 import com.ruoyi.system.mapper.TblLikeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.TblSpecialColumnMapper;
 import com.ruoyi.system.domain.TblSpecialColumn;
@@ -53,7 +54,6 @@ private TblLikeMapper tblLikeMapper;
         TblSpecialColumn tblSpecialColumn = tblSpecialColumnMapper.selectTblSpecialColumnById(id);
         tblSpecialColumn.setLikeCount(tblSpecialColumn.getLikeCount()+1);
         tblSpecialColumnMapper.updateTblSpecialColumn(tblSpecialColumn);
-        //增加点赞记录
         TblLike tblLike = new TblLike();
         tblLike.setSpecialId(id);
         tblLike.setUserId(userId);
@@ -77,13 +77,13 @@ private TblLikeMapper tblLikeMapper;
     @Override
     public TblSpecialColumn selectTblSpecialColumnById(Long id)
     {
-
         TblSpecialColumn tblSpecialColumn = tblSpecialColumnMapper.selectTblSpecialColumnById(id);
+        //查询用户点赞
         TblLike tblLike = new TblLike();
         tblLike.setUserId(SecurityUtils.getUserId());
         tblLike.setSpecialId(id);
-        tblLikeMapper.selectTblLike(tblLike);
-        tblSpecialColumn.setTblLike(tblLike);
+        TblLike tblLike1 = tblLikeMapper.selectTblLike(tblLike);
+        tblSpecialColumn.setTblLike(tblLike1);
         return tblSpecialColumn;
     }
 
@@ -159,5 +159,19 @@ private TblLikeMapper tblLikeMapper;
     public int deleteTblSpecialColumnById(Long id)
     {
         return tblSpecialColumnMapper.deleteTblSpecialColumnById(id);
+    }
+
+    @Override
+    public int disLike(Long id) {
+        //减少点赞数
+        TblSpecialColumn tblSpecialColumn = tblSpecialColumnMapper.selectTblSpecialColumnById(id);
+        tblSpecialColumn.setLikeCount(tblSpecialColumn.getLikeCount()-1);
+        //删除点赞记录
+        Long userId = SecurityUtils.getUserId();
+        TblLike tblLike = new TblLike();
+        tblLike.setUserId(userId);
+        tblLike.setSpecialId(id);
+        tblLikeMapper.deleteTblLike(tblLike);
+        return tblSpecialColumnMapper.updateTblSpecialColumn(tblSpecialColumn);
     }
 }
