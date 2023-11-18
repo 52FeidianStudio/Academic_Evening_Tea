@@ -26,6 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="userId != null "> and user_id = #{userId}</if>
             <if test="nums != null "> and nums = #{nums}</if>
         </where>
+        order by create_time desc
     </select>
     
     <select id="selectTblGoodsUserById" parameterType="Long" resultMap="TblGoodsUserResult">

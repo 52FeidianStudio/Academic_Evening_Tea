@@ -30,6 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="userId != null "> and user_id = #{userId}</if>
             <if test="recommendId != null "> and recommend_id = #{recommendId}</if>
         </where>
+  order by create_time desc
     </select>
     
     <select id="selectTblRecommendCommnetById" parameterType="Long" resultMap="TblRecommendCommentResult">
@@ -38,7 +39,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
         
     <insert id="insertTblRecommendCommnet" parameterType="TblRecommendComment">
-        insert into tbl_recommend_commnet
+        insert into tbl_recommend_comment
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">id,</if>
             <if test="comment != null">comment,</if>
@@ -62,7 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </insert>
 
     <update id="updateTblRecommendCommnet" parameterType="TblRecommendComment">
-        update tbl_recommend_commnet
+        update tbl_recommend_comment
         <trim prefix="SET" suffixOverrides=",">
             <if test="comment != null">comment = #{comment},</if>
             <if test="userId != null">user_id = #{userId},</if>
@@ -76,11 +77,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </update>
 
     <delete id="deleteTblRecommendCommnetById" parameterType="Long">
-        delete from tbl_recommend_commnet where id = #{id}
+        delete from tbl_recommend_comment where id = #{id}
     </delete>
 
     <delete id="deleteTblRecommendCommnetByIds" parameterType="String">
-        delete from tbl_recommend_commnet where id in 
+        delete from tbl_recommend_comment where id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>

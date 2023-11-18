@@ -37,6 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="status != null  and status != ''"> and status = #{status}</if>
             <if test="likeCount != null "> and like_count = #{likeCount}</if>
         </where>
+        order by create_time desc
     </select>
     
     <select id="selectTblRecommendById" parameterType="Long" resultMap="TblRecommendResult">
@@ -64,7 +65,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
-            <if test="userId != null">#{user_id},</if>
+            <if test="userId != null">#{userId},</if>
             <if test="content != null">#{content},</if>
             <if test="lecturerName != null">#{lecturerName},</if>
             <if test="theme != null">#{theme},</if>

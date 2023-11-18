@@ -37,7 +37,7 @@ public class TblSpecialColumnController extends BaseController
      * 查询文章列表
      */
 //    @PreAuthorize("@ss.hasPermi('system:column:list')")
-    @PostMapping("/list")
+    @GetMapping("/list")
     public TableDataInfo list(TblSpecialColumn tblSpecialColumn)
     {
         startPage();

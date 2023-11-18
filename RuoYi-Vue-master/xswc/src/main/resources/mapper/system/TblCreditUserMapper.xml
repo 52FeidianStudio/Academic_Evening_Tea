@@ -49,6 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="creditType != null  and creditType != ''"> and credit_type = #{creditType}</if>
 			<if test="id != null  and id != ''"> and id = #{id}</if>
 		</where>
+		order by create_time desc
 	</select>
 
 
