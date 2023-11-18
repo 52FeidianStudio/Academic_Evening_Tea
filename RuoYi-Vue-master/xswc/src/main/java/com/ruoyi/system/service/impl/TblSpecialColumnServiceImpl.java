@@ -4,7 +4,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
+import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.system.annotation.create;
+import com.ruoyi.system.domain.TblLike;
+import com.ruoyi.system.mapper.TblLikeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.TblSpecialColumnMapper;
@@ -22,7 +25,8 @@ public class TblSpecialColumnServiceImpl implements ITblSpecialColumnService
 {
     @Autowired
     private TblSpecialColumnMapper tblSpecialColumnMapper;
-
+@Autowired
+private TblLikeMapper tblLikeMapper;
     /**
      * 增加文章浏览量
      * @param id 【请填写功能名称】主键
@@ -43,9 +47,15 @@ public class TblSpecialColumnServiceImpl implements ITblSpecialColumnService
      */
     @Override
     public void addLike(Long id) {
+        //文章点赞数增加
         TblSpecialColumn tblSpecialColumn = tblSpecialColumnMapper.selectTblSpecialColumnById(id);
         tblSpecialColumn.setLikeCount(tblSpecialColumn.getLikeCount()+1);
         tblSpecialColumnMapper.updateTblSpecialColumn(tblSpecialColumn);
+        //增加点赞记录
+        TblLike tblLike = new TblLike();
+        tblLike.setSpecialId(id);
+        tblLike.setUserId(SecurityUtils.getUserId());
+        tblLikeMapper.insertTblLike(tblLike);
         return ;
     }
 
@@ -58,7 +68,13 @@ public class TblSpecialColumnServiceImpl implements ITblSpecialColumnService
     @Override
     public TblSpecialColumn selectTblSpecialColumnById(Long id)
     {
+
         TblSpecialColumn tblSpecialColumn = tblSpecialColumnMapper.selectTblSpecialColumnById(id);
+        TblLike tblLike = new TblLike();
+        tblLike.setUserId(SecurityUtils.getUserId());
+        tblLike.setSpecialId(id);
+        tblLikeMapper.selectTblLike(tblLike);
+        tblSpecialColumn.setTblLike(tblLike);
         return tblSpecialColumn;
     }
 

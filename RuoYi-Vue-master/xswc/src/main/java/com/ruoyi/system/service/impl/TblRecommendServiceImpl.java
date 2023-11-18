@@ -7,13 +7,11 @@ import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.system.constant.CreditConstant;
 import com.ruoyi.system.domain.TblCreditUser;
+import com.ruoyi.system.domain.TblLike;
 import com.ruoyi.system.domain.TblRecommendComment;
-import com.ruoyi.system.mapper.SysUserMapper;
-import com.ruoyi.system.mapper.TblCreditUserMapper;
-import com.ruoyi.system.mapper.TblRecommendCommentMapper;
+import com.ruoyi.system.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.ruoyi.system.mapper.TblRecommendMapper;
 import com.ruoyi.system.domain.TblRecommend;
 import com.ruoyi.system.service.ITblRecommendService;
 
@@ -35,6 +33,9 @@ public class TblRecommendServiceImpl implements ITblRecommendService
     private SysUserMapper sysUserMapper;
     @Autowired
     private TblCreditUserMapper tblCreditUserMapper;
+
+    @Autowired
+    private TblLikeMapper tblLikeMapper;
     /**
      * id查询推荐
      * 
@@ -45,10 +46,17 @@ public class TblRecommendServiceImpl implements ITblRecommendService
     public TblRecommend selectTblRecommendById(Long id)
     {
         TblRecommend tblRecommend= tblRecommendMapper.selectTblRecommendById(id);
+        //查询评论
         TblRecommendComment tblRecommendCommnet = new TblRecommendComment();
         tblRecommendCommnet.setRecommendId(id);
         List<TblRecommendComment> tblRecommendCommnets = tblRecommendCommnetMapper.selectTblRecommendCommnetList(tblRecommendCommnet);
         tblRecommend.setTblRecommendCommnets(tblRecommendCommnets);
+        //查询用户点赞
+        TblLike tblLike = new TblLike();
+        tblLike.setUserId(SecurityUtils.getUserId());
+        tblLike.setRecommendId(id);
+        tblLikeMapper.selectTblLike(tblLike);
+        tblRecommend.setTblLike(tblLike);
         return tblRecommend;
     }
 
@@ -157,5 +165,10 @@ public class TblRecommendServiceImpl implements ITblRecommendService
         TblRecommend tblRecommend = tblRecommendMapper.selectTblRecommendById(id);
         tblRecommend.setLikeCount(tblRecommend.getLikeCount()+1);
         tblRecommendMapper.updateTblRecommend(tblRecommend);
+        //增加点赞记录
+        TblLike tblLike = new TblLike();
+        tblLike.setRecommendId(id);
+        tblLike.setUserId(SecurityUtils.getUserId());
+        tblLikeMapper.insertTblLike(tblLike);
     }
 }

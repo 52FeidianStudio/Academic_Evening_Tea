@@ -37,6 +37,8 @@ public class TblSpecialColumn
     @Excel(name = "种类1精彩瞬间2科普活动")
     private Integer kind;
 
+    private TblLike tblLike;
+
     /** 简介 */
     @Excel(name = "简介")
     private String summary;

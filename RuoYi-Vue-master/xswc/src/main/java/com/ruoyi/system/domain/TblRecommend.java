@@ -26,6 +26,8 @@ public class TblRecommend
     private  Long userId;
     private String nickName;
 
+    private  TblLike tblLike;
+
 private String avatar;
     /** 推荐理由 */
     @Excel(name = "推荐理由")

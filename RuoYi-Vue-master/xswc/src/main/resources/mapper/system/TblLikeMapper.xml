@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.TblLikeMapper">
+    
+    <resultMap type="TblLike" id="TblLikeResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="recommendId"    column="recommend_id"    />
+        <result property="specialId"    column="special_id"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createBy"    column="create_by"    />
+    </resultMap>
+
+    <sql id="selectTblLikeVo">
+        select id, user_id,recommend_id,special_id, update_time, update_by, create_time, create_by from tbl_like
+    </sql>
+
+<!--    <select id="selectTblGoodsList" parameterType="TblGoods" resultMap="TblGoodsResult">-->
+<!--        <include refid="selectTblGoodsVo"/>-->
+<!--        <where>  -->
+<!--            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>-->
+<!--            <if test="price != null "> and price = #{price}</if>-->
+<!--            <if test="introduce != null  and introduce != ''"> and introduce = #{introduce}</if>-->
+<!--            <if test="picture != null  and picture != ''"> and picture = #{picture}</if>-->
+<!--            <if test="allnums != null  and allnums != ''"> and allnums = #{allnums}</if>-->
+<!--            <if test="coverPicture != null  and coverPicture != ''"> and cover_picture = #{coverPicture}</if>-->
+<!--        </where>-->
+<!--    </select>-->
+
+    <select id="selectTblLike" parameterType="tblLike" resultMap="TblLikeResult">
+        <include refid="selectTblLikeVo"/>
+                <where>
+                    <if test="id != null "> and id = #{id}</if>
+                    <if test="userId != null  and userId != ''"> and user_id = #{userId}</if>
+                    <if test="specialId != null  and specialId != ''"> and special_id = #{specialId}</if>
+                    <if test="recommendId != null  and recommendId != ''"> and recommend_id = #{recommendId}</if>
+                </where>
+    </select>
+
+    <insert id="insertTblLike" parameterType="TblLike">
+        insert into tbl_like
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="specialId != null">special_id,</if>
+            <if test="recommendId != null">recommend_id,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="recommendId != null">#{recommendId},</if>
+            <if test="specialId != null">#{specialId},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+         </trim>
+    </insert>
+
+<!--    <update id="updateTblGoods" parameterType="TblGoods">-->
+<!--        update tbl_goods-->
+<!--        <trim prefix="SET" suffixOverrides=",">-->
+<!--            <if test="name != null">name = #{name},</if>-->
+<!--            <if test="price != null">price = #{price},</if>-->
+<!--            <if test="introduce != null">introduce = #{introduce},</if>-->
+<!--            <if test="allnums != null">allnums = #{allnums},</if>-->
+<!--            <if test="picture != null">picture = #{picture},</if>-->
+<!--            <if test="coverPicture != null">cover_picture = #{coverPicture},</if>-->
+<!--            <if test="updateTime != null">update_time = #{updateTime},</if>-->
+<!--            <if test="updateBy != null">update_by = #{updateBy},</if>-->
+<!--            <if test="createTime != null">create_time = #{createTime},</if>-->
+<!--            <if test="createBy != null">create_by = #{createBy},</if>-->
+<!--        </trim>-->
+<!--        where id = #{id}-->
+<!--    </update>-->
+
+    <delete id="deleteTblLikeById" parameterType="tblLike">
+        delete from tbl_like
+        <where>
+            <if test="id != null "> and id = #{id}</if>
+            <if test="userId != null  and userId != ''"> and user_id = #{userId}</if>
+            <if test="specialId != null  and specialId != ''"> and special_id = #{specialId}</if>
+            <if test="recommendId != null  and recommendId != ''"> and recommend_id = #{recommendId}</if>
+        </where>
+    </delete>
+
+<!--    <delete id="deleteTblLikeByIds" parameterType="String">-->
+<!--        delete from tbl_Like where id in-->
+<!--        <foreach item="id" collection="array" open="(" separator="," close=")">-->
+<!--            #{id}-->
+<!--        </foreach>-->
+<!--    </delete>-->
+</mapper>
