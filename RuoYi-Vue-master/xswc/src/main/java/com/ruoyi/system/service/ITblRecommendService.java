@@ -59,5 +59,5 @@ public interface ITblRecommendService
      */
     public int deleteTblRecommendById(Long id);
 
-    void addLike(Long id);
+    void addLike(Long id,Long userId,String userName);
 }

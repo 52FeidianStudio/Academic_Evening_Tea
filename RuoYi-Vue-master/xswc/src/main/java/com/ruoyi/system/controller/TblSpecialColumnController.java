@@ -3,6 +3,7 @@ package com.ruoyi.system.controller;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,7 +106,7 @@ public class TblSpecialColumnController extends BaseController
 
     /**
      * 点赞
-     * @param tblSpecialColumn
+     * @param
      * @return
      */
 //    @PreAuthorize("@ss.hasPermi('system:column:like')")
@@ -114,13 +115,10 @@ public class TblSpecialColumnController extends BaseController
     @Transactional
     public AjaxResult like(@PathVariable("id") Long id)
     {
-        Runnable runnable = new Runnable(){
-            @Override
-            public void run() {
-                tblSpecialColumnService.addLike(id);
-            }
-        };
-        threadPoolTaskExecutor.execute(runnable);
+        Long userId = SecurityUtils.getUserId();
+        String username = SecurityUtils.getUsername();
+        ReRunnable reRunnable = new ReRunnable(id,userId,username);
+        threadPoolTaskExecutor.execute(reRunnable);
 
         return success();
     }
@@ -134,4 +132,47 @@ public class TblSpecialColumnController extends BaseController
     {
         return toAjax(tblSpecialColumnService.deleteTblSpecialColumnByIds(ids));
     }
+
+
+    class ReRunnable implements  Runnable{
+
+        private  String userName;
+        private  Long userId;
+        private  Long id;
+        ReRunnable(Long id,Long userId, String userName){
+            this.id=id;
+            this.userId=userId;
+            this.userName=userName;
+        }
+        @Override
+        public void run() {
+            tblSpecialColumnService.addLike(id,userId,userName);
+        }
+
+        public String getUserName() {
+            return userName;
+        }
+
+        public void setUserName(String userName) {
+            this.userName = userName;
+        }
+
+        public Long getUserId() {
+            return userId;
+        }
+
+        public void setUserId(Long userId) {
+            this.userId = userId;
+        }
+
+        public Long getId() {
+            return id;
+        }
+
+        public void setId(Long id) {
+            this.id = id;
+        }
+    }
+
+
 }

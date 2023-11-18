@@ -23,8 +23,8 @@ public interface ITblSpecialColumnService
      * 增加浏览量
      * @param id
      */
-    public void addViewNum(Long id);
-    public void addLike(Long id);
+    public void addViewNum(Long id );
+    public void addLike(Long id ,Long userId,String userName);
 
     /**
      * 查询【请填写功能名称】列表

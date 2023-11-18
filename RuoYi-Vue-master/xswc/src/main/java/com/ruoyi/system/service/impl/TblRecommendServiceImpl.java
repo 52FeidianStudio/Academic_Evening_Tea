@@ -1,6 +1,8 @@
 package com.ruoyi.system.service.impl;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import com.ruoyi.common.core.domain.entity.SysUser;
@@ -161,14 +163,21 @@ public class TblRecommendServiceImpl implements ITblRecommendService
      * @param id
      */
     @Override
-    public void addLike(Long id) {
+    public void addLike(Long id ,Long userId,String userName) {
         TblRecommend tblRecommend = tblRecommendMapper.selectTblRecommendById(id);
         tblRecommend.setLikeCount(tblRecommend.getLikeCount()+1);
         tblRecommendMapper.updateTblRecommend(tblRecommend);
         //增加点赞记录
         TblLike tblLike = new TblLike();
-        tblLike.setRecommendId(id);
-        tblLike.setUserId(SecurityUtils.getUserId());
+        tblLike.setSpecialId(id);
+        tblLike.setUserId(userId);
+        tblLike.setCreateBy(userName);
+        LocalDateTime createTime = LocalDateTime.now();
+        // 创建一个日期时间格式化器
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        // 格式化 LocalDateTime 对象为字符串
+        String formattedDateTime = createTime.format(formatter);
+        tblLike.setCreateTime(formattedDateTime);
         tblLikeMapper.insertTblLike(tblLike);
     }
 }

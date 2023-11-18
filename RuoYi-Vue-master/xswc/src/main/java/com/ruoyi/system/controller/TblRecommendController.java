@@ -3,6 +3,7 @@ package com.ruoyi.system.controller;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ruoyi.common.utils.SecurityUtils;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,13 +87,11 @@ public class TblRecommendController extends BaseController
     @GetMapping("/like/{id}")
     @Transactional
     public AjaxResult like(@PathVariable("id") Long id)
-    {Runnable runnable = new Runnable(){
-        @Override
-        public void run() {
-            tblRecommendService.addLike(id);
-        }
-    };
-        threadPoolTaskExecutor.execute(runnable);
+    {
+        Long userId = SecurityUtils.getUserId();
+        String username = SecurityUtils.getUsername();
+        ReRunnable reRunnable = new ReRunnable(id,userId,username);
+        threadPoolTaskExecutor.execute(reRunnable);
 
         return success();
     }
@@ -118,5 +117,45 @@ public class TblRecommendController extends BaseController
     public AjaxResult remove(@PathVariable Long[] ids)
     {
         return toAjax(tblRecommendService.deleteTblRecommendByIds(ids));
+    }
+
+    class ReRunnable implements  Runnable{
+
+        private  String userName;
+        private  Long userId;
+        private  Long id;
+        ReRunnable(Long id,Long userId, String userName){
+            this.id=id;
+            this.userId=userId;
+            this.userName=userName;
+        }
+        @Override
+        public void run() {
+            tblRecommendService.addLike(id,userId,userName);
+        }
+
+        public String getUserName() {
+            return userName;
+        }
+
+        public void setUserName(String userName) {
+            this.userName = userName;
+        }
+
+        public Long getUserId() {
+            return userId;
+        }
+
+        public void setUserId(Long userId) {
+            this.userId = userId;
+        }
+
+        public Long getId() {
+            return id;
+        }
+
+        public void setId(Long id) {
+            this.id = id;
+        }
     }
 }

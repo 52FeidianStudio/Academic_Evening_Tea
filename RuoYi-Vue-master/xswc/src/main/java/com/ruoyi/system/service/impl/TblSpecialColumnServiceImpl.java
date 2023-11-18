@@ -1,6 +1,8 @@
 package com.ruoyi.system.service.impl;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
@@ -46,7 +48,7 @@ private TblLikeMapper tblLikeMapper;
      * @param id
      */
     @Override
-    public void addLike(Long id) {
+    public void addLike(Long id ,Long userId,String userName) {
         //文章点赞数增加
         TblSpecialColumn tblSpecialColumn = tblSpecialColumnMapper.selectTblSpecialColumnById(id);
         tblSpecialColumn.setLikeCount(tblSpecialColumn.getLikeCount()+1);
@@ -54,7 +56,14 @@ private TblLikeMapper tblLikeMapper;
         //增加点赞记录
         TblLike tblLike = new TblLike();
         tblLike.setSpecialId(id);
-        tblLike.setUserId(SecurityUtils.getUserId());
+        tblLike.setUserId(userId);
+        tblLike.setCreateBy(userName);
+        LocalDateTime createTime = LocalDateTime.now();
+        // 创建一个日期时间格式化器
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        // 格式化 LocalDateTime 对象为字符串
+        String formattedDateTime = createTime.format(formatter);
+        tblLike.setCreateTime(formattedDateTime);
         tblLikeMapper.insertTblLike(tblLike);
         return ;
     }
