@@ -103,7 +103,7 @@ public class TblGoodsUserServiceImpl implements ITblGoodsUserService
         sysUserMapper.updateUser(sysUser);
         tblGoodsMapper.updateTblGoods(tblGoods);
       tblGoodsUserMapper.insertTblGoodsUser(tblGoodsUser);
-      int res=3;
+      int res=3;//成功
         return  res;
     }
 
