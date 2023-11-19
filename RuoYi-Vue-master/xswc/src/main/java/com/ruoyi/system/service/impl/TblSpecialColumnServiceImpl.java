@@ -82,12 +82,15 @@ private TblLikeMapper tblLikeMapper;
     public TblSpecialColumn selectTblSpecialColumnById(Long id)
     {
         TblSpecialColumn tblSpecialColumn = tblSpecialColumnMapper.selectTblSpecialColumnById(id);
-        //查询用户点赞
-        TblLike tblLike = new TblLike();
-        tblLike.setUserId(SecurityUtils.getUserId());
-        tblLike.setSpecialId(id);
-        TblLike tblLike1 = tblLikeMapper.selectTblLike(tblLike);
-        tblSpecialColumn.setTblLike(tblLike1);
+        if(SecurityUtils.getUserId()!=null)
+        {
+            //查询用户点赞
+            TblLike tblLike = new TblLike();
+            tblLike.setUserId(SecurityUtils.getUserId());
+            tblLike.setSpecialId(id);
+            TblLike tblLike1 = tblLikeMapper.selectTblLike(tblLike);
+            tblSpecialColumn.setTblLike(tblLike1);
+        }
         return tblSpecialColumn;
     }
 
@@ -103,13 +106,16 @@ private TblLikeMapper tblLikeMapper;
     public List<TblSpecialColumn> selectTblSpecialColumnList(TblSpecialColumn tblSpecialColumn)
     {
         List<TblSpecialColumn> tblSpecialColumns= tblSpecialColumnMapper.selectTblSpecialColumnList(tblSpecialColumn);
-        for (TblSpecialColumn tblSpecialColumn1:tblSpecialColumns){
-            //查询用户点赞
-            TblLike tblLike = new TblLike();
-            tblLike.setUserId(SecurityUtils.getUserId());
-            tblLike.setSpecialId(tblSpecialColumn1.getId());
-            TblLike tblLike1 = tblLikeMapper.selectTblLike(tblLike);
-            tblSpecialColumn1.setTblLike(tblLike1);
+        if(SecurityUtils.getUserId()!=null)
+        {
+            for (TblSpecialColumn tblSpecialColumn1:tblSpecialColumns){
+                //查询用户点赞
+                TblLike tblLike = new TblLike();
+                tblLike.setUserId(SecurityUtils.getUserId());
+                tblLike.setSpecialId(tblSpecialColumn1.getId());
+                TblLike tblLike1 = tblLikeMapper.selectTblLike(tblLike);
+                tblSpecialColumn1.setTblLike(tblLike1);
+            }
         }
         return tblSpecialColumns;
     }
@@ -174,6 +180,12 @@ private TblLikeMapper tblLikeMapper;
         return tblSpecialColumnMapper.deleteTblSpecialColumnById(id);
     }
 
+
+    /**
+     * 取消点赞
+     * @param id
+     * @return
+     */
     @Override
     public int disLike(Long id) {
         //减少点赞数

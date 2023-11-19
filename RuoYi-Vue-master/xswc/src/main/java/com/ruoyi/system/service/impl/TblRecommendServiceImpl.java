@@ -52,10 +52,13 @@ public class TblRecommendServiceImpl implements ITblRecommendService
         tblRecommend.setTblRecommendCommnets(tblRecommendCommnets);
         //查询用户点赞
         TblLike tblLike = new TblLike();
-        tblLike.setUserId(SecurityUtils.getUserId());
         tblLike.setRecommendId(id);
-        TblLike tblLike1 = tblLikeMapper.selectTblLike(tblLike);
-        tblRecommend.setTblLike(tblLike1);
+        if(SecurityUtils.getUserId()!=null)
+        {
+            tblLike.setUserId(SecurityUtils.getUserId());
+            TblLike tblLike1 = tblLikeMapper.selectTblLike(tblLike);
+            tblRecommend.setTblLike(tblLike1);
+        }
         //点赞名单
         tblLike.setUserId(null);
         List<TblLike>  likes= tblLikeMapper.selectTblLikeList(tblLike);
@@ -79,12 +82,14 @@ public class TblRecommendServiceImpl implements ITblRecommendService
             tblRecommendCommnet.setRecommendId(tblRecommend1.getId());
             List<TblRecommendComment> tblRecommendCommnets = tblRecommendCommnetMapper.selectTblRecommendCommnetList(tblRecommendCommnet);
             tblRecommend1.setTblRecommendCommnets(tblRecommendCommnets);
-            //查询改用户点赞
+            //查询该用户点赞
             TblLike tblLike = new TblLike();
-            tblLike.setUserId(SecurityUtils.getUserId());
             tblLike.setRecommendId(tblRecommend1.getId());
-            TblLike tblLike1 = tblLikeMapper.selectTblLike(tblLike);
-            tblRecommend1.setTblLike(tblLike1);
+            if(SecurityUtils.getUserId()!=null){
+                tblLike.setUserId(SecurityUtils.getUserId());
+                TblLike tblLike1 = tblLikeMapper.selectTblLike(tblLike);
+                tblRecommend1.setTblLike(tblLike1);
+            }
             //点赞名单
             tblLike.setUserId(null);
             List<TblLike>  likes= tblLikeMapper.selectTblLikeList(tblLike);
