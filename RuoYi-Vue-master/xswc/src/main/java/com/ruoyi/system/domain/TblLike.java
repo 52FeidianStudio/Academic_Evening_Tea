@@ -14,7 +14,7 @@ public class TblLike {
     private  Long userId;
     private  Long recommendId;
     private  Long specialId;
-
+    private  String nickName;
     //创建时间
     private String createTime;
     //更新时间

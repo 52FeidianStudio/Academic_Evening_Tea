@@ -50,21 +50,25 @@ private TblLikeMapper tblLikeMapper;
      */
     @Override
     public void addLike(Long id ,Long userId,String userName) {
-        //文章点赞数增加
-        TblSpecialColumn tblSpecialColumn = tblSpecialColumnMapper.selectTblSpecialColumnById(id);
-        tblSpecialColumn.setLikeCount(tblSpecialColumn.getLikeCount()+1);
-        tblSpecialColumnMapper.updateTblSpecialColumn(tblSpecialColumn);
         TblLike tblLike = new TblLike();
         tblLike.setSpecialId(id);
         tblLike.setUserId(userId);
-        tblLike.setCreateBy(userName);
-        LocalDateTime createTime = LocalDateTime.now();
-        // 创建一个日期时间格式化器
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        // 格式化 LocalDateTime 对象为字符串
-        String formattedDateTime = createTime.format(formatter);
-        tblLike.setCreateTime(formattedDateTime);
-        tblLikeMapper.insertTblLike(tblLike);
+        TblLike tblLike1 = tblLikeMapper.selectTblLike(tblLike);
+        if(tblLike1==null){
+            //文章点赞数增加
+            TblSpecialColumn tblSpecialColumn = tblSpecialColumnMapper.selectTblSpecialColumnById(id);
+            tblSpecialColumn.setLikeCount(tblSpecialColumn.getLikeCount()+1);
+            tblSpecialColumnMapper.updateTblSpecialColumn(tblSpecialColumn);
+            //点赞记录
+            tblLike.setCreateBy(userName);
+            LocalDateTime createTime = LocalDateTime.now();
+            // 创建一个日期时间格式化器
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            // 格式化 LocalDateTime 对象为字符串
+            String formattedDateTime = createTime.format(formatter);
+            tblLike.setCreateTime(formattedDateTime);
+            tblLikeMapper.insertTblLike(tblLike);
+        }
         return ;
     }
 

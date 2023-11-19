@@ -56,6 +56,10 @@ public class TblRecommendServiceImpl implements ITblRecommendService
         tblLike.setRecommendId(id);
         TblLike tblLike1 = tblLikeMapper.selectTblLike(tblLike);
         tblRecommend.setTblLike(tblLike1);
+        //点赞名单
+        tblLike.setUserId(null);
+        List<TblLike>  likes= tblLikeMapper.selectTblLikeList(tblLike);
+        tblRecommend.setLikes(likes);
         return tblRecommend;
     }
 
@@ -70,12 +74,21 @@ public class TblRecommendServiceImpl implements ITblRecommendService
     {
         List<TblRecommend> tblRecommends=    tblRecommendMapper.selectTblRecommendList(tblRecommend);
         for (TblRecommend tblRecommend1:tblRecommends){
-            //查询用户点赞
+            //查询评论
+            TblRecommendComment tblRecommendCommnet = new TblRecommendComment();
+            tblRecommendCommnet.setRecommendId(tblRecommend1.getId());
+            List<TblRecommendComment> tblRecommendCommnets = tblRecommendCommnetMapper.selectTblRecommendCommnetList(tblRecommendCommnet);
+            tblRecommend1.setTblRecommendCommnets(tblRecommendCommnets);
+            //查询改用户点赞
             TblLike tblLike = new TblLike();
             tblLike.setUserId(SecurityUtils.getUserId());
             tblLike.setRecommendId(tblRecommend1.getId());
             TblLike tblLike1 = tblLikeMapper.selectTblLike(tblLike);
             tblRecommend1.setTblLike(tblLike1);
+            //点赞名单
+            tblLike.setUserId(null);
+            List<TblLike>  likes= tblLikeMapper.selectTblLikeList(tblLike);
+            tblRecommend1.setLikes(likes);
         }
         return tblRecommends;
     }
@@ -170,21 +183,24 @@ public class TblRecommendServiceImpl implements ITblRecommendService
      */
     @Override
     public void addLike(Long id ,Long userId,String userName) {
-        TblRecommend tblRecommend = tblRecommendMapper.selectTblRecommendById(id);
-        tblRecommend.setLikeCount(tblRecommend.getLikeCount()+1);
-        tblRecommendMapper.updateTblRecommend(tblRecommend);
-        //增加点赞记录
         TblLike tblLike = new TblLike();
         tblLike.setRecommendId(id);
         tblLike.setUserId(userId);
-        tblLike.setCreateBy(userName);
-        LocalDateTime createTime = LocalDateTime.now();
-        // 创建一个日期时间格式化器
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        // 格式化 LocalDateTime 对象为字符串
-        String formattedDateTime = createTime.format(formatter);
-        tblLike.setCreateTime(formattedDateTime);
-        tblLikeMapper.insertTblLike(tblLike);
+        TblLike tblLike1 = tblLikeMapper.selectTblLike(tblLike);
+        if(tblLike1==null){
+            TblRecommend tblRecommend = tblRecommendMapper.selectTblRecommendById(id);
+            tblRecommend.setLikeCount(tblRecommend.getLikeCount()+1);
+            tblRecommendMapper.updateTblRecommend(tblRecommend);
+            //增加点赞记录
+            tblLike.setCreateBy(userName);
+            LocalDateTime createTime = LocalDateTime.now();
+            // 创建一个日期时间格式化器
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            // 格式化 LocalDateTime 对象为字符串
+            String formattedDateTime = createTime.format(formatter);
+            tblLike.setCreateTime(formattedDateTime);
+            tblLikeMapper.insertTblLike(tblLike);
+        }
     }
 
     /**

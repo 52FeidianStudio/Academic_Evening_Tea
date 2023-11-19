@@ -7,6 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="TblLike" id="TblLikeResult">
         <result property="id"    column="id"    />
         <result property="userId"    column="user_id"    />
+        <result property="nickName"    column="nick_name"    />
         <result property="recommendId"    column="recommend_id"    />
         <result property="specialId"    column="special_id"    />
         <result property="updateTime"    column="update_time"    />
@@ -16,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectTblLikeVo">
-        select id, user_id,recommend_id,special_id, update_time, update_by, create_time, create_by from tbl_like
+        select id, user_id,recommend_id,special_id,update_time, update_by, create_time, create_by from tbl_like
     </sql>
 
 <!--    <select id="selectTblGoodsList" parameterType="TblGoods" resultMap="TblGoodsResult">-->
@@ -39,6 +40,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                     <if test="specialId != null  and specialId != ''"> and special_id = #{specialId}</if>
                     <if test="recommendId != null  and recommendId != ''"> and recommend_id = #{recommendId}</if>
                 </where>
+    </select>
+
+
+    <select id="selectTblLikeList" parameterType="TblLike" resultMap="TblLikeResult">
+        select u.nick_name as nick_name
+        from tbl_like l
+     join sys_user u on u.user_id = l.user_id
+        <where>
+            <if test="specialId != null  and specialId != ''"> and special_id = #{specialId}</if>
+            <if test="recommendId != null  and recommendId != ''"> and recommend_id = #{recommendId}</if>
+        </where>
     </select>
 
     <insert id="insertTblLike" parameterType="TblLike">

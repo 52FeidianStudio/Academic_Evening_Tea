@@ -28,6 +28,8 @@ public class TblRecommend
 
     private  TblLike tblLike;
 
+    private  List<TblLike>  likes;
+
 private String avatar;
     /** 推荐理由 */
     @Excel(name = "推荐理由")
