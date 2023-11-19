@@ -68,7 +68,16 @@ public class TblRecommendServiceImpl implements ITblRecommendService
     @Override
     public List<TblRecommend> selectTblRecommendList(TblRecommend tblRecommend)
     {
-        return tblRecommendMapper.selectTblRecommendList(tblRecommend);
+        List<TblRecommend> tblRecommends=    tblRecommendMapper.selectTblRecommendList(tblRecommend);
+        for (TblRecommend tblRecommend1:tblRecommends){
+            //查询用户点赞
+            TblLike tblLike = new TblLike();
+            tblLike.setUserId(SecurityUtils.getUserId());
+            tblLike.setRecommendId(tblRecommend1.getId());
+            TblLike tblLike1 = tblLikeMapper.selectTblLike(tblLike);
+            tblRecommend1.setTblLike(tblLike1);
+        }
+        return tblRecommends;
     }
 
     /**

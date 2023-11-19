@@ -98,7 +98,16 @@ private TblLikeMapper tblLikeMapper;
     @Override
     public List<TblSpecialColumn> selectTblSpecialColumnList(TblSpecialColumn tblSpecialColumn)
     {
-        return tblSpecialColumnMapper.selectTblSpecialColumnList(tblSpecialColumn);
+        List<TblSpecialColumn> tblSpecialColumns= tblSpecialColumnMapper.selectTblSpecialColumnList(tblSpecialColumn);
+        for (TblSpecialColumn tblSpecialColumn1:tblSpecialColumns){
+            //查询用户点赞
+            TblLike tblLike = new TblLike();
+            tblLike.setUserId(SecurityUtils.getUserId());
+            tblLike.setSpecialId(tblSpecialColumn1.getId());
+            TblLike tblLike1 = tblLikeMapper.selectTblLike(tblLike);
+            tblSpecialColumn1.setTblLike(tblLike1);
+        }
+        return tblSpecialColumns;
     }
 
     /**
