@@ -59,7 +59,8 @@ public class TblGoodsUserServiceImpl implements ITblGoodsUserService
     @Override
     public List<TblGoodsUser> selectTblGoodsUserList(TblGoodsUser tblGoodsUser)
     {
-        return tblGoodsUserMapper.selectTblGoodsUserList(tblGoodsUser);
+        List<TblGoodsUser> tblGoodsUsers=  tblGoodsUserMapper.selectTblGoodsUserList(tblGoodsUser);
+        return  tblGoodsUsers;
     }
 
     /**
@@ -102,6 +103,7 @@ public class TblGoodsUserServiceImpl implements ITblGoodsUserService
         //修改
         sysUserMapper.updateUser(sysUser);
         tblGoodsMapper.updateTblGoods(tblGoods);
+        tblGoodsUser.setTotal(need);
       tblGoodsUserMapper.insertTblGoodsUser(tblGoodsUser);
       int res=3;//成功
         return  res;

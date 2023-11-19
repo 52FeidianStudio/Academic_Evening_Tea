@@ -9,6 +9,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="goodsId"    column="goods_id"    />
         <result property="userId"    column="user_id"    />
         <result property="nums"    column="nums"    />
+        <result property="state"    column="state"    />
+        <result property="total"    column="total"    />
+        <result property="picture"    column="picture"    />
+        <result property="coverPicture"    column="cover_picture"    />
         <result property="updateTime"    column="update_time"    />
         <result property="updateBy"    column="update_by"    />
         <result property="createTime"    column="create_time"    />
@@ -16,11 +20,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectTblGoodsUserVo">
-        select id, goods_id, user_id, nums, update_time, update_by, create_time, create_by from tbl_goods_user
+        select id, goods_id, user_id, total,nums,state, update_time, update_by, create_time, create_by from tbl_goods_user
     </sql>
 
     <select id="selectTblGoodsUserList" parameterType="TblGoodsUser" resultMap="TblGoodsUserResult">
-        <include refid="selectTblGoodsUserVo"/>
+<!--        <include refid="selectTblGoodsUserVo"/>-->
+           select gu.*,g.name,g.cover_picture
+           from tbl_goods_user gu
+           join tbl_goods g on gu.goods_id=g.id
         <where>  
             <if test="goodsId != null "> and goods_id = #{goodsId}</if>
             <if test="userId != null "> and user_id = #{userId}</if>
@@ -41,6 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="goodsId != null">goods_id,</if>
             <if test="userId != null">user_id,</if>
             <if test="nums != null">nums,</if>
+            <if test="total != null">total,</if>
             <if test="updateTime != null">update_time,</if>
             <if test="updateBy != null">update_by,</if>
             <if test="createTime != null">create_time,</if>
@@ -49,6 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
             <if test="goodsId != null">#{goodsId},</if>
+            <if test="total != null">#{total},</if>
             <if test="userId != null">#{userId},</if>
             <if test="nums != null">#{nums},</if>
             <if test="updateTime != null">#{updateTime},</if>
@@ -63,6 +72,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="SET" suffixOverrides=",">
             <if test="goodsId != null">goods_id = #{goodsId},</if>
             <if test="userId != null">user_id = #{userId},</if>
+            <if test="total != null">total = #{total},</if>
+            <if test="state != null">state = #{state},</if>
             <if test="nums != null">nums = #{nums},</if>
             <if test="updateTime != null">update_time = #{updateTime},</if>
             <if test="updateBy != null">update_by = #{updateBy},</if>

@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import com.ruoyi.common.annotation.Excel;
 
+import java.math.BigDecimal;
+
 
 /**
  * 【请填写功能名称】对象 tbl_goods_user
@@ -34,7 +36,17 @@ public class TblGoodsUser
     /** 数量 */
     @Excel(name = "数量")
     private Integer nums;
+    /** 商品名称 */
+    @Excel(name = "商品名称")
+    private String name;
 
+    /** 商品封面 */
+    @Excel(name = "商品封面")
+    private String coverPicture;
+    private BigDecimal total;
+
+    //1未领取2已领取
+    private  Integer state;
 
     //创建时间
     private String createTime;

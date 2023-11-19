@@ -44,6 +44,7 @@ public class TblGoods
     @Excel(name = "商品图片")
     private String picture;
 
+
     /** 商品封面 */
     @Excel(name = "商品封面")
     private String coverPicture;

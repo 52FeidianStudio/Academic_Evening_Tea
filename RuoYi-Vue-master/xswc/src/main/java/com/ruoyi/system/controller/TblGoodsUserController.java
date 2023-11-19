@@ -42,8 +42,12 @@ public class TblGoodsUserController extends BaseController
      */
 //    @PreAuthorize("@ss.hasPermi('system:user:list')")
     @GetMapping("/list")
-    public TableDataInfo list(TblGoodsUser tblGoodsUser)
+    public TableDataInfo list(TblGoodsUser tblGoodsUser,Long type)
     {
+        if (type==1){
+            Long userId = SecurityUtils.getUserId();
+            tblGoodsUser.setUserId(userId);
+        }
         startPage();
         List<TblGoodsUser> list = tblGoodsUserService.selectTblGoodsUserList(tblGoodsUser);
         return getDataTable(list);
