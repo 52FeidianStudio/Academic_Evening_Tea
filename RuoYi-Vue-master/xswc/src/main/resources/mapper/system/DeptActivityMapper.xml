@@ -7,6 +7,7 @@
         <result property="activityId"    column="activity_id"    />
         <result property="resNum"    column="res_num"    />
         <result property="maxNum"    column="max_num"    />
+        <result property="deptName"    column="dept_name"    />
         <result property="updateTime"    column="update_time"    />
         <result property="updateBy"    column="update_by"    />
         <result property="createTime"    column="create_time"    />
@@ -61,8 +62,13 @@
     from dept_activity
     where activity_id=#{activityId} and dept_id =#{deptId}
     </select>
-    <select id="selectDeptActivityList" resultType="com.ruoyi.system.domain.DeptActivity">
-        <include refid="selectDeptActivityVO"/>
+
+
+    <select id="selectDeptActivityList" resultType="com.ruoyi.system.domain.DeptActivity" resultMap="DeptActivityVO">
+<!--  <include refid="selectDeptActivityVO"/>-->
+          select   da.*,sd.dept_name
+           from dept_activity  da
+           join sys_dept  sd on sd.dept_id=da.dept_id
         <where>
             <if test="activityId != null  and activityId != ''"> and activity_id = #{activityId}</if>
             <if test="deptId != null">and depy_id=#{deptId},</if>

@@ -19,6 +19,9 @@ public class DeptActivity  {
     private  Long activityId;
     //学院id
     private Long deptId;
+
+    private  String deptName;
+
     //限制人数
     private  Long maxNum;
     //剩余人数

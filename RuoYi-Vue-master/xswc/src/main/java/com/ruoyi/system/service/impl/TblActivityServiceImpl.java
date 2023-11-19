@@ -87,7 +87,7 @@ public class TblActivityServiceImpl implements ITblActivityService
         System.out.println(tblActivity.getPageNum());
         System.out.println(tblActivity.getPageSize());
         List<TblActivity>list= tblActivityMapper.selectTblActivityList(tblActivity);
-
+          //查询学院限制情况
         for(TblActivity tblActivity1:list){
             DeptActivity deptActivity = new DeptActivity();
             deptActivity.setActivityId(tblActivity1.getId());

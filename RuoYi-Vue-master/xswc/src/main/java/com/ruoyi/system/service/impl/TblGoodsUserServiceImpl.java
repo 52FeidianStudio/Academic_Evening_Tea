@@ -51,7 +51,7 @@ public class TblGoodsUserServiceImpl implements ITblGoodsUserService
     }
 
     /**
-     * 查询【请填写功能名称】列表
+     * 查询兑换列表
      * 
      * @param tblGoodsUser 【请填写功能名称】
      * @return 【请填写功能名称】
@@ -63,7 +63,7 @@ public class TblGoodsUserServiceImpl implements ITblGoodsUserService
     }
 
     /**
-     * 新增【请填写功能名称】
+     * 新增兑换记录
      * 
      * @param tblGoodsUser 【请填写功能名称】
      * @return 结果
