@@ -70,6 +70,8 @@ public interface SysUserMapper
      */
     public int updateUser(SysUser user);
 
+    public int updateCredit(SysUser user);
+
     /**
      * 修改用户头像
      * 
