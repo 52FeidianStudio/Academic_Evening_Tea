@@ -134,7 +134,9 @@ public class TblActivityServiceImpl implements ITblActivityService
     public int updateTblActivity(TblActivity tblActivity)
     {
         Long activityId = tblActivity.getId();
-        if (tblActivity.getState().equals(ActivityConstant.PASS))
+        TblActivity tblActivityDTO = tblActivityMapper.selectTblActivityById(activityId);
+
+        if (tblActivity.getState().equals(ActivityConstant.PASS) && !tblActivityDTO.getState() .equals(ActivityConstant.PASS) )
         {
             HttpPostRequestExample httpPostRequestExample = new HttpPostRequestExample();
             String accessToken = httpPostRequestExample.postSendAccessToken();
