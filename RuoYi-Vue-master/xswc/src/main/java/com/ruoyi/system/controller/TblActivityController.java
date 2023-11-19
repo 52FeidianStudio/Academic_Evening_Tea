@@ -96,7 +96,7 @@ public class TblActivityController extends BaseController
     /**
      * 修改商家发布活动
      */
-//    @PreAuthorize("@ss.hasPermi('system:activity:edit')")
+    @PreAuthorize("@ss.hasPermi('system:activity:edit')")
     @Log(title = "修改商家发布活动", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody TblActivity tblActivity)
@@ -107,7 +107,7 @@ public class TblActivityController extends BaseController
     /**
      * 删除商家发布活动
      */
-//    @PreAuthorize("@ss.hasPermi('system:activity:remove')")
+    @PreAuthorize("@ss.hasPermi('system:activity:remove')")
     @Log(title = "删除商家发布活动", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     @Transactional

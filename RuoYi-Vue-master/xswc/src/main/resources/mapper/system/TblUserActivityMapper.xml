@@ -12,6 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="sex"    column="sex"    />
         <result property="faculty"    column="faculty"    />
         <result property="name"    column="name"    />
+        <result property="userName"    column="user_name"    />
         <result property="nickName"    column="nick_name"    />
         <result property="avatar"    column="avatar"    />
         <result property="studentId"    column="student_id"    />
@@ -77,7 +78,7 @@ order by lat desc
 
     </select>
     <select id="selectTblUsersActivityList" resultType="com.ruoyi.system.domain.TblUserActivity" resultMap="TblUserActivityResult">
-select  ua.*,u.sex,u.faculty,u.name,u.nick_name,u.avatar,u.student_id
+select  ua.*,u.sex,u.faculty,u.name,u.nick_name,u.avatar,u.student_id ,u.user_name
 from tbl_user_activity   ua
 join sys_user   u  on u.user_id = ua.user_id
         <where>

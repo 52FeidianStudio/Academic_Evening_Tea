@@ -73,6 +73,7 @@ public class TblUserActivity  {
     /** 用户昵称 */
     @Excel(name = "用户名称")
     private String nickName;
+    private  String userName;
 
     /** 用户头像 */
     private String avatar;
