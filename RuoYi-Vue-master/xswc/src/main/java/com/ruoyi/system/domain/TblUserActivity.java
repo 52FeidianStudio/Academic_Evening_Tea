@@ -62,6 +62,25 @@ public class TblUserActivity  {
     private  String createBy;
     //更新人
     private  String updateBy;
+
+    /** 用户性别 */
+    @Excel(name = "用户性别", readConverterExp = "0=男,1=女,2=未知")
+    private String sex;
+    /**  学院*/
+    private  String faculty;
+    /**  姓名*/
+    private  String name;
+    /** 用户昵称 */
+    @Excel(name = "用户名称")
+    private String nickName;
+
+    /** 用户头像 */
+    private String avatar;
+    /**  学号*/
+    private  String studentId;
+
+
+
 }
 //
 //    public Long getId()

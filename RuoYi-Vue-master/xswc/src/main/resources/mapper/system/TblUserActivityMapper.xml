@@ -9,6 +9,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="userId"    column="user_id"    />
         <result property="activityId"    column="activity_id"    />
         <result property="status"    column="status"    />
+        <result property="sex"    column="sex"    />
+        <result property="faculty"    column="faculty"    />
+        <result property="name"    column="name"    />
+        <result property="nickName"    column="nick_name"    />
+        <result property="avatar"    column="avatar"    />
+        <result property="studentId"    column="student_id"    />
         <result property="createTime"    column="create_time"    />
         <result property="createBy"    column="create_by"    />
         <result property="updateTime"    column="update_time"    />
@@ -68,6 +74,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         join  tbl_activity on tbl_activity.id= tbl_user_activity.activity_id
         where  tbl_user_activity.user_id=#{userId}
 order by lat desc
+
+    </select>
+    <select id="selectTblUsersActivityList" resultType="com.ruoyi.system.domain.TblUserActivity" resultMap="TblUserActivityResult">
+select  ua.*,u.sex,u.faculty,u.name,u.nick_name,u.avatar,u.student_id
+from tbl_user_activity   ua
+join sys_user   u  on u.user_id = ua.user_id
+        <where>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="activityId != null "> and activity_id = #{activityId}</if>
+            <if test="status != null "> and status = #{status}</if>
+        </where>
 
     </select>
 

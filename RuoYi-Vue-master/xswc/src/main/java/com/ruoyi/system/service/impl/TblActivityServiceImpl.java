@@ -68,6 +68,11 @@ public class TblActivityServiceImpl implements ITblActivityService
         DeptActivity deptActivity = new DeptActivity();
         deptActivity.setActivityId(tblActivity.getId());
         tblActivity.setDeptActivities(deptActivityMapper.selectDeptActivityList(deptActivity));
+
+        //展示报名的人信息
+        tblUserActivity.setUserId(null);
+        List<TblUserActivity> tblUserActivities=tblUserActivityMapper.selectTblUsersActivityList(tblUserActivity);
+        tblActivity.setTblUserActivities(tblUserActivities);
         return tblActivity;
     }
 
@@ -75,8 +80,6 @@ public class TblActivityServiceImpl implements ITblActivityService
      * 用户查询活动集合
      *
      * @param tblActivity 用户查询活动
-     * @param pageNum
-     * @param pageSize
      * @return 用户查询活动集合
      */
     @updateActivity

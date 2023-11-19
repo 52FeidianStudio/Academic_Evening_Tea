@@ -79,4 +79,6 @@ public interface TblUserActivityMapper
     public int deleteTblUserActivityByIds(Long[] ids);
 
     public int  deleteTblUserActivityByActivityIds(Long[] ids);
+
+    List<TblUserActivity> selectTblUsersActivityList(TblUserActivity tblUserActivity);
 }

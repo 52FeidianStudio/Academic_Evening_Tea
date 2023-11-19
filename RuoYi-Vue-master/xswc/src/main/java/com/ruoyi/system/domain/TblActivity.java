@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.ruoyi.common.core.domain.entity.SysUser;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -116,6 +117,8 @@ public class TblActivity
     @Excel(name = "报名二维码路径")
     private String applicationFilePath;
 
+
+    private  List<TblUserActivity>  tblUserActivities;
 //    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss ")
 //    @Excel(name = "发布时间*", width = 30, dateFormat = "yyyy-MM-dd hh:mm:ss")
 //创建时间
