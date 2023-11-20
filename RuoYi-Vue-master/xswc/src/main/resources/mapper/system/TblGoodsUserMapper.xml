@@ -57,9 +57,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">#{id},</if>
             <if test="goodsId != null">#{goodsId},</if>
-            <if test="total != null">#{total},</if>
             <if test="userId != null">#{userId},</if>
             <if test="nums != null">#{nums},</if>
+            <if test="total != null">#{total},</if>
             <if test="updateTime != null">#{updateTime},</if>
             <if test="updateBy != null">#{updateBy},</if>
             <if test="createTime != null">#{createTime},</if>

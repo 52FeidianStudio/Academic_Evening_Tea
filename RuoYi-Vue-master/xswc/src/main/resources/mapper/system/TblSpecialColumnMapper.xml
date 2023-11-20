@@ -65,8 +65,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="summary != null">#{summary},</if>
             <if test="content != null">#{content},</if>
             <if test="likeCount != null">#{likeCount},</if>
-            <if test="img != null">#{img},</if>
             <if test="viewsNums != null">#{viewsNums},</if>
+            <if test="img != null">#{img},</if>
             <if test="updateTime != null">#{updateTime},</if>
             <if test="updateBy != null">#{updateBy},</if>
             <if test="createTime != null">#{createTime},</if>
