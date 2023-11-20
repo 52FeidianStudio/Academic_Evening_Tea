@@ -61,8 +61,6 @@
                 <if test="activityId !=null"> and activity_id=#{activityId} </if>
                 <if test="id !=null">and id=#{id} </if>
                 <if test="deptId !=null">and dept_id=#{deptId} </if>
-                <if test="resNum !=null">and res_num=#{resNum} </if>
-                <if test="maxNum !=null">and max_num=#{maxNum} </if>
             </where>
 
     </update>

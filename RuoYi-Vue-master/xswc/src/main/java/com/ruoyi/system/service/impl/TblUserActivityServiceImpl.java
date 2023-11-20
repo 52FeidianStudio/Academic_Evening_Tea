@@ -84,7 +84,7 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
         //检查用户的学院人数是否有限制
         DeptActivity deptActivity = new DeptActivity();
         deptActivity.setActivityId(tblUserActivity.getActivityId());
-//        deptActivity.setDeptId(deptId);
+        deptActivity.setDeptId(deptId);
         Long resNum = deptActivityMapper.getResNum(deptActivity);
 
         //该活动的已经报名人数不能超过总人数
