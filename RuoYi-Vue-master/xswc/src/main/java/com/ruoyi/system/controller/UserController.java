@@ -120,9 +120,15 @@ public class UserController extends BaseController
     @PutMapping("/resetPwd")
     public AjaxResult resetPwd(@RequestBody SysUser user)
     {
-        userService.checkUserAllowed(user);
+//        userService.checkUserAllowed(user);
         Long userId =SecurityUtils.getUserId();
         user.setUserId(userId);
+        SysUser sysUser = userService.selectUserById(userId);
+        String password = sysUser.getPassword();
+        String oldpassword = user.getOldpassword();
+        if(!SecurityUtils.encryptPassword(oldpassword).equals(password)){
+            return success("密码错误");
+        }
 //        userService.checkUserDataScope(user.getUserId());
         user.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
         user.setUpdateBy(getUsername());
