@@ -42,6 +42,15 @@ public class SysNotice extends BaseEntity
 
     //封面图片
     private  String img;
+    private  String title;
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     public String getImg() {
         return img;

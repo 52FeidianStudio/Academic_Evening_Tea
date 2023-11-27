@@ -10,6 +10,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="noticeType"     column="notice_type"     />
         <result property="noticeContent"  column="notice_content"  />
         <result property="status"         column="status"          />
+        <result property="img"         column="img"          />
+        <result property="title"         column="title"          />
         <result property="specialId"         column="special_id"          />
         <result property="createBy"       column="create_by"       />
         <result property="createTime"     column="create_time"     />
@@ -29,9 +31,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
     
     <select id="selectNoticeList" parameterType="SysNotice" resultMap="SysNoticeResult">
-      select  sn.*, tsc.img
+      select  sn.*, img,title
      from sys_notice  sn
-     left join tbl_special_column tsc on   tsc.id=sn.special_id
+     left  join tbl_special_column tsc on   tsc.id=sn.special_id
         <where>
 			<if test="noticeTitle != null and noticeTitle != ''">
 				AND notice_title like concat('%', #{noticeTitle}, '%')
@@ -42,7 +44,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="createBy != null and createBy != ''">
 				AND create_by like concat('%', #{createBy}, '%')
 			</if>
-			and status =0
+            <if test="status != null ">
+                and status =#{status}
+            </if>
 		</where>
     </select>
     
