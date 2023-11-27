@@ -359,6 +359,7 @@ public class SysRoleServiceImpl implements ISysRoleService
     public int deleteRoleByIds(Long[] roleIds)
     {
         for (Long roleId : roleIds)
+
         {
 //            checkRoleAllowed(new SysRole(roleId));
             checkRoleDataScope(roleId);

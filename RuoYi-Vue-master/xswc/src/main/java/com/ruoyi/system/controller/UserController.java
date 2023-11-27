@@ -15,6 +15,7 @@ import com.ruoyi.system.service.*;
 import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -123,10 +124,12 @@ public class UserController extends BaseController
 //        userService.checkUserAllowed(user);
         Long userId =SecurityUtils.getUserId();
         user.setUserId(userId);
+
         SysUser sysUser = userService.selectUserById(userId);
-        String password = sysUser.getPassword();
-        String oldpassword = user.getOldpassword();
-        if(!SecurityUtils.encryptPassword(oldpassword).equals(password)){
+
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        boolean isFalse = passwordEncoder.matches(user.getOldpassword(),sysUser.getPassword() );
+        if(!isFalse){
             return success("密码错误");
         }
 //        userService.checkUserDataScope(user.getUserId());
