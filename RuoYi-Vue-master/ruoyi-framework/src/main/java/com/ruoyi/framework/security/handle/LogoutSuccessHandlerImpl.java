@@ -38,7 +38,7 @@ public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
             throws IOException, ServletException
     {
-        LoginUser loginUser = tokenService.getLoginUser(request);
+        LoginUser loginUser = tokenService.getLoginUser(request,response);
         if (StringUtils.isNotNull(loginUser))
         {
             String userName = loginUser.getUsername();

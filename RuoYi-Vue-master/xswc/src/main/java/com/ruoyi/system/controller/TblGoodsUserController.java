@@ -82,7 +82,7 @@ public class TblGoodsUserController extends BaseController
 //    @PreAuthorize("@ss.hasPermi('system:user:add')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.INSERT)
     @PostMapping
-    @Transactional
+//    @Transactional
     public AjaxResult add(@RequestBody TblGoodsUser tblGoodsUser)
     {
         Long userId = SecurityUtils.getUserId();

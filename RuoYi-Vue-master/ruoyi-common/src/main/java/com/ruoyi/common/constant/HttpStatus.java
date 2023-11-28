@@ -52,6 +52,11 @@ public class HttpStatus
      */
     public static final int UNAUTHORIZED = 401;
 
+    /*
+    * token过期
+    */
+    public static final int TOKENEXPIRED = 410;
+
     /**
      * 访问受限，授权过期
      */

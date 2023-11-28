@@ -14,15 +14,26 @@ public class TesttttController {
 
     @GetMapping("/test")
     public String testController(String id,Integer flag) {
-        Runnable sssss = new Runnable() {
-            @Override
-            public void run() {
-                System.out.println("sssss");
-            }
-        };
+        RRRRRRunnable sssss = new RRRRRRunnable();
+        sssss.setParam("sadasdas");
         if(flag==1) {
             executior.execute(sssss);
         }
         return  "test";
     }
+
+   class RRRRRRunnable implements Runnable {
+
+       private String param;
+
+       public void setParam(String param) {
+           this.param = param;
+       }
+
+       @Override
+       public void run() {
+           System.out.println("sssss"+this.param);
+
+       }
+   }
 }

@@ -27,8 +27,15 @@ public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint, S
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e)
             throws IOException
     {
-        int code = HttpStatus.UNAUTHORIZED;
-        String msg = StringUtils.format("请求访问：{}，认证失败，无法访问系统资源", request.getRequestURI());
-        ServletUtils.renderString(response, JSON.toJSONString(AjaxResult.error(code, msg)));
+        Object tokenExpired = request.getAttribute("tokenExpired");
+        if (StringUtils.isNotNull(tokenExpired)) {
+            String msg = StringUtils.format("请求访问：{}，toekn过期或丢失，无法访问系统资源", request.getRequestURI());
+
+            ServletUtils.renderString(response, JSON.toJSONString(AjaxResult.error(HttpStatus.TOKENEXPIRED, msg)));
+        } else {
+            String msg = StringUtils.format("请求访问：{}，认证失败，无法访问系统资源", request.getRequestURI());
+
+            ServletUtils.renderString(response, JSON.toJSONString(AjaxResult.error(HttpStatus.UNAUTHORIZED, msg)));
+        }
     }
 }
