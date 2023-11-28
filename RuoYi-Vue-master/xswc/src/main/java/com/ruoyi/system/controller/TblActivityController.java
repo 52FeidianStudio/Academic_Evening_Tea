@@ -1,6 +1,7 @@
 package com.ruoyi.system.controller;
 
 import java.util.List;
+import javax.annotation.security.PermitAll;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ruoyi.common.utils.SecurityUtils;
@@ -38,6 +39,7 @@ public class TblActivityController extends BaseController
      * 用户查询活动集合
      */
 //    @PreAuthorize("@ss.hasPermi('system:activity:list')")
+
     @PostMapping("/list")
     public TableDataInfo Userlist(@RequestBody TblActivity tblActivity)
     {
