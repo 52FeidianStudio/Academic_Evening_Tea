@@ -80,7 +80,7 @@ public class UserController extends BaseController
     {
         Long userId = SecurityUtils.getUserId();
         user.setUserId(userId);
-        userService.checkUserAllowed(user);
+//        userService.checkUserAllowed(user);
 //        userService.checkUserDataScope(user.getUserId());
         if (!userService.checkUserNameUnique(user))
         {
@@ -146,7 +146,7 @@ public class UserController extends BaseController
     @PutMapping("/changeStatus")
     public AjaxResult changeStatus(@RequestBody SysUser user)
     {
-        userService.checkUserAllowed(user);
+//        userService.checkUserAllowed(user);
         userService.checkUserDataScope(user.getUserId());
         user.setUpdateBy(getUsername());
         return toAjax(userService.updateUserStatus(user));

@@ -122,7 +122,7 @@ public class TblSpecialColumnController extends BaseController
         return success();
     }
     /**
-     * 点赞
+     * 取消点赞
      * @param
      * @return
      */

@@ -458,7 +458,7 @@ public class UserServiceImpl implements IUserService
     {
         for (Long userId : userIds)
         {
-            checkUserAllowed(new SysUser(userId));
+//            checkUserAllowed(new SysUser(userId));
             checkUserDataScope(userId);
         }
         // 删除用户与角色关联
