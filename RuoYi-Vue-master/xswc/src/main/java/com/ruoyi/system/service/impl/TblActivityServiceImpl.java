@@ -73,6 +73,11 @@ public class TblActivityServiceImpl implements ITblActivityService
         tblUserActivity.setUserId(null);
         List<TblUserActivity> tblUserActivities=tblUserActivityMapper.selectTblUsersActivityList(tblUserActivity);
         tblActivity.setTblUserActivities(tblUserActivities);
+
+        for (TblUserActivity userActivity : tblUserActivities) {
+            System.out.println("***");
+            System.out.println(userActivity);
+        }
         return tblActivity;
     }
 

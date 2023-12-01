@@ -41,7 +41,7 @@ public interface ITblRecommendService
      * @param tblRecommend 【请填写功能名称】
      * @return 结果
      */
-    public int updateTblRecommend(TblRecommend tblRecommend);
+    public int updateTblRecommend(TblRecommend tblRecommend) throws Exception;
 
     /**
      * 批量删除【请填写功能名称】

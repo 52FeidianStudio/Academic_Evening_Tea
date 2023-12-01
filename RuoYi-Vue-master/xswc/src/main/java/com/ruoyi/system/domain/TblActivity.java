@@ -162,6 +162,7 @@ private String createTime;
     private Integer pageNum;
     private Integer pageSize;
 
+    private String startTime;
 
 //    public void setId(Long id)
 //    {

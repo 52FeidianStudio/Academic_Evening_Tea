@@ -3,16 +3,20 @@ package com.ruoyi.system.service.impl;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.utils.SecurityUtils;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.constant.CreditConstant;
 import com.ruoyi.system.domain.*;
 import com.ruoyi.system.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.service.ITblRecommendService;
+
+import javax.xml.crypto.Data;
 
 /**
  * 【请填写功能名称】Service业务层处理
@@ -119,43 +123,64 @@ public class TblRecommendServiceImpl implements ITblRecommendService
      * @param tblRecommend 【请填写功能名称】
      * @return 结果
      */
+    /**
+     * 覆盖父类方法，更新TblRecommend对象信息，并处理相应业务逻辑。
+     *
+     * @param tblRecommend 包含更新信息的TblRecommend对象
+     * @return 更新结果的整数表示
+     */
     @Override
-    public int updateTblRecommend(TblRecommend tblRecommend)
-    {
-        Long userId = SecurityUtils.getUserId();
+    public int updateTblRecommend(TblRecommend tblRecommend) throws Exception {
+        // 获取当前用户的ID
+        Long userId = tblRecommend.getUserId();
+
+        // 查询更新前的TblRecommend对象
         TblRecommend pretblRecommend = tblRecommendMapper.selectTblRecommendById(tblRecommend.getId());
+
+        // 获取更新后的状态值
         Integer status = tblRecommend.getStatus();
-        if(pretblRecommend.getStatus()==status)
-        {
+        Integer preStatus = pretblRecommend.getStatus();//之前状态
+
+        if(status == null||status == preStatus){//对status不修改
             return tblRecommendMapper.updateTblRecommend(tblRecommend);
         }
-        if(status==2)
-        {
-            //加积分
-            SysUser sysUser = sysUserMapper.selectUserById(userId);
-            sysUser.setCredit(sysUser.getCredit().add(new BigDecimal(1)));
-            sysUserMapper.updateUser(sysUser);
-            //加积分记录
-            TblCreditUser tblCreditUser = new TblCreditUser();
-            tblCreditUser.setUserId(userId);
-            tblCreditUser.setCreditNum(new BigDecimal(1));
-            tblCreditUser.setCreditType(CreditConstant.RECOMMEND.longValue());
-            tblCreditUserMapper.insertTblCreditUser(tblCreditUser);
+
+        String updateTime = pretblRecommend.getUpdateTime();
+
+
+        int addValue = 0;
+        if(StringUtils.isNull(updateTime)){
+            if(status==2) addValue = 1 ;
+            if(status==3) addValue = 3 ;
+        }else{
+            if(status==1) throw new Exception("积分已添加，不可修改");
+            if(status==2) {
+                if(preStatus==3) throw new Exception("积分已添加，不可修改");
+            }
+            if(status==3){
+                if(preStatus==1) throw new Exception("积分已添加，不可修改");
+                if(preStatus==2) addValue=2;
+            }
         }
-        if (status==3)
-        {
-            //加积分
-            SysUser sysUser = sysUserMapper.selectUserById(userId);
-            sysUser.setCredit(sysUser.getCredit().add(new BigDecimal(2)));
-            sysUserMapper.updateUser(sysUser);
-            //加积分记录
-            TblCreditUser tblCreditUser = new TblCreditUser();
-            tblCreditUser.setUserId(userId);
-            tblCreditUser.setCreditNum(new BigDecimal(2));
-            tblCreditUser.setCreditType(CreditConstant.RECOMMEND.longValue());
-            tblCreditUserMapper.insertTblCreditUser(tblCreditUser);
-        }
-        return tblRecommendMapper.updateTblRecommend(tblRecommend);
+
+        this.addCredit(userId, addValue);
+
+        return  tblRecommendMapper.updateTblRecommendAndUpdateTime(tblRecommend);
+
+    }
+
+    void addCredit(Long userId,int addValue){
+        // 加积分
+        SysUser sysUser = sysUserMapper.selectUserById(userId);
+        sysUser.setCredit(sysUser.getCredit().add(new BigDecimal(addValue)));
+        sysUserMapper.updateUser(sysUser);
+
+        // 记录积分变动
+        TblCreditUser tblCreditUser = new TblCreditUser();
+        tblCreditUser.setUserId(userId);
+        tblCreditUser.setCreditNum(new BigDecimal(2));
+        tblCreditUser.setCreditType(CreditConstant.RECOMMEND.longValue());
+        tblCreditUserMapper.insertTblCreditUser(tblCreditUser);
     }
 
     /**

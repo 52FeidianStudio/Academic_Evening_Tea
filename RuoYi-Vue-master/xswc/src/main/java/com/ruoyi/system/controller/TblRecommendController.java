@@ -114,8 +114,8 @@ public class TblRecommendController extends BaseController
 //    @PreAuthorize("@ss.hasPermi('system:recommend:edit')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.UPDATE)
     @PutMapping
-    public AjaxResult edit(@RequestBody TblRecommend tblRecommend)
-    {
+    @Transactional
+    public AjaxResult edit(@RequestBody TblRecommend tblRecommend) throws Exception {
         return toAjax(tblRecommendService.updateTblRecommend(tblRecommend));
     }
 

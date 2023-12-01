@@ -94,6 +94,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </trim>
         where id = #{id}
     </update>
+    <update id="updateTblRecommendAndUpdateTime" parameterType="TblRecommend">
+        update tbl_recommend
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null "> user_id = #{userId},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="lecturerName != null">lecturer_name = #{lecturerName},</if>
+            <if test="theme != null">theme = #{theme},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="likeCount != null">like_count = #{likeCount},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+        </trim>
+        ,update_time = NOW()
+        where id = #{id}
+    </update>
 
     <delete id="deleteTblRecommendById" parameterType="Long">
         delete from tbl_recommend where id = #{id}

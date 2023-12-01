@@ -47,6 +47,7 @@ public interface TblRecommendMapper
      * @return 结果
      */
     public int updateTblRecommend(TblRecommend tblRecommend);
+    public int updateTblRecommendAndUpdateTime(TblRecommend tblRecommend);
 
     /**
      * 删除【请填写功能名称】
