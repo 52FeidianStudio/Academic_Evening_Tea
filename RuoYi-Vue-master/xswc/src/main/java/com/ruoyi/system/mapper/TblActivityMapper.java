@@ -79,4 +79,5 @@ public interface TblActivityMapper
     Long getIsEndByActivityId(Long activityId);
 
 
+    Long getIsStartByActivityId(Long activityId);
 }

@@ -46,11 +46,14 @@ public class UpdateActivityAspect {
 
             String avalibableTimeStr = tblActivity.getStartTime();//获取可以报名的时间
             LocalDateTime avalibableTime = StringUtils.isNull(avalibableTimeStr)?
-                    LocalDateTime.parse("2099-12-12 00:00:00", formatter):
+                    LocalDateTime.parse("1999-12-12 00:00:00", formatter)://未来时间不可能到达
                     LocalDateTime.parse(avalibableTimeStr, formatter);
+
+            Duration begainEntoll = Duration.between(avalibableTime, now);
 
             // 将时间字符串转化成时间格式
             LocalDateTime startTime = LocalDateTime.parse(time, formatter);
+
 
             // 计算活动开始时间与当前时间的差距
             Duration duration = Duration.between(startTime, now);
@@ -58,7 +61,24 @@ public class UpdateActivityAspect {
             // 定义一个两小时的时长
             Duration twoHours = Duration.ofHours(2);
 
+            //以下为关闭活动操作
             // 如果活动持续时间超过两小时
+            if(tblActivity.getId()==89)
+                System.out.println(begainEntoll.compareTo(Duration.ofHours(0)));
+            int i = begainEntoll.compareTo(Duration.ofHours(0));
+            System.out.println(i);
+
+            if(begainEntoll.compareTo(Duration.ofHours(0)) < 0){
+                tblActivity.setIsClose(0);
+                tblActivityMapper.updateTblActivity(tblActivity);
+                continue;
+            }else{
+                Integer isClose = tblActivity.getIsClose();
+                if(isClose == 0) {
+                    tblActivity.setIsClose(1);
+                    tblActivityMapper.updateTblActivity(tblActivity);
+                }
+            }
             if(duration.compareTo(twoHours) >= 0){
                 // 设置活动为关闭状态
                 tblActivity.setIsClose(ActivityConstant.ACTIVITYISCLOSE);
@@ -71,6 +91,11 @@ public class UpdateActivityAspect {
                 // 更新TblActivity记录
                 tblActivityMapper.updateTblActivity(tblActivity);
             }
+            /*
+            * 规则：
+            * 如果活动开始后时间超过两小时，则表明活动已经关闭了
+            * 如果还没到活动开始时间则优先设置为未开始
+            * */
         }
     }
 }

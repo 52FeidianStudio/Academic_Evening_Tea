@@ -124,17 +124,32 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
     @updateActivity
     public int updateTblUserActivity(TblUserActivity tblUserActivity)
     {
-       Long userId= SecurityUtils.getUserId();
+        Long userId= SecurityUtils.getUserId();
         tblUserActivity.setUserId(userId);
-         Long isEnd=tblActivityMapper.getIsEndByActivityId(tblUserActivity.getActivityId());
+        Long isEnd=tblActivityMapper.getIsEndByActivityId(tblUserActivity.getActivityId());
+        Long isStart=tblActivityMapper.getIsStartByActivityId(tblUserActivity.getActivityId());
         TblUserActivity tblUserActivityvo = tblUserActivityMapper.selectTblUserActivityByUA(tblUserActivity);
 
+
+        if (isStart == 0){
+//
+//            tblUserActivity.setStatus(ActivityConstant.NOSHOW);
+//            tblUserActivityMapper.updateTblUserActivity(tblUserActivity);
+
+            return ActivityConstant.REFISTERISNOTSTART;
+
+        }
+
+
         //过了签到时间
-        if (isEnd.equals(ActivityConstant.ACTIVITYISEND.longValue())){
+        if (isEnd.equals(ActivityConstant.ACTIVITYISEND.longValue())  ){
+
             tblUserActivity.setStatus(ActivityConstant.NOSHOW);
             tblUserActivityMapper.updateTblUserActivity(tblUserActivity);
+
             return ActivityConstant.REFISTERTIMEOUT;
-    }
+
+        }
         //没有报名该活动
         if(tblUserActivityvo ==null ) {
             return  ActivityConstant.NOREGISTERED;
