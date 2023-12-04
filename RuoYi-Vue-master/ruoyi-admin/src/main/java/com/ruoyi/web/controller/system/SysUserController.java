@@ -150,7 +150,7 @@ public class SysUserController extends BaseController
     public AjaxResult edit(@Validated @RequestBody SysUser user)
     {
 //        userService.checkUserAllowed(user);
-        userService.checkUserDataScope(user.getUserId());
+//        userService.checkUserDataScope(user.getUserId());
         if (!userService.checkUserNameUnique(user))
         {
             return error("修改用户'" + user.getUserName() + "'失败，登录账号已存在");
@@ -191,7 +191,7 @@ public class SysUserController extends BaseController
     public AjaxResult resetPwd(@RequestBody SysUser user)
     {
 //        userService.checkUserAllowed(user);
-        userService.checkUserDataScope(user.getUserId());
+//        userService.checkUserDataScope(user.getUserId());
         user.setPassword(SecurityUtils.encryptPassword(user.getPassword()));
         user.setUpdateBy(getUsername());
         return toAjax(userService.resetPwd(user));
@@ -206,7 +206,7 @@ public class SysUserController extends BaseController
     public AjaxResult changeStatus(@RequestBody SysUser user)
     {
 //        userService.checkUserAllowed(user);
-        userService.checkUserDataScope(user.getUserId());
+//        userService.checkUserDataScope(user.getUserId());
         user.setUpdateBy(getUsername());
         return toAjax(userService.updateUserStatus(user));
     }

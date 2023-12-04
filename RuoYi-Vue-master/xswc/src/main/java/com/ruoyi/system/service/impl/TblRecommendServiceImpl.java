@@ -25,7 +25,7 @@ import javax.xml.crypto.Data;
  * @date 2023-10-25
  */
 @Service
-public class TblRecommendServiceImpl implements ITblRecommendService 
+public class TblRecommendServiceImpl implements ITblRecommendService
 {
     @Autowired
     private TblRecommendMapper tblRecommendMapper;
@@ -178,7 +178,7 @@ public class TblRecommendServiceImpl implements ITblRecommendService
         // 记录积分变动
         TblCreditUser tblCreditUser = new TblCreditUser();
         tblCreditUser.setUserId(userId);
-        tblCreditUser.setCreditNum(new BigDecimal(2));
+        tblCreditUser.setCreditNum(new BigDecimal(addValue));
         tblCreditUser.setCreditType(CreditConstant.RECOMMEND.longValue());
         tblCreditUserMapper.insertTblCreditUser(tblCreditUser);
     }
