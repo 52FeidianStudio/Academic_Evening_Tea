@@ -10,6 +10,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 【请填写功能名称】对象 tbl_special_column
@@ -57,7 +58,7 @@ public class TblSpecialColumn
 
     //文章封面照片
     private String img;
-
+    private List<SysNotice> isNotice;
 
     //创建时间
     private String createTime;

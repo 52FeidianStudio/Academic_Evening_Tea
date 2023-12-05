@@ -8,7 +8,9 @@ import java.util.List;
 import com.ruoyi.common.utils.DateUtils;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.system.annotation.create;
+import com.ruoyi.system.domain.SysNotice;
 import com.ruoyi.system.domain.TblLike;
+import com.ruoyi.system.mapper.SysNoticeMapper;
 import com.ruoyi.system.mapper.TblLikeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,6 +32,8 @@ public class TblSpecialColumnServiceImpl implements ITblSpecialColumnService
     private TblSpecialColumnMapper tblSpecialColumnMapper;
 @Autowired
 private TblLikeMapper tblLikeMapper;
+@Autowired
+private SysNoticeMapper sysNoticeMapper;
     /**
      * 增加文章浏览量
      * @param id 【请填写功能名称】主键
@@ -115,6 +119,12 @@ private TblLikeMapper tblLikeMapper;
                 tblLike.setSpecialId(tblSpecialColumn1.getId());
                 TblLike tblLike1 = tblLikeMapper.selectTblLike(tblLike);
                 tblSpecialColumn1.setTblLike(tblLike1);
+
+                //查询是否被设为公告
+                SysNotice sysNotice =new SysNotice();
+                sysNotice.setSpecialId(tblSpecialColumn1.getId());
+                List<SysNotice> isNotice = sysNoticeMapper.selectNoticeList(sysNotice);
+                tblSpecialColumn1.setIsNotice(isNotice);
             }
         }
         return tblSpecialColumns;
