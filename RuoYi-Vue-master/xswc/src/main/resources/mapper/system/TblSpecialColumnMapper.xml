@@ -28,9 +28,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="title != null  and title != ''"> and title = #{title}</if>
             <if test="kind != null "> and kind = #{kind}</if>
-            <if test="summary != null  and summary != ''"> and summary = #{summary}</if>
-            <if test="img != null  and img != ''"> and img = #{img}</if>
-            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="summary != null "> and summary = #{summary}</if>
+            <if test="img != null  "> and img = #{img}</if>
+            <if test="content != null  "> and content = #{content}</if>
             <if test="likeCount != null "> and like_count = #{likeCount}</if>
             <if test="viewsNums != null "> and views_nums = #{viewsNums}</if>
         </where>

@@ -129,6 +129,8 @@ private String createTime;
     private  String createBy;
     //更新人
     private  String updateBy;
+//活动报名开始时间
+    private  String datetime;
 
 
 

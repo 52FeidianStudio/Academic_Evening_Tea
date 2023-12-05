@@ -41,7 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectTblActivityVo">
-        select id, details, img, user_id, user_name,speaker_name, user_tel, hot, hb_num, top, givelike, views, money, type, state, is_end,is_close,time, address, hb_keyword, hong, user_img2, cityname, lat, lng, qphone, application_file_path, signin_file_path,create_time,create_by,update_by,update_time,start_time from tbl_activity
+        select id, details, img, user_id,user_name,speaker_name, user_tel, hot, hb_num, top, givelike, views, money, type, state, is_end,is_close,time, address, hb_keyword, hong, user_img2, cityname, lat, lng, qphone, application_file_path, signin_file_path,create_time,create_by,update_by,update_time,start_time from tbl_activity
     </sql>
 
     <select id="selectTblActivityList" parameterType="TblActivityVO" resultMap="TblActivityResult">

@@ -47,7 +47,8 @@ public class TblGoodsUser
 
     //1未领取2已领取
     private  Integer state;
-
+    private  String phonenumber;
+    private  String username;
     //创建时间
     private String createTime;
     //更新时间

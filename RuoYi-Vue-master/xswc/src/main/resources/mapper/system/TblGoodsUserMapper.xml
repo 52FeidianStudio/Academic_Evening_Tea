@@ -11,7 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="nums"    column="nums"    />
         <result property="state"    column="state"    />
         <result property="total"    column="total"    />
-        <result property="picture"    column="picture"    />
+        <result property="username"    column="username"    />
         <result property="coverPicture"    column="cover_picture"    />
         <result property="updateTime"    column="update_time"    />
         <result property="updateBy"    column="update_by"    />
@@ -25,9 +25,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="selectTblGoodsUserList" parameterType="TblGoodsUser" resultMap="TblGoodsUserResult">
 <!--        <include refid="selectTblGoodsUserVo"/>-->
-           select gu.*,g.name,g.cover_picture
+           select gu.*,g.name,g.cover_picture,u.name as username ,u.phonenumber
            from tbl_goods_user gu
            join tbl_goods g on gu.goods_id=g.id
+            join sys_user u on u.user_id = gu.user_id
         <where>  
             <if test="goodsId != null "> and goods_id = #{goodsId}</if>
             <if test="userId != null "> and user_id = #{userId}</if>

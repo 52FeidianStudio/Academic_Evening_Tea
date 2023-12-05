@@ -63,10 +63,7 @@ public class UpdateActivityAspect {
 
             //以下为关闭活动操作
             // 如果活动持续时间超过两小时
-            if(tblActivity.getId()==89)
-                System.out.println(begainEntoll.compareTo(Duration.ofHours(0)));
-            int i = begainEntoll.compareTo(Duration.ofHours(0));
-            System.out.println(i);
+
 
             if(begainEntoll.compareTo(Duration.ofHours(0)) < 0){
                 tblActivity.setIsClose(0);
