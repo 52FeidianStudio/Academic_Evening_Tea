@@ -31,8 +31,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             join sys_user u on u.user_id = gu.user_id
         <where>  
             <if test="goodsId != null "> and goods_id = #{goodsId}</if>
-            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="userId != null "> and gu.user_id = #{userId}</if>
             <if test="nums != null "> and nums = #{nums}</if>
+            <if test="state != null "> and state = #{state}</if>
+            <if test="username != null "> and u.name = #{username}</if>
         </where>
         order by create_time desc
     </select>
