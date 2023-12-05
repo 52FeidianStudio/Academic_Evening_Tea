@@ -56,7 +56,7 @@ public class UpdateActivityAspect {
 
 
             // 计算活动开始时间与当前时间的差距
-            Duration duration = Duration.between(startTime, now);
+            Duration duration = Duration.between(now , startTime);
 
             // 定义一个两小时的时长
             Duration twoHours = Duration.ofHours(2);
@@ -76,7 +76,7 @@ public class UpdateActivityAspect {
                     tblActivityMapper.updateTblActivity(tblActivity);
                 }
             }
-            if(duration.compareTo(twoHours) >= 0){
+            if(duration.compareTo(twoHours) <=0){
                 // 设置活动为关闭状态
                 tblActivity.setIsClose(ActivityConstant.ACTIVITYISCLOSE);
 
