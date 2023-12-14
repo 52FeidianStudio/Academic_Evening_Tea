@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.TblHeadMapper">
+    
+    <resultMap type="TblHead" id="TblHeadResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="email"    column="email"    />
+        <result property="number"    column="number"    />
+    </resultMap>
+
+    <sql id="selectTblHeadVo">
+        select id, name, email, number from tbl_head
+    </sql>
+
+    <select id="selectTblHeadList" parameterType="TblHead" resultMap="TblHeadResult">
+        <include refid="selectTblHeadVo"/>
+        <where>  
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="email != null  and email != ''"> and email = #{email}</if>
+            <if test="number != null  and number != ''"> and number = #{number}</if>
+        </where>
+    </select>
+    
+    <select id="selectTblHeadById" parameterType="Long" resultMap="TblHeadResult">
+        <include refid="selectTblHeadVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTblHead" parameterType="TblHead" useGeneratedKeys="true" keyProperty="id">
+        insert into tbl_head
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="email != null">email,</if>
+            <if test="number != null">number,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="email != null">#{email},</if>
+            <if test="number != null">#{number},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTblHead" parameterType="TblHead">
+        update tbl_head
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="number != null">number = #{number},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTblHeadById" parameterType="Long">
+        delete from tbl_head where id = #{id}
+    </delete>
+
+    <delete id="deleteTblHeadByIds" parameterType="String">
+        delete from tbl_head where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

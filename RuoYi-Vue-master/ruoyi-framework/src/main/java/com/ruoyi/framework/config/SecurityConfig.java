@@ -117,7 +117,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                         "/**/xswc/**",
                         "/**/goods/list",  "/**/goods/{id}",
                         "/**/recommend/list", "/**/recommend/{id}",
-                        "/**/notice/list"
+                        "/**/notice/list",
+                        "/**/head/list"
                 ).permitAll()
                 .regexMatchers(HttpMethod.GET, "/.+/column/\\d+/\\d+")
                 .permitAll()
