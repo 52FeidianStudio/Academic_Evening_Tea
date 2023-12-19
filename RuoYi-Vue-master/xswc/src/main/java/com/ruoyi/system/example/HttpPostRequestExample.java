@@ -137,7 +137,7 @@ public class HttpPostRequestExample {
         // 请求体
         String requestBody = "{" +
                 "\"page\":\"pages/activity/ActivityDetails\"," +
-                "\"scene\":\"id=" + activityId.toString() + "\"," +
+                "\"scene\":\"" + activityId.toString() + "\"," +
                 "\"check_path\":false," +
                 "\"env_version\":\"release\"" +
                 "}";
@@ -187,7 +187,7 @@ public class HttpPostRequestExample {
         // 请求体
         String requestBody = "{" +
                 "\"page\":\"pages/activity/SignCheck\"," +
-                "\"scene\":\"id=" + activityId.toString() + "\"," +
+                "\"scene\":\"" + activityId.toString() + "\"," +
                 "\"check_path\":false," +
                 "\"env_version\":\"release\"" +
                 "}";

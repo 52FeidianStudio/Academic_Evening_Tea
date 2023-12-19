@@ -54,7 +54,9 @@ private String avatar;
 
     //评论
     private List<TblRecommendComment> tblRecommendCommnets;
-
+    private String lng;
+    private Integer pageNum;
+    private Integer pageSize;
 
     //创建时间
     private String createTime;

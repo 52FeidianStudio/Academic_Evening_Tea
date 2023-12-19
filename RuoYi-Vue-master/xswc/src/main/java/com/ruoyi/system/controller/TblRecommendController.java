@@ -39,7 +39,10 @@ public class TblRecommendController extends BaseController
     @GetMapping("/list")
     public TableDataInfo list(TblRecommend tblRecommend)
     {
-        startPage();
+        if(tblRecommend.getPageNum()!=null && tblRecommend.getPageSize()!=null)
+        {
+            startPage();
+        }
         List<TblRecommend> list = tblRecommendService.selectTblRecommendList(tblRecommend);
         return getDataTable(list);
     }

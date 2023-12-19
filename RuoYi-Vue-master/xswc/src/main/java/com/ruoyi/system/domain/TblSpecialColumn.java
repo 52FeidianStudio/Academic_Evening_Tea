@@ -68,6 +68,8 @@ public class TblSpecialColumn
     private  String createBy;
     //更新人
     private  String updateBy;
+    private Integer pageNum;
+    private Integer pageSize;
 
 
 //

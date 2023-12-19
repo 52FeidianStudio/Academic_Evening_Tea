@@ -41,7 +41,9 @@ public class TblSpecialColumnController extends BaseController
     @GetMapping("/list")
     public TableDataInfo list(TblSpecialColumn tblSpecialColumn)
     {
-        startPage();
+        if(tblSpecialColumn.getPageNum() !=null && tblSpecialColumn.getPageSize() !=null){
+            startPage();
+        }
         List<TblSpecialColumn> list = tblSpecialColumnService.selectTblSpecialColumnList(tblSpecialColumn);
         return getDataTable(list);
     }
