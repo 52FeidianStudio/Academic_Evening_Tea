@@ -198,12 +198,20 @@ private SysNoticeMapper sysNoticeMapper;
      */
     @Override
     public int disLike(Long id) {
+        //是否有点赞记录
+        Long userId = SecurityUtils.getUserId();
+        TblLike tblLike = new TblLike();
+        tblLike.setUserId(userId);
+        tblLike.setSpecialId(id);
+        TblLike tblLike1 = tblLikeMapper.selectTblLike(tblLike);
+        if(tblLike1==null)//没有   不删除，不减少
+        {
+            return 0;
+        }
         //减少点赞数
         TblSpecialColumn tblSpecialColumn = tblSpecialColumnMapper.selectTblSpecialColumnById(id);
         tblSpecialColumn.setLikeCount(tblSpecialColumn.getLikeCount()-1);
         //删除点赞记录
-        Long userId = SecurityUtils.getUserId();
-        TblLike tblLike = new TblLike();
         tblLike.setUserId(userId);
         tblLike.setSpecialId(id);
         tblLikeMapper.deleteTblLike(tblLike);
