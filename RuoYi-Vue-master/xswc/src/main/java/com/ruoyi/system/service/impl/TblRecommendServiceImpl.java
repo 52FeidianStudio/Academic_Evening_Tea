@@ -240,14 +240,19 @@ public class TblRecommendServiceImpl implements ITblRecommendService
      */
     @Override
     public int dislike(Long id) {
+        //判断是否点过赞
+        TblLike tblLike = new TblLike();
+        tblLike.setRecommendId(id);
+        tblLike.setUserId(SecurityUtils.getUserId());
+        TblLike tblLike1 = tblLikeMapper.selectTblLike(tblLike);
+        if(tblLike1==null)// 没有   不取消
+        {
+            return 0;
+        }
         //减少点赞数
         TblRecommend tblRecommend = tblRecommendMapper.selectTblRecommendById(id);
         tblRecommend.setLikeCount(tblRecommend.getLikeCount()-1);
         //删除点赞记录
-        Long userId = SecurityUtils.getUserId();
-        TblLike tblLike = new TblLike();
-        tblLike.setUserId(userId);
-        tblLike.setRecommendId(id);
         tblLikeMapper.deleteTblLike(tblLike);
         return tblRecommendMapper.updateTblRecommend(tblRecommend);
     }
