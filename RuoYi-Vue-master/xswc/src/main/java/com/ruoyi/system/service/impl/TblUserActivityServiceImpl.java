@@ -1,12 +1,17 @@
 package com.ruoyi.system.service.impl;
 
 import java.math.BigDecimal;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.utils.SecurityUtils;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.annotation.updateActivity;
 import com.ruoyi.system.annotation.updateUserActivity;
+import com.ruoyi.system.aspect.UpdateActivityAspect;
 import com.ruoyi.system.constant.ActivityConstant;
 import com.ruoyi.system.constant.CreditConstant;
 import com.ruoyi.system.constant.ResultConstant;
@@ -74,9 +79,16 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
      */
     @Override
     @Transactional
-    @updateActivity
     public int insertTblUserActivity(TblUserActivity tblUserActivity)
     {
+        //对活动状态更新
+        TblActivity pretblActivity = tblActivityMapper.selectTblActivityById(tblUserActivity.getActivityId());
+        updateActivityAspect(pretblActivity);
+        //判断活动报名是否截止
+        TblActivity tblActivity = tblActivityMapper.selectTblActivityById(tblUserActivity.getActivityId());
+        if(tblActivity.getIsClose()==2){
+            return -1;
+        }
         //得到用户的部门id
         Long userId = SecurityUtils.getUserId();
         SysUser sysUser = sysUserMapper.selectUserById(userId);
@@ -88,7 +100,6 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
         Long resNum = deptActivityMapper.getResNum(deptActivity);
 
         //该活动的已经报名人数不能超过总人数
-        TblActivity tblActivity = tblActivityMapper.selectTblActivityById(tblUserActivity.getActivityId());
         Long hbNum = tblActivity.getHbNum();
         Long hot = tblActivity.getHot();
         Long res=hot-hbNum;
@@ -112,6 +123,65 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
             return tblUserActivityMapper.insertTblUserActivity(tblUserActivity);
         }
     }
+    public void  updateActivityAspect (TblActivity tblActivity){
+
+        // 获取当前时间
+        LocalDateTime now = LocalDateTime.now();
+
+        // 获取活动开始时间
+        String time = tblActivity.getLat();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        String avalibableTimeStr = tblActivity.getStartTime();//获取可以报名的时间
+        LocalDateTime avalibableTime = StringUtils.isNull(avalibableTimeStr)?
+                LocalDateTime.parse("1999-12-12 00:00:00", formatter)://未来时间不可能到达
+                LocalDateTime.parse(avalibableTimeStr, formatter);
+
+        Duration begainEntoll = Duration.between(avalibableTime, now);
+
+        // 将时间字符串转化成时间格式
+        LocalDateTime startTime = LocalDateTime.parse(time, formatter);
+
+
+        // 计算活动开始时间与当前时间的差距
+        Duration duration = Duration.between(now , startTime);
+
+        // 定义一个两小时的时长
+        Duration twoHours = Duration.ofHours(2);
+
+        //以下为关闭活动操作
+        // 如果活动持续时间超过两小时
+
+
+        if(begainEntoll.compareTo(Duration.ofHours(0)) < 0){
+            tblActivity.setIsClose(0);
+            tblActivityMapper.updateTblActivity(tblActivity);
+            return;
+        }else{
+            Integer isClose = tblActivity.getIsClose();
+            if(isClose == 0) {
+                tblActivity.setIsClose(1);
+                tblActivityMapper.updateTblActivity(tblActivity);
+            }
+        }
+        if(duration.compareTo(twoHours) <=0){
+            // 设置活动为关闭状态
+            tblActivity.setIsClose(ActivityConstant.ACTIVITYISCLOSE);
+
+            // 如果活动开始时间早于或等于当前时间，设置活动为已结束状态
+            if(startTime.isBefore(now) || startTime.isEqual(now)){
+                tblActivity.setIsEnd(ActivityConstant.ACTIVITYISEND);
+            }
+            // 更新TblActivity记录
+            tblActivityMapper.updateTblActivity(tblActivity);
+        }
+        /*
+         * 规则：
+         * 如果活动开始后时间超过两小时，则表明活动已经关闭了
+         * 如果还没到活动开始时间则优先设置为未开始
+         * */
+
+    }
 
     /**
      * 用户签到
@@ -121,9 +191,14 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
      */
     @Override
     @Transactional
-    @updateActivity
     public int updateTblUserActivity(TblUserActivity tblUserActivity)
     {
+        //对活动状态更新
+        TblActivity pretblActivity = tblActivityMapper.selectTblActivityById(tblUserActivity.getActivityId());
+        updateActivityAspect(pretblActivity);
+
+
+
         Long userId= SecurityUtils.getUserId();
         tblUserActivity.setUserId(userId);
         Long isEnd=tblActivityMapper.getIsEndByActivityId(tblUserActivity.getActivityId());
@@ -139,6 +214,7 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
             return ActivityConstant.REFISTERISNOTSTART;
 
         }
+
 
 
         //过了签到时间
@@ -217,7 +293,6 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
      * @return
      */
     @Override
-    @updateUserActivity
     public List<UserActivity> selectMyActivity(TblUserActivity tblUserActivity) {
         List<UserActivity> list=tblUserActivityMapper.selectMyActivity(tblUserActivity);
         return list;

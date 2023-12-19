@@ -50,6 +50,9 @@ public class TblUserActivityController extends BaseController
        if(res==0){
            return AjaxResult.error("报名失败，人数达到上限");
        }
+       if(res==-1){
+           return AjaxResult.error("报名时间已过");
+       }
        return success();
     }
 

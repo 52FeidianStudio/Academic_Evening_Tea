@@ -1,8 +1,12 @@
 package com.ruoyi.system.service.impl;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import com.ruoyi.common.utils.SecurityUtils;
+import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.annotation.update;
 import com.ruoyi.system.annotation.updateActivity;
 import com.ruoyi.system.constant.ActivityConstant;
@@ -14,6 +18,8 @@ import com.ruoyi.system.example.HttpPostRequestExample;
 import com.ruoyi.system.mapper.DeptActivityMapper;
 import com.ruoyi.system.mapper.TblUserActivityMapper;
 
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
@@ -48,11 +54,18 @@ public class TblActivityServiceImpl implements ITblActivityService
      * @return 商家发布文章
      */
     @Override
-    @updateActivity
     public TblActivity selectTblActivityById(Long id)
     {
         //查询活动详情
         TblActivity tblActivity = tblActivityMapper.selectTblActivityById(id);
+
+        //更新活动状态
+        Integer isEnd = tblActivity.getIsEnd();
+        if (isEnd!=2)
+        {
+            //更新活动状态
+            UpdateActivityAspect(tblActivity);
+        }
         //未登录情况
         if(SecurityUtils.getUserId()==null){
             return tblActivity;
@@ -87,16 +100,21 @@ public class TblActivityServiceImpl implements ITblActivityService
      * @param tblActivity 用户查询活动
      * @return 用户查询活动集合
      */
-    @updateActivity
-    @Override
-    public List<TblActivity> selectTblActivityList(@RequestBody TblActivity tblActivity)
-    {
 
+    @Override
+    public List<TblActivity> selectTblActivityList( TblActivity tblActivity)
+    {
         System.out.println(tblActivity.getPageNum());
         System.out.println(tblActivity.getPageSize());
         List<TblActivity>list= tblActivityMapper.selectTblActivityList(tblActivity);
           //查询学院限制情况
         for(TblActivity tblActivity1:list){
+            Integer isEnd = tblActivity1.getIsEnd();
+            if (isEnd!=2)
+            {
+                //更新活动状态
+                UpdateActivityAspect(tblActivity1);
+            }
             DeptActivity deptActivity = new DeptActivity();
             deptActivity.setActivityId(tblActivity1.getId());
             tblActivity1.setDeptActivities(deptActivityMapper.selectDeptActivityList(deptActivity));
@@ -104,6 +122,69 @@ public class TblActivityServiceImpl implements ITblActivityService
         }
         return list;
     }
+
+
+    public void  UpdateActivityAspect (TblActivity tblActivity){
+
+            // 获取当前时间
+            LocalDateTime now = LocalDateTime.now();
+
+            // 获取活动开始时间
+           String time = tblActivity.getLat();
+           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+           String avalibableTimeStr = tblActivity.getStartTime();//获取可以报名的时间
+           LocalDateTime avalibableTime = StringUtils.isNull(avalibableTimeStr)?
+                        LocalDateTime.parse("1999-12-12 00:00:00", formatter)://未来时间不可能到达
+                        LocalDateTime.parse(avalibableTimeStr, formatter);
+
+           Duration begainEntoll = Duration.between(avalibableTime, now);
+
+           // 将时间字符串转化成时间格式
+        LocalDateTime startTime = LocalDateTime.parse(time, formatter);
+
+
+        // 计算活动开始时间与当前时间的差距
+        Duration duration = Duration.between(now , startTime);
+
+        // 定义一个两小时的时长
+        Duration twoHours = Duration.ofHours(2);
+
+        //以下为关闭活动操作
+        // 如果活动持续时间超过两小时
+
+
+                if(begainEntoll.compareTo(Duration.ofHours(0)) < 0){
+                    tblActivity.setIsClose(0);
+                    tblActivityMapper.updateTblActivity(tblActivity);
+                    return;
+                }else{
+                    Integer isClose = tblActivity.getIsClose();
+                    if(isClose == 0) {
+                        tblActivity.setIsClose(1);
+                        tblActivityMapper.updateTblActivity(tblActivity);
+                    }
+                }
+                if(duration.compareTo(twoHours) <=0){
+                    // 设置活动为关闭状态
+                    tblActivity.setIsClose(ActivityConstant.ACTIVITYISCLOSE);
+
+                    // 如果活动开始时间早于或等于当前时间，设置活动为已结束状态
+                    if(startTime.isBefore(now) || startTime.isEqual(now)){
+                        tblActivity.setIsEnd(ActivityConstant.ACTIVITYISEND);
+                    }
+                    // 更新TblActivity记录
+                    tblActivityMapper.updateTblActivity(tblActivity);
+                }
+                /*
+                 * 规则：
+                 * 如果活动开始后时间超过两小时，则表明活动已经关闭了
+                 * 如果还没到活动开始时间则优先设置为未开始
+                 * */
+
+        }
+
+
 
     /**
      * 新增用户发布活动
