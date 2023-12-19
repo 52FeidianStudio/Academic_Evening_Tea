@@ -79,6 +79,10 @@ public class TblGoodsUserServiceImpl implements ITblGoodsUserService
         Integer allnums = tblGoods.getAllnums();
         Integer resnums=allnums-nums;
 
+        if(nums==0){
+            return 0;
+        }
+
         if (resnums<0){//库存不足
             return GoodContsant.INSUFFICIENTGOODS;
         }
