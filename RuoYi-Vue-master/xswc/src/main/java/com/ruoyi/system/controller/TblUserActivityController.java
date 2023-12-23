@@ -53,6 +53,9 @@ public class TblUserActivityController extends BaseController
        if(res==-1){
            return AjaxResult.error("报名时间已过");
        }
+       if(res==-2){
+           return  AjaxResult.error("已经报过名");
+       }
        return success();
     }
 

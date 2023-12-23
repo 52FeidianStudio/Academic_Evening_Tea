@@ -81,6 +81,11 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
     @Transactional
     public int insertTblUserActivity(TblUserActivity tblUserActivity)
     {
+        //是否报过名
+        List<TblUserActivity> tblUserActivities = tblUserActivityMapper.selectTblUserActivityList(tblUserActivity);
+        if(tblUserActivities.size()!=0){
+            return -2;
+        }
         //对活动状态更新
         TblActivity pretblActivity = tblActivityMapper.selectTblActivityById(tblUserActivity.getActivityId());
         updateActivityAspect(pretblActivity);

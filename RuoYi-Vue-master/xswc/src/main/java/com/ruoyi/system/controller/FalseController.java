@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class FalseController {
     @GetMapping
     public AjaxResult test1(){
-        return  AjaxResult.success(true);
+        return  AjaxResult.success(false);
     }
 
     @PostMapping
