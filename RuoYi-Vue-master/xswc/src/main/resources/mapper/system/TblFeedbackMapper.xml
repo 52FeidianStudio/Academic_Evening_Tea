@@ -25,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <include refid="selectTblFeedbackVo"/>
         <where>  
             <if test="userId != null "> and user_id = #{userId}</if>
-            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="content != null  and content != ''"> and content like concat('%', #{content}, '%')</if>
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
             <if test="phone != null  and phone != ''"> and phone = #{phone}</if>
             <if test="picture != null  and picture != ''"> and picture = #{picture}</if>

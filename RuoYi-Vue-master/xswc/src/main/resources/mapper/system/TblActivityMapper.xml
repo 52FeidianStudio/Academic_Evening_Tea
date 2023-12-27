@@ -19,6 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="views"    column="views"    />
         <result property="money"    column="money"    />
         <result property="type"    column="type"    />
+        <result property="sort"    column="sort"    />
         <result property="state"    column="state"    />
         <result property="isEnd"    column="is_end"    />
         <result property="isClose"    column="is_close"    />
@@ -41,7 +42,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectTblActivityVo">
-        select id, details, img, user_id,user_name,speaker_name, user_tel, hot, hb_num, top, givelike, views, money, type, state, is_end,is_close,time, address, hb_keyword, hong, user_img2, cityname, lat, lng, qphone, application_file_path, signin_file_path,create_time,create_by,update_by,update_time,start_time from tbl_activity
+        select id, details, img, user_id,user_name,speaker_name, user_tel, hot, hb_num, top, givelike, views, money, type,sort, state, is_end,is_close,time, address, hb_keyword, hong, user_img2, cityname, lat, lng, qphone, application_file_path, signin_file_path,create_time,create_by,update_by,update_time,start_time from tbl_activity
     </sql>
 
     <select id="selectTblActivityList" parameterType="TblActivityVO" resultMap="TblActivityResult">
@@ -60,6 +61,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="views != null "> and views = #{views}</if>
             <if test="money != null "> and money = #{money}</if>
             <if test="type != null "> and type = #{type}</if>
+            <if test="sort != null "> and sort = #{sort}</if>
             <if test="state != null "> and state = #{state}</if>
             <if test="isClose != null "> and is_close = #{isClose}</if>
             <if test="isEnd != null "> and is_end = #{isEnd}</if>
@@ -150,6 +152,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="views != null">views,</if>
             <if test="money != null">money,</if>
             <if test="type != null">type,</if>
+            <if test="sort != null">sort,</if>
             <if test="state != null">state,</if>
             <if test="time != null">time,</if>
             <if test="address != null">address,</if>
@@ -182,6 +185,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="views != null">#{views},</if>
             <if test="money != null">#{money},</if>
             <if test="type != null">#{type},</if>
+            <if test="sort != null">#{sort},</if>
             <if test="state != null">#{state},</if>
             <if test="time != null">#{time},</if>
             <if test="address != null">#{address},</if>
@@ -218,6 +222,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="views != null">views = #{views},</if>
             <if test="money != null">money = #{money},</if>
             <if test="type != null">type= #{type},</if>
+            <if test="sort != null">sort= #{sort},</if>
             <if test="state != null">state = #{state},</if>
             <if test="isClose != null">is_close = #{isClose},</if>
             <if test="isEnd != null">is_end = #{isEnd},</if>

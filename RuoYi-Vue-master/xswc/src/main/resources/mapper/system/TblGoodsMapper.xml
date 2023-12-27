@@ -27,7 +27,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>  
             <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
             <if test="price != null "> and price = #{price}</if>
-            <if test="introduce != null  and introduce != ''"> and introduce = #{introduce}</if>
+            <if test="introduce != null  and introduce != ''"> and introduce like concat('%', #{introduce}, '%')</if>
             <if test="picture != null  and picture != ''"> and picture = #{picture}</if>
             <if test="allnums != null  and allnums != ''"> and allnums = #{allnums}</if>
             <if test="coverPicture != null  and coverPicture != ''"> and cover_picture = #{coverPicture}</if>

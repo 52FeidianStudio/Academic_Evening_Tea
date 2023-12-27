@@ -131,7 +131,8 @@ private String createTime;
     private  String updateBy;
 //活动报名开始时间
     private  String datetime;
-
+//1为学术晚茶2为学术社区
+    private  Integer  sort;
 
 
     /** 报名人数* */

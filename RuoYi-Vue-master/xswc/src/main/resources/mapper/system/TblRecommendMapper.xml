@@ -31,9 +31,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <where>
             <if test="id != null  and id != ''"> and id = #{id}</if>
             <if test="userId != null  and userId != ''"> and user_id = #{userId}</if>
-            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="content != null  and content != ''"> and content like concat ('%', #{content},'%')</if>
             <if test="lecturerName != null  and lecturerName != ''"> and lecturer_name like concat('%', #{lecturerName}, '%')</if>
-            <if test="theme != null  and theme != ''"> and theme = #{theme}</if>
+            <if test="theme != null  and theme != ''"> and theme like concat ('%', #{theme},'%')</if>
             <if test="status != null  and status != ''"> and status = #{status}</if>
             <if test="likeCount != null "> and like_count = #{likeCount}</if>
         </where>
