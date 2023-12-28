@@ -121,6 +121,9 @@ public class UserController extends BaseController
     @PutMapping("/resetPwd")
     public AjaxResult resetPwd(@RequestBody SysUser user)
     {
+        if(user.getPassword()==null || user.getPassword().length()==0){
+            return success("密码不能为空");
+        }
 //        userService.checkUserAllowed(user);
         Long userId =SecurityUtils.getUserId();
         user.setUserId(userId);
