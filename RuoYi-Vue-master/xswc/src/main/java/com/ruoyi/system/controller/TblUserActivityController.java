@@ -75,20 +75,20 @@ public class TblUserActivityController extends BaseController
     /**
      * 导出【请填写功能名称】列表
      */
-//    @PreAuthorize("@ss.hasPermi('system:activity:export')")
+//    @PreAuthorize("@ss.hasPermi('system:useractivity:export')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.EXPORT)
     @PostMapping("/export")
     public void export(HttpServletResponse response, TblUserActivity tblUserActivity)
     {
         List<TblUserActivity> list = tblUserActivityService.selectTblUserActivityList(tblUserActivity);
         ExcelUtil<TblUserActivity> util = new ExcelUtil<TblUserActivity>(TblUserActivity.class);
-        util.exportExcel(response, list, "【请填写功能名称】数据");
+        util.exportExcel(response, list, "活动报名人数据");
     }
 
     /**
      * 获取【请填写功能名称】详细信息
      */
-//    @PreAuthorize("@ss.hasPermi('system:activity:query')")
+//    @PreAuthorize("@ss.hasPermi('system:useractivity:query')")
     @GetMapping(value = "/{id}")
     public AjaxResult getInfo(@PathVariable("id") Long id)
     {
@@ -134,7 +134,7 @@ public  AjaxResult myactivity(){
     /**
      * 删除【请填写功能名称】
      */
-//    @PreAuthorize("@ss.hasPermi('system:activity:remove')")
+//    @PreAuthorize("@ss.hasPermi('system:useractivity:remove')")
     @Log(title = "【请填写功能名称】", businessType = BusinessType.DELETE)
 	@DeleteMapping("/{ids}")
     public AjaxResult remove(@PathVariable Long[] ids)

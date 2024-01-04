@@ -33,7 +33,7 @@ public class TblUserActivity  {
     /**
      * 用户编号
      */
-    @Excel(name = "用户编号")
+//    @Excel(name = "用户编号")
     private Long userId;
 
     /**
@@ -41,11 +41,26 @@ public class TblUserActivity  {
      */
     @Excel(name = "活动编号")
     private Long activityId;
+    @Excel(name = "学号")
+    private  String userName;
+    /**  姓名*/
+    @Excel(name = "姓名")
+    private  String name;
+    /**  学院*/
+    @Excel(name = "学院")
+    private  String faculty;
+    /** 用户性别 */
+    @Excel(name = "用户性别", readConverterExp = "1=男,2=女")
+    private String sex;
+
+    /** 用户昵称 */
+    @Excel(name = "用户名称")
+    private String nickName;
 
     /**
      * 1未签到2已签到3失约
      */
-    @Excel(name = "1未签到2已签到3失约")
+    @Excel(name = "签到状态",readConverterExp = "1=未签到,2=已签到,3=失约")
     private Integer status;
 
     public void setId(Long id) {
@@ -63,17 +78,6 @@ public class TblUserActivity  {
     //更新人
     private  String updateBy;
 
-    /** 用户性别 */
-    @Excel(name = "用户性别", readConverterExp = "0=男,1=女,2=未知")
-    private String sex;
-    /**  学院*/
-    private  String faculty;
-    /**  姓名*/
-    private  String name;
-    /** 用户昵称 */
-    @Excel(name = "用户名称")
-    private String nickName;
-    private  String userName;
 
     /** 用户头像 */
     private String avatar;

@@ -68,7 +68,7 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
     @Override
     public List<TblUserActivity> selectTblUserActivityList(TblUserActivity tblUserActivity)
     {
-        return tblUserActivityMapper.selectTblUserActivityList(tblUserActivity);
+        return tblUserActivityMapper.selectTblUsersActivityList(tblUserActivity);
     }
 
     /**
@@ -219,8 +219,6 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
             return ActivityConstant.REFISTERISNOTSTART;
 
         }
-
-
 
         //过了签到时间
         if (isEnd.equals(ActivityConstant.ACTIVITYISEND.longValue())  ){

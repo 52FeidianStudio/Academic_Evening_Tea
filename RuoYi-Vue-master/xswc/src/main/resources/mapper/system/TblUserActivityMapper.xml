@@ -78,7 +78,7 @@ order by lat desc
 
     </select>
     <select id="selectTblUsersActivityList" resultType="com.ruoyi.system.domain.TblUserActivity" resultMap="TblUserActivityResult">
-select  ua.*,u.sex,u.faculty,u.name,u.nick_name,u.avatar,u.student_id ,u.user_name
+select  ua.*,u.sex as sex ,u.faculty as faculty,u.name,u.nick_name,u.avatar,u.student_id ,u.user_name
 from tbl_user_activity   ua
 join sys_user   u  on u.user_id = ua.user_id
         <where>
