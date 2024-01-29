@@ -4,7 +4,10 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ruoyi.common.utils.SecurityUtils;
+import com.ruoyi.system.domain.TblActivity;
 import com.ruoyi.system.domain.UserActivity;
+import com.ruoyi.system.mapper.TblActivityMapper;
+import com.ruoyi.system.service.ITblActivityService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +29,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
 
 /**
  * 用户报名活动 Controller
- * 
+ *
  * @author ruoyi
  * @date 2023-10-25
  */
@@ -36,6 +39,8 @@ public class TblUserActivityController extends BaseController
 {
     @Autowired
     private ITblUserActivityService tblUserActivityService;
+    @Autowired
+    private ITblActivityService tblActivityService;
 
 
     /**
@@ -129,6 +134,19 @@ public  AjaxResult myactivity(){
         tblUserActivity.setUserId(SecurityUtils.getUserId());
         return success(tblUserActivityService.selectMyActivity(tblUserActivity));
     }
+    /**
+     * 个人中心  我发布的活动
+     * @return
+     */
+//    @PreAuthorize("@ss.hasPermi('system:activity:myactivity')")
+    @Log(title = "我发布的活动", businessType = BusinessType.UPDATE)
+    @GetMapping("/myaddactivity")
+    public  AjaxResult myaddactivity(){
+          TblActivity tblActivity= new TblActivity();
+          tblActivity.setUserId(SecurityUtils.getUserId());
+        return success(tblActivityService.selectTblActivityList(tblActivity));
+    }
+
 
 
     /**

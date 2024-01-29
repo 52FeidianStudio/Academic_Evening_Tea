@@ -202,8 +202,6 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
         TblActivity pretblActivity = tblActivityMapper.selectTblActivityById(tblUserActivity.getActivityId());
         updateActivityAspect(pretblActivity);
 
-
-
         Long userId= SecurityUtils.getUserId();
         tblUserActivity.setUserId(userId);
         Long isEnd=tblActivityMapper.getIsEndByActivityId(tblUserActivity.getActivityId());
@@ -223,8 +221,8 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
         //过了签到时间
         if (isEnd.equals(ActivityConstant.ACTIVITYISEND.longValue())  ){
 
-            tblUserActivity.setStatus(ActivityConstant.NOSHOW);
-            tblUserActivityMapper.updateTblUserActivity(tblUserActivity);
+//            tblUserActivity.setStatus(ActivityConstant.NOSHOW);
+//            tblUserActivityMapper.updateTblUserActivity(tblUserActivity);
 
             return ActivityConstant.REFISTERTIMEOUT;
 
