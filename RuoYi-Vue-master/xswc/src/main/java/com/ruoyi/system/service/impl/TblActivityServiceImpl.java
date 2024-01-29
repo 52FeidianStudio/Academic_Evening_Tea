@@ -3,12 +3,12 @@ package com.ruoyi.system.service.impl;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
 import java.util.List;
 
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.StringUtils;
-import com.ruoyi.system.annotation.update;
-import com.ruoyi.system.annotation.updateActivity;
+
 import com.ruoyi.system.constant.ActivityConstant;
 import com.ruoyi.system.constant.ResultConstant;
 import com.ruoyi.system.domain.DeptActivity;
@@ -16,18 +16,18 @@ import com.ruoyi.system.domain.DeptNum;
 import com.ruoyi.system.domain.TblUserActivity;
 import com.ruoyi.system.example.HttpPostRequestExample;
 import com.ruoyi.system.mapper.DeptActivityMapper;
+
 import com.ruoyi.system.mapper.TblUserActivityMapper;
 
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.mapper.TblActivityMapper;
 import com.ruoyi.system.domain.TblActivity;
 import com.ruoyi.system.service.ITblActivityService;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * 商家发布文章Service业务层处理
@@ -46,6 +46,9 @@ public class TblActivityServiceImpl implements ITblActivityService
 
     @Autowired
     private DeptActivityMapper deptActivityMapper;
+
+
+
 
     /**
      *  用户获取发布活动详细信息
@@ -224,6 +227,7 @@ public class TblActivityServiceImpl implements ITblActivityService
     {
         Long activityId = tblActivity.getId();
         TblActivity tblActivityDTO = tblActivityMapper.selectTblActivityById(activityId);
+       Integer state= tblActivity.getState();
         //审核
 
          //通过审核生成二维码
@@ -236,7 +240,6 @@ public class TblActivityServiceImpl implements ITblActivityService
             tblActivity.setSigninFilePath(signinFilePath);
             tblActivity.setApplicationFilePath(applicationFilePath);
         }
-
         return tblActivityMapper.updateTblActivity(tblActivity);
     }
 
@@ -291,7 +294,7 @@ public class TblActivityServiceImpl implements ITblActivityService
             }
         }
         //修改活动信息
-
+        tblActivity.setState(1);//修改为待审核
         return tblActivityMapper.updateTblActivity(tblActivity);
     }
 }

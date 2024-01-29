@@ -118,6 +118,7 @@ public class TblActivity
     private String applicationFilePath;
 
 
+
     private  List<TblUserActivity>  tblUserActivities;
 //    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss ")
 //    @Excel(name = "发布时间*", width = 30, dateFormat = "yyyy-MM-dd hh:mm:ss")
