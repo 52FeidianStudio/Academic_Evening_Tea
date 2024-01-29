@@ -30,4 +30,6 @@ public interface DeptActivityMapper {
      */
 
     public List<DeptActivity> selectDeptActivityList(DeptActivity deptActivity);
+
+     public  void deleteDeptActivityByActivityId(Long acticityId);
 }

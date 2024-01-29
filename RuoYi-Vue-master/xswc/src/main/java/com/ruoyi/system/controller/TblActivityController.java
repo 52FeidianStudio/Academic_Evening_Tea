@@ -95,14 +95,30 @@ public class TblActivityController extends BaseController
     }
 
     /**
-     * 修改商家发布活动
+     * 管理员修改发布活动
      */
     @PreAuthorize("@ss.hasPermi('system:activity:edit')")
-    @Log(title = "修改商家发布活动", businessType = BusinessType.UPDATE)
+    @Log(title = "修改发布活动", businessType = BusinessType.UPDATE)
     @PutMapping
     public AjaxResult edit(@RequestBody TblActivity tblActivity)
     {
         return toAjax(tblActivityService.updateTblActivity(tblActivity));
+    }
+
+
+    /**
+     * 用户修改发布活动
+     */
+    @PreAuthorize("@ss.hasPermi('system:activity:edit')")
+    @Log(title = "用户修改发布活动", businessType = BusinessType.UPDATE)
+    @PutMapping("/edit")
+    public AjaxResult activityedit(@RequestBody TblActivity tblActivity)
+    {
+        if(tblActivity.getState()==4)
+        {
+            return toAjax(tblActivityService.editTblActivity(tblActivity));
+        }
+        return success("该活动状态不能被修改");
     }
 
     /**

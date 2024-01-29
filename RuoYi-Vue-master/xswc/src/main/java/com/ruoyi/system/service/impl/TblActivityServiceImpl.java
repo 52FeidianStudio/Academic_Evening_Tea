@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.RequestBody;
  * @date 2023-10-25
  */
 @Service
-public class TblActivityServiceImpl implements ITblActivityService 
+public class TblActivityServiceImpl implements ITblActivityService
 {
     @Autowired
     private TblActivityMapper tblActivityMapper;
@@ -224,8 +224,10 @@ public class TblActivityServiceImpl implements ITblActivityService
     {
         Long activityId = tblActivity.getId();
         TblActivity tblActivityDTO = tblActivityMapper.selectTblActivityById(activityId);
+        //审核
 
-        if (tblActivity.getState().equals(ActivityConstant.PASS) && !tblActivityDTO.getState() .equals(ActivityConstant.PASS) )
+         //通过审核生成二维码
+        if (tblActivityDTO.getSigninFilePath()!=null&&tblActivity.getState().equals(ActivityConstant.PASS) && !tblActivityDTO.getState() .equals(ActivityConstant.PASS) )
         {
             HttpPostRequestExample httpPostRequestExample = new HttpPostRequestExample();
             String accessToken = httpPostRequestExample.postSendAccessToken();
@@ -260,5 +262,36 @@ public class TblActivityServiceImpl implements ITblActivityService
     public int deleteTblActivityById(Long id)
     {
         return tblActivityMapper.deleteTblActivityById(id);
+    }
+
+    /**
+     * 用户修改活动
+     * @param tblActivity
+     * @return
+     */
+    @Override
+    public int editTblActivity(TblActivity tblActivity) {
+        Long acticityId=tblActivity.getId();
+
+        //修改学院限制
+            //删除原有学院限制
+        deptActivityMapper.deleteDeptActivityByActivityId(acticityId);
+           //新增修改的学院限制
+        DeptNum[] deptNums=tblActivity.getDeptNums();
+
+        //有学院限制
+        if (deptNums!=null){
+            for(DeptNum deptNum:deptNums){
+                DeptActivity deptActivity = new DeptActivity();
+                deptActivity.setActivityId(acticityId);
+                deptActivity.setDeptId(deptNum.getDeptId());
+                deptActivity.setMaxNum(deptNum.getMaxNum());
+                deptActivity.setResNum(deptNum.getMaxNum());
+                deptActivityMapper.insertDeptActivity(deptActivity);
+            }
+        }
+        //修改活动信息
+
+        return tblActivityMapper.updateTblActivity(tblActivity);
     }
 }

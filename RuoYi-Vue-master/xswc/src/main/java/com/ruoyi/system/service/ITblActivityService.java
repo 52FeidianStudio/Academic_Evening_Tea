@@ -23,8 +23,7 @@ public interface ITblActivityService
      * 用户查询活动集合
      *
      * @param tblActivity 商家发布文章
-     * @param pageNum
-     * @param pageSize
+
      * @return 商家发布文章集合
      */
     public List<TblActivity> selectTblActivityList(TblActivity tblActivity);
@@ -60,4 +59,6 @@ public interface ITblActivityService
      * @return 结果
      */
     public int deleteTblActivityById(Long id);
+
+   public int editTblActivity(TblActivity tblActivity);
 }

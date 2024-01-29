@@ -64,6 +64,10 @@
             </where>
 
     </update>
+    <delete id="deleteDeptActivityByActivityId">
+        delete from  dept_activity
+        where activity_id=#{activityId}
+    </delete>
 
     <select id="getResNum" resultType="java.lang.Long">
       select res_num
