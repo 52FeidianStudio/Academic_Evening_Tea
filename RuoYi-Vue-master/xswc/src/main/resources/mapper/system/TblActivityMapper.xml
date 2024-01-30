@@ -213,7 +213,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="img != null">img = #{img},</if>
             <if test="userId != null">user_id = #{userId},</if>
             <if test="userName != null">user_name = #{userName},</if>
-            <if test="speakerName != null">user_name = #{speakerName},</if>
+            <if test="speakerName != null">speaker_name= #{speakerName},</if>
             <if test="userTel != null">user_tel = #{userTel},</if>
             <if test="hot != null">hot = #{hot},</if>
             <if test="hbNum != null">hb_num = #{hbNum},</if>
