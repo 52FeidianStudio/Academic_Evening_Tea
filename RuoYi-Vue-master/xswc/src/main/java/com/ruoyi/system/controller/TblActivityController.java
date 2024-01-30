@@ -109,7 +109,7 @@ public class TblActivityController extends BaseController
     /**
      * 用户修改发布活动
      */
-    @PreAuthorize("@ss.hasPermi('system:activity:edit')")
+    @PreAuthorize("@ss.hasPermi('system:activity:useredit')")
     @Log(title = "用户修改发布活动", businessType = BusinessType.UPDATE)
     @PutMapping("/edit")
     public AjaxResult activityedit(@RequestBody TblActivity tblActivity)
