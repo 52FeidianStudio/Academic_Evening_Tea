@@ -7,9 +7,6 @@ import com.aliyun.oss.OSSException;
 import com.ruoyi.common.utils.uuid.UUID;
 import com.ruoyi.system.domain.App;
 import com.ruoyi.system.utils.AliOssUtil;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -19,10 +16,13 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -158,24 +158,136 @@ public class HttpPostRequestExample {
             // 执行请求并获取响应
             HttpResponse response = httpClient.execute(httpPost);
 
-            // 获取响应实体
-            HttpEntity entity = response.getEntity();
+
 
             // 打印响应状态码
             System.out.println("Response Code: " + response.getStatusLine().getStatusCode());
 
             String name = UUID.randomUUID().toString() + ".png";
 
+            // 获取响应实体
+            HttpEntity entity = response.getEntity();
+
             // 保存图像到本地文件
             if (entity != null) {
-                byte[] imageBytes = EntityUtils.toByteArray(entity);
+       byte[] imageBytes = EntityUtils.toByteArray(entity);
+
+                //存储成图片文件
+
+                // 指定文件路径
+                String picturePath = "/var/www/picture/二维码.png";
+
+                try {
+                    // 创建文件输出流
+                    FileOutputStream fos = new FileOutputStream(picturePath);
+
+                    // 将byte数组写入文件
+                    fos.write(imageBytes);
+
+                    // 关闭文件输出流
+                    fos.close();
+
+                    System.out.println("Image saved successfully.");
+                } catch (IOException e) {
+                    System.err.println("Error saving image: " + e.getMessage());
+                }
+
+
+                //合成图片
+
+                try {
+                    // 读取底部图片
+                    BufferedImage baseImage = ImageIO.read(new File("/var/www/picture/二维码.png"));
+                    // 读取要贴上的标签图片
+                    BufferedImage labelImage = ImageIO.read(new File("/var/www/picture/报名码标签.png"));
+
+
+                    //  g.dispose();
+
+                    // 计算标签图片的位置
+                    int x = baseImage.getWidth() - labelImage.getWidth();
+                    int y = baseImage.getHeight() - labelImage.getHeight();
+                    x=x+120;
+                    y=y+61;
+                    // 缩小标签图片
+                    double scale = 0.4; // 缩小为原始大小的一半
+                    AffineTransform at = AffineTransform.getScaleInstance(scale, scale);
+                    AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+                    BufferedImage scaledLabelImage = op.filter(labelImage, null);
+
+                    // 在底部图片右下角绘制缩小后的标签图片
+                    Graphics2D g = baseImage.createGraphics();
+                    g.drawImage(scaledLabelImage, x, y, null);
+                    g.dispose();
+
+                    // 将合成后的图片保存到文件
+                    File outputFile = new File("/var/www/picture/合成二维码.png");
+                    ImageIO.write(baseImage, "jpg", outputFile);
+
+                    System.out.println("图片合成成功！");
+                } catch (IOException e) {
+                    System.out.println("发生了错误：" + e.getMessage());
+                }
+
+
 //                AliOssUtil aliOssUtil1 = new AliOssUtil();
-                filePath = this.upload(imageBytes, name);
+
+                //上传
+
+                String repicturePath = "/var/www/picture/合成二维码.png";
+
+                try {
+                    // 创建文件输入流
+                    FileInputStream fis = new FileInputStream(repicturePath);
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+                    byte[] buffer = new byte[1024];
+                    int bytesRead;
+                    // 从文件中读取数据到缓冲区
+                    while ((bytesRead = fis.read(buffer)) != -1) {
+                        // 将数据写入到ByteArrayOutputStream中
+                        bos.write(buffer, 0, bytesRead);
+                    }
+
+                    // 关闭输入流
+                    fis.close();
+
+                    // 获取图片的byte数组
+                    byte[] reImageBytes = bos.toByteArray();
+
+                    // 关闭ByteArrayOutputStream
+                    bos.close();
+
+                    // 现在你可以使用imageBytes了
+                    filePath =this.upload(reImageBytes, name);
+                    System.out.println("Image converted to byte array successfully.");
+                } catch (IOException e) {
+                    System.err.println("Error converting image to byte array: " + e.getMessage());
+                }
+
+
+                //删除
+
+                // 创建File对象
+                File file = new File(repicturePath);
+
+                // 尝试删除文件
+                boolean isDeleted = file.delete();
+
+                if (isDeleted) {
+                    System.out.println("文件删除成功");
+                } else {
+                    System.out.println("文件删除失败");
+                }
+
+
+                //   filePath = this.upload(imageBytes, name);
                 System.out.println("Image saved successfully!");
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return filePath;
     }
 
@@ -218,8 +330,115 @@ public class HttpPostRequestExample {
 
             // 保存图像到本地文件
             if (entity != null) {
-                byte[] imageBytes = EntityUtils.toByteArray(entity);
-                filePath =this.upload(imageBytes, name);
+
+              byte[] imageBytes = EntityUtils.toByteArray(entity);
+
+                //存储成图片文件
+
+                // 指定文件路径
+                String picturePath = "/var/www/picture/二维码.png";
+
+                try {
+                    // 创建文件输出流
+                    FileOutputStream fos = new FileOutputStream(picturePath);
+
+                    // 将byte数组写入文件
+                    fos.write(imageBytes);
+
+                    // 关闭文件输出流
+                    fos.close();
+
+                    System.out.println("Image saved successfully.");
+                } catch (IOException e) {
+                    System.err.println("Error saving image: " + e.getMessage());
+                }
+                //合成图片
+
+                try {
+                    // 读取底部图片
+                    BufferedImage baseImage = ImageIO.read(new File("/var/www/picture/二维码.png"));
+                    // 读取要贴上的标签图片
+                    BufferedImage labelImage = ImageIO.read(new File("/var/www/picture/签到码标签.png"));
+
+
+                    //  g.dispose();
+
+                    // 计算标签图片的位置
+                    int x = baseImage.getWidth() - labelImage.getWidth();
+                    int y = baseImage.getHeight() - labelImage.getHeight();
+                    x=x+120;
+                    y=y+61;
+                    // 缩小标签图片
+                    double scale = 0.4; // 缩小为原始大小的一半
+                    AffineTransform at = AffineTransform.getScaleInstance(scale, scale);
+                    AffineTransformOp op = new AffineTransformOp(at, AffineTransformOp.TYPE_BILINEAR);
+                    BufferedImage scaledLabelImage = op.filter(labelImage, null);
+
+                    // 在底部图片右下角绘制缩小后的标签图片
+                    Graphics2D g = baseImage.createGraphics();
+                    g.drawImage(scaledLabelImage, x, y, null);
+                    g.dispose();
+
+                    // 将合成后的图片保存到文件
+                    File outputFile = new File("/var/www/picture/合成二维码.png");
+                    ImageIO.write(baseImage, "jpg", outputFile);
+
+                    System.out.println("图片合成成功！");
+                } catch (IOException e) {
+                    System.out.println("发生了错误：" + e.getMessage());
+                }
+
+
+                //上传
+
+                String repicturePath = "/var/www/picture/合成二维码.png";
+
+                try {
+                    // 创建文件输入流
+                    FileInputStream fis = new FileInputStream(repicturePath);
+                    ByteArrayOutputStream bos = new ByteArrayOutputStream();
+
+                    byte[] buffer = new byte[1024];
+                    int bytesRead;
+                    // 从文件中读取数据到缓冲区
+                    while ((bytesRead = fis.read(buffer)) != -1) {
+                        // 将数据写入到ByteArrayOutputStream中
+                        bos.write(buffer, 0, bytesRead);
+                    }
+
+                    // 关闭输入流
+                    fis.close();
+
+                    // 获取图片的byte数组
+                    byte[] reImageBytes = bos.toByteArray();
+
+                    // 关闭ByteArrayOutputStream
+                    bos.close();
+
+                    // 现在你可以使用imageBytes了
+                    filePath =this.upload(reImageBytes, name);
+                    System.out.println("Image converted to byte array successfully.");
+                } catch (IOException e) {
+                    System.err.println("Error converting image to byte array: " + e.getMessage());
+                }
+
+                //删除
+
+                // 创建File对象
+                File prefile = new File(picturePath);
+                File refile = new File(repicturePath);
+
+
+                // 尝试删除文件
+                boolean isDeleted = prefile.delete();
+                boolean isDeleted2 = refile.delete();
+                if (isDeleted && isDeleted2) {
+                    System.out.println("文件删除成功");
+                } else {
+                    System.out.println("文件删除失败");
+                }
+
+
                 System.out.println("Image saved successfully!");
             }
         } catch (IOException e) {

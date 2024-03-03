@@ -70,10 +70,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </where>
     </select>
     <select id="selectMyActivity" resultType="com.ruoyi.system.domain.UserActivity"  resultMap="UserActivityResult">
-        select   tbl_user_activity.user_id, activity_id, status,  details, img, speaker_name,hot, hb_num,  type, state, is_end,is_close,time, address, hb_keyword, hong, user_img2, cityname,lat
+        select   tbl_user_activity.user_id, activity_id, status,  details, img, speaker_name,hot, hb_num,sort,  type, state, is_end,is_close,time, address, hb_keyword, hong, user_img2, cityname,lat
         from  tbl_user_activity
         join  tbl_activity on tbl_activity.id= tbl_user_activity.activity_id
-        where  tbl_user_activity.user_id=#{userId}
+        where  tbl_user_activity.user_id=#{userId}  and state=2
 order by lat desc
 
     </select>

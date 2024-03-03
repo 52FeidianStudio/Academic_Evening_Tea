@@ -21,6 +21,9 @@ public class UserActivity {
     @Excel(name = "活动编号")
     private Long activityId;
 
+    @Excel(name = "活动种类")
+    private Long sort;
+
     /**
      * 1未签到2已签到3失约
      */

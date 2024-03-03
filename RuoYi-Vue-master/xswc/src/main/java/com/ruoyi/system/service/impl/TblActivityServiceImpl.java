@@ -231,8 +231,8 @@ public class TblActivityServiceImpl implements ITblActivityService
         //审核
 
          //通过审核生成二维码
-        if (tblActivityDTO.getSigninFilePath()!=null&&tblActivity.getState().equals(ActivityConstant.PASS) && !tblActivityDTO.getState() .equals(ActivityConstant.PASS) )
-        {
+       if (tblActivity.getSigninFilePath()==null&&tblActivity.getState().equals(ActivityConstant.PASS) && !tblActivityDTO.getState() .equals(ActivityConstant.PASS) ) {
+            System.out.println("123456");
             HttpPostRequestExample httpPostRequestExample = new HttpPostRequestExample();
             String accessToken = httpPostRequestExample.postSendAccessToken();
             String applicationFilePath = httpPostRequestExample.postApplication(accessToken,activityId);
@@ -240,6 +240,7 @@ public class TblActivityServiceImpl implements ITblActivityService
             tblActivity.setSigninFilePath(signinFilePath);
             tblActivity.setApplicationFilePath(applicationFilePath);
         }
+
         return tblActivityMapper.updateTblActivity(tblActivity);
     }
 
@@ -275,6 +276,10 @@ public class TblActivityServiceImpl implements ITblActivityService
     @Override
     public int editTblActivity(TblActivity tblActivity) {
         Long acticityId=tblActivity.getId();
+
+        //如果修改时间需要重新判断活动报名和结束状态
+        tblActivity.setIsClose(0);
+        tblActivity.setIsEnd(1);
 
         //修改学院限制
             //删除原有学院限制
