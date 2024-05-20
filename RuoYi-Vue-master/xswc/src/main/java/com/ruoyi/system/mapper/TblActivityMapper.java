@@ -10,6 +10,7 @@ import com.ruoyi.system.domain.TblUserActivity;
 import com.ruoyi.system.domain.UserActivity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.PathVariable;
 
 
 /**
@@ -65,6 +66,23 @@ public interface TblActivityMapper
      */
 
     public int deleteTblActivityById(Long id);
+
+
+
+//学术晚茶统计总数
+    public int countSortOne();
+
+    //学术社区统计总数
+    public int countSortTwo();
+
+
+    //学术晚茶某年活动总数
+    public int countSortOneYear(String lat);
+    //学术社区某年活动总数
+    public int countSortTwoYear(String lat);
+
+public List<TblActivity> countLate(@Param("lat") String lat ,@Param("sort") Integer sort);
+
 
     /**
      * 批量删除商家发布文章

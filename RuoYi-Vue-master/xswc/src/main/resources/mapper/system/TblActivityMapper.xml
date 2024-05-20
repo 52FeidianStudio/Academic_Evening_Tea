@@ -21,6 +21,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="type"    column="type"    />
         <result property="sort"    column="sort"    />
         <result property="state"    column="state"    />
+        <result property="num"    column="num"    />
         <result property="isEnd"    column="is_end"    />
         <result property="isClose"    column="is_close"    />
         <result property="time"    column="time"    />
@@ -42,7 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectTblActivityVo">
-        select id, details, img, user_id,user_name,speaker_name, user_tel, hot, hb_num, top, givelike, views, money, type,sort, state, is_end,is_close,time, address, hb_keyword, hong, user_img2, cityname, lat, lng, qphone, application_file_path, signin_file_path,create_time,create_by,update_by,update_time,start_time from tbl_activity
+        select id, details, img, user_id,user_name,speaker_name, user_tel, hot,num, hb_num, top, givelike, views, money, type,sort, state, is_end,is_close,time, address, hb_keyword, hong, user_img2, cityname, lat, lng, qphone, application_file_path, signin_file_path,create_time,create_by,update_by,update_time,start_time from tbl_activity
     </sql>
 
     <select id="selectTblActivityList" parameterType="TblActivityVO" resultMap="TblActivityResult">
@@ -66,6 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="isClose != null "> and is_close = #{isClose}</if>
             <if test="isEnd != null "> and is_end = #{isEnd}</if>
             <if test="time != null "> and time = #{time}</if>
+            <if test="num != null "> and num = #{num}</if>
             <if test="address != null  and address != ''"> and address = #{address}</if>
             <if test="hbKeyword != null  and hbKeyword != ''"> and hb_keyword = #{hbKeyword}</if>
             <if test="hong != null  and hong != ''"> and hong = #{hong}</if>
@@ -135,6 +137,56 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         from tbl_activity
         where id=#{activityId}
     </select>
+
+    <select id="countSortOne" resultType="java.lang.Integer">
+        SELECT  COUNT(*)+410 AS num_activities
+        FROM tbl_activity
+        where id >= 2270 and state =2 and sort =1
+    </select>
+
+    <select id="countSortTwo" resultType="java.lang.Integer">
+        SELECT  COUNT(*) +12 AS num_activities
+        FROM tbl_activity
+        where id >= 2266 and state =2 and sort =2
+    </select>
+
+    <select id="countSortOneYear" resultType="java.lang.Integer">
+        SELECT
+            COUNT(*)
+        FROM
+            tbl_activity
+        WHERE
+                    id >= 2270
+                    AND state=2
+                AND sort = 1
+                AND YEAR(lat) = YEAR(#{lat});
+
+    </select>
+
+    <select id="countSortTwoYear" resultType="java.lang.Integer">
+        SELECT
+            COUNT(*)
+        FROM
+            tbl_activity
+        WHERE
+                    id >= 2266
+                AND state=2
+                AND sort = 2
+                AND YEAR(lat) = YEAR(#{lat});
+    </select>
+
+    <select id="countLate" resultType="com.ruoyi.system.domain.TblActivity">
+        SELECT
+            *
+        FROM
+            tbl_activity
+        WHERE
+            YEAR(lat) = YEAR(#{lat})
+          AND lat > #{lat}
+          and sort =#{sort}
+order by lat asc
+    </select>
+
 
     <insert id="insertTblActivity" parameterType="TblActivity" useGeneratedKeys="true" keyProperty="id">
         insert into tbl_activity
@@ -227,6 +279,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="isClose != null">is_close = #{isClose},</if>
             <if test="isEnd != null">is_end = #{isEnd},</if>
             <if test="time != null">time = #{time},</if>
+            <if test="num != null">num = #{ num},</if>
             <if test="address != null">address = #{address},</if>
             <if test="hbKeyword != null">hb_keyword = #{hbKeyword},</if>
             <if test="hong != null">hong = #{hong},</if>

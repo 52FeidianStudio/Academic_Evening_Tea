@@ -232,13 +232,48 @@ public class TblActivityServiceImpl implements ITblActivityService
 
          //通过审核生成二维码
        if (tblActivity.getSigninFilePath()==null&&tblActivity.getState().equals(ActivityConstant.PASS) && !tblActivityDTO.getState() .equals(ActivityConstant.PASS) ) {
-            System.out.println("123456");
+//            System.out.println("123456");
             HttpPostRequestExample httpPostRequestExample = new HttpPostRequestExample();
             String accessToken = httpPostRequestExample.postSendAccessToken();
             String applicationFilePath = httpPostRequestExample.postApplication(accessToken,activityId);
             String signinFilePath = httpPostRequestExample.postSignIn(accessToken, activityId);
             tblActivity.setSigninFilePath(signinFilePath);
             tblActivity.setApplicationFilePath(applicationFilePath);
+
+            //活动期数
+
+           //1查询该活动举办那一年的活动
+           int sum =0;//这年总活动数
+           int  rank =0;//新排序
+           if(tblActivity.getSort()==1){
+               sum=tblActivityMapper.countSortOneYear(tblActivity.getLat());
+               //2024年的学术晚茶id=2270开始记录的第八期，所以2024年的期数记录不一样
+               LocalDateTime dateTime = LocalDateTime.parse(tblActivity.getLat(), java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+               if(dateTime.getYear() == 2024){
+                   rank=rank+6;
+               }
+           }else{
+               sum=tblActivityMapper.countSortTwoYear(tblActivity.getLat());
+               //TODO 学术社区
+           }
+
+           //2查找比该活动举办时间晚的活动
+           List<TblActivity> tblActivities = tblActivityMapper.countLate(tblActivity.getLat(),tblActivity.getSort());
+           //3如果没有比它晚的活动，期数等于该年总期数+1
+           if(tblActivities==null){
+               tblActivity.setNum(Long.valueOf(sum+1) );
+           }else{
+               //4如果有，则修改比它晚的活动期数
+               int  tmp = tblActivities.toArray().length;
+               rank =rank+sum-tmp+1;
+               tblActivity.setNum(Long.valueOf(rank) );
+               for(TblActivity pretblActivity:tblActivities){
+                   rank++;
+                   pretblActivity.setNum(Long.valueOf(rank));
+                   tblActivityMapper.updateTblActivity(pretblActivity);
+               }
+           }
+
         }
 
         return tblActivityMapper.updateTblActivity(tblActivity);
@@ -301,5 +336,17 @@ public class TblActivityServiceImpl implements ITblActivityService
         //修改活动信息
         tblActivity.setState(1);//修改为待审核
         return tblActivityMapper.updateTblActivity(tblActivity);
+    }
+
+    @Override
+    public int countBySort(Integer sort) {
+        int count=0;
+        if(sort==1){
+            count =tblActivityMapper.countSortOne();
+        }
+        if(sort==2){
+           count = tblActivityMapper.countSortTwo();
+        }
+        return count;
     }
 }

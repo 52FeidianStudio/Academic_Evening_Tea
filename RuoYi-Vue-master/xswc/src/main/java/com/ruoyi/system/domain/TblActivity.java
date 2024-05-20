@@ -116,8 +116,8 @@ public class TblActivity
     /** 预留字段2  签到二维码*/
     @Excel(name = "报名二维码路径")
     private String applicationFilePath;
-
-
+//该年的第几期
+    private  Long  num;
 
     private  List<TblUserActivity>  tblUserActivities;
 //    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss ")
