@@ -118,6 +118,9 @@ public class TblActivity
     private String applicationFilePath;
 //该年的第几期
     private  Long  num;
+//该活动是总的第几期
+    private Long totality;
+
 
     private  List<TblUserActivity>  tblUserActivities;
 //    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss ")

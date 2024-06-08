@@ -63,6 +63,6 @@ public interface ITblActivityService
     public int deleteTblActivityById(Long id);
 
    public int editTblActivity(TblActivity tblActivity);
-
-    public int  countBySort(Integer sort);
+//
+//    public int  countBySort(Integer sort);
 }

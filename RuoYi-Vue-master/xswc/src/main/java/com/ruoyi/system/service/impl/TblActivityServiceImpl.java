@@ -1,6 +1,7 @@
 package com.ruoyi.system.service.impl;
 
 import java.time.Duration;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -240,21 +241,27 @@ public class TblActivityServiceImpl implements ITblActivityService
             tblActivity.setSigninFilePath(signinFilePath);
             tblActivity.setApplicationFilePath(applicationFilePath);
 
-            //活动期数
+            //活动期数和总活动数
 
            //1查询该活动举办那一年的活动
            int sum =0;//这年总活动数
            int  rank =0;//新排序
+           int totality=0;//第总期数
            if(tblActivity.getSort()==1){
                sum=tblActivityMapper.countSortOneYear(tblActivity.getLat());
+               totality = tblActivityMapper.countSortOne(tblActivity.getLat())+1;
+               tblActivity.setTotality(Long.valueOf( totality));
+
                //2024年的学术晚茶id=2270开始记录的第八期，所以2024年的期数记录不一样
                LocalDateTime dateTime = LocalDateTime.parse(tblActivity.getLat(), java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
                if(dateTime.getYear() == 2024){
-                   rank=rank+6;
+                   rank=rank+7;
                }
            }else{
                sum=tblActivityMapper.countSortTwoYear(tblActivity.getLat());
                //TODO 学术社区
+               totality = tblActivityMapper.countSortTwo(tblActivity.getLat())+1;
+               tblActivity.setTotality(Long.valueOf( totality));
            }
 
            //2查找比该活动举办时间晚的活动
@@ -269,6 +276,8 @@ public class TblActivityServiceImpl implements ITblActivityService
                tblActivity.setNum(Long.valueOf(rank) );
                for(TblActivity pretblActivity:tblActivities){
                    rank++;
+                   totality++;
+                   pretblActivity.setTotality(Long.valueOf( totality));
                    pretblActivity.setNum(Long.valueOf(rank));
                    tblActivityMapper.updateTblActivity(pretblActivity);
                }
@@ -338,15 +347,15 @@ public class TblActivityServiceImpl implements ITblActivityService
         return tblActivityMapper.updateTblActivity(tblActivity);
     }
 
-    @Override
-    public int countBySort(Integer sort) {
-        int count=0;
-        if(sort==1){
-            count =tblActivityMapper.countSortOne();
-        }
-        if(sort==2){
-           count = tblActivityMapper.countSortTwo();
-        }
-        return count;
-    }
+//    @Override
+//    public int countBySort(Integer sort) {
+//        int count=0;
+//        if(sort==1){
+//            count =tblActivityMapper.countSortOne();
+//        }
+//        if(sort==2){
+//           count = tblActivityMapper.countSortTwo();
+//        }
+//        return count;
+//    }
 }

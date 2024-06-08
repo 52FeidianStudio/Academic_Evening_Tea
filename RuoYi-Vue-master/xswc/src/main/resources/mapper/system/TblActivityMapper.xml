@@ -32,6 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         <result property="cityname"    column="cityname"    />
         <result property="lat"    column="lat"    />
         <result property="lng"    column="lng"    />
+        <result property="all"    column="all"    />
         <result property="qphone"    column="qphone"    />
         <result property="signinFilePath"    column="signin_file_path"    />
         <result property="applicationFilePath"    column="application_file_path"    />
@@ -43,7 +44,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </resultMap>
 
     <sql id="selectTblActivityVo">
-        select id, details, img, user_id,user_name,speaker_name, user_tel, hot,num, hb_num, top, givelike, views, money, type,sort, state, is_end,is_close,time, address, hb_keyword, hong, user_img2, cityname, lat, lng, qphone, application_file_path, signin_file_path,create_time,create_by,update_by,update_time,start_time from tbl_activity
+        select id, details, img, user_id,user_name,speaker_name, user_tel, totality,hot,num, hb_num, top, givelike, views, money, type,sort, state, is_end,is_close,time, address, hb_keyword, hong, user_img2, cityname, lat, lng, qphone, application_file_path, signin_file_path,create_time,create_by,update_by,update_time,start_time from tbl_activity
     </sql>
 
     <select id="selectTblActivityList" parameterType="TblActivityVO" resultMap="TblActivityResult">
@@ -138,17 +139,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         where id=#{activityId}
     </select>
 
-    <select id="countSortOne" resultType="java.lang.Integer">
-        SELECT  COUNT(*)+410 AS num_activities
-        FROM tbl_activity
-        where id >= 2270 and state =2 and sort =1
-    </select>
 
-    <select id="countSortTwo" resultType="java.lang.Integer">
-        SELECT  COUNT(*) +12 AS num_activities
-        FROM tbl_activity
-        where id >= 2266 and state =2 and sort =2
-    </select>
 
     <select id="countSortOneYear" resultType="java.lang.Integer">
         SELECT
@@ -184,7 +175,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             YEAR(lat) = YEAR(#{lat})
           AND lat > #{lat}
           and sort =#{sort}
+        and state =2
 order by lat asc
+    </select>
+
+    <select id="countSortOne" resultType="java.lang.Integer">
+        SELECT  COUNT(*)+410 AS num_activities
+        FROM tbl_activity
+        where id >= 2270    and state =2 and sort =1 and  #{lat}>=lat
+    </select>
+
+    <select id="countSortTwo" resultType="java.lang.Integer">
+        SELECT  COUNT(*) +12 AS num_activities
+        FROM tbl_activity
+        where id >= 2266 and state =2 and sort =2  and #{lat}>=lat
     </select>
 
 
@@ -287,6 +291,7 @@ order by lat asc
             <if test="cityname != null">cityname = #{cityname},</if>
             <if test="lat != null">lat = #{lat},</if>
             <if test="lng != null">lng = #{lng},</if>
+            <if test="totality != null">totality = #{totality},</if>
             <if test="qphone != null">qphone = #{qphone},</if>
             <if test="signinFilePath != null">signin_file_path = #{signinFilePath},</if>
             <if test="applicationFilePath != null">application_file_path = #{applicationFilePath},</if>

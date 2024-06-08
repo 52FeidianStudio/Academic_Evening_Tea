@@ -69,11 +69,12 @@ public interface TblActivityMapper
 
 
 
-//学术晚茶统计总数
-    public int countSortOne();
 
-    //学术社区统计总数
-    public int countSortTwo();
+//该活动在学术晚茶总第几期
+    public int countSortOne(@Param("lat") String lat);
+
+    //该活动在学术社区总第几期
+    public int countSortTwo(@Param("lat") String lat);
 
 
     //学术晚茶某年活动总数

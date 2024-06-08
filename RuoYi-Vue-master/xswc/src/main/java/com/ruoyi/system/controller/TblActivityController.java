@@ -37,10 +37,10 @@ public class TblActivityController extends BaseController
 
 
     //查询学术晚茶/学术社区的总期数
-    @GetMapping("/count/{sort}")
-    public AjaxResult countSort(@PathVariable("sort") Integer sort){
-        return success( tblActivityService.countBySort(sort));
-    }
+//    @GetMapping("/count/{sort}")
+//    public AjaxResult countSort(@PathVariable("sort") Integer sort){
+//        return success( tblActivityService.countBySort(sort));
+//    }
 
 
 
