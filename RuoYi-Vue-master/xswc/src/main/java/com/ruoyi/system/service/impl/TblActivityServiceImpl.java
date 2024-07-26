@@ -234,6 +234,7 @@ public class TblActivityServiceImpl implements ITblActivityService
          //通过审核生成二维码
        if (tblActivity.getSigninFilePath()==null&&tblActivity.getState().equals(ActivityConstant.PASS) && !tblActivityDTO.getState() .equals(ActivityConstant.PASS) ) {
 //            System.out.println("123456");
+           //二维码
             HttpPostRequestExample httpPostRequestExample = new HttpPostRequestExample();
             String accessToken = httpPostRequestExample.postSendAccessToken();
             String applicationFilePath = httpPostRequestExample.postApplication(accessToken,activityId);
@@ -242,43 +243,61 @@ public class TblActivityServiceImpl implements ITblActivityService
             tblActivity.setApplicationFilePath(applicationFilePath);
 
             //活动期数和总活动数
+              // 学术晚茶：统计id=2270对应"2024-04-11 19:00:00"时间之后的活动
+              // 学术社区:统计id=2266 对应"2024-03-26 10:00:00"时间之后的活动
+           String dateSortOne = "2024-04-11 19:00:00";
+           String dateSortTwo ="2024-03-26 10:00:00";
 
-           //1查询该活动举办那一年的活动
-           int sum =0;//这年总活动数
+           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+           LocalDateTime dateTimeLat = LocalDateTime.parse(tblActivity.getLat(), formatter);
+           LocalDateTime dateTimeSortOne = LocalDateTime.parse(dateSortOne, formatter);
+           LocalDateTime dateTimeSortTwo = LocalDateTime.parse(dateSortTwo, formatter);
+
+           if (!(dateTimeLat.isAfter(dateTimeSortOne) || dateTimeLat.isEqual(dateTimeSortOne))) {
+//               System.out.println(dateTimeLat + " 大于或等于 " + dateTimeSortOne);
+               return tblActivityMapper.updateTblActivity(tblActivity);
+
+           } else if(!(dateTimeLat.isAfter(dateTimeSortTwo) || dateTimeLat.isEqual(dateTimeSortTwo))) {
+//               System.out.println(dateTimeLat+ " 大于或等于 " + dateTimeSortTwo);
+               return tblActivityMapper.updateTblActivity(tblActivity);
+           }
+
+           //1查询该活动举办该一年的活动并设置该活动的总期数
+           int sum =0;//该年总活动数
            int  rank =0;//新排序
-           int totality=0;//第总期数
-           if(tblActivity.getSort()==1){
-               sum=tblActivityMapper.countSortOneYear(tblActivity.getLat());
-               totality = tblActivityMapper.countSortOne(tblActivity.getLat())+1;
-               tblActivity.setTotality(Long.valueOf( totality));
+           int totality=0;//该活动对应学术晚茶（社区）的总期数
+           if(tblActivity.getSort()==1){//学术晚茶：统计id=2270对应"2024-04-11 19:00:00"时间之后的活动
+               sum=tblActivityMapper.countSortOneYear(tblActivity.getLat());//该年总活动数
+               totality = tblActivityMapper.countSortOne(tblActivity.getLat())+1;//该活动对应学术晚茶（社区）的总期数=410+这段时间的活动数+1
+               tblActivity.setTotality(Long.valueOf( totality));//设置该活动对应学术晚茶（社区）的总期数
 
                //2024年的学术晚茶id=2270开始记录的第八期，所以2024年的期数记录不一样
                LocalDateTime dateTime = LocalDateTime.parse(tblActivity.getLat(), java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
                if(dateTime.getYear() == 2024){
                    rank=rank+7;
                }
-           }else{
-               sum=tblActivityMapper.countSortTwoYear(tblActivity.getLat());
-               //TODO 学术社区
-               totality = tblActivityMapper.countSortTwo(tblActivity.getLat())+1;
-               tblActivity.setTotality(Long.valueOf( totality));
+           }else{//学术社区:统计id=2266 对应"2024-03-26 10:00:00"时间之后的活动
+               sum=tblActivityMapper.countSortTwoYear(tblActivity.getLat());//该年总活动数
+               totality = tblActivityMapper.countSortTwo(tblActivity.getLat())+1;//该活动的总期数=12+这段时间的活动数+1
+               tblActivity.setTotality(Long.valueOf( totality));//设置该活动的总期数
            }
 
-           //2查找比该活动举办时间晚的活动
+           //2查找比该活动举办时间晚的活动（按照举办时间排序从低到高）
            List<TblActivity> tblActivities = tblActivityMapper.countLate(tblActivity.getLat(),tblActivity.getSort());
-           //3如果没有比它晚的活动，期数等于该年总期数+1
+           //3如果没有比它晚的活动，期数等于该年总活动数+1
            if(tblActivities==null){
                tblActivity.setNum(Long.valueOf(sum+1) );
            }else{
-               //4如果有，则修改比它晚的活动期数
+               //4如果有，则计算该活动的期数，并修改比它晚的活动期数和总活动数
                int  tmp = tblActivities.toArray().length;
                rank =rank+sum-tmp+1;
                tblActivity.setNum(Long.valueOf(rank) );
                for(TblActivity pretblActivity:tblActivities){
-                   rank++;
-                   totality++;
-                   pretblActivity.setTotality(Long.valueOf( totality));
-                   pretblActivity.setNum(Long.valueOf(rank));
+//                   rank++;
+//                   totality++;
+                   pretblActivity.setTotality(pretblActivity.getTotality()+1);
+                   pretblActivity.setNum(pretblActivity.getNum()+1);
                    tblActivityMapper.updateTblActivity(pretblActivity);
                }
            }
@@ -297,6 +316,7 @@ public class TblActivityServiceImpl implements ITblActivityService
     @Override
     public int deleteTblActivityByIds(Long[] ids)
     {
+        //TODO 未对期数和总期数进行修改
         return tblActivityMapper.deleteTblActivityByIds(ids);
     }
 
@@ -309,6 +329,7 @@ public class TblActivityServiceImpl implements ITblActivityService
     @Override
     public int deleteTblActivityById(Long id)
     {
+        //TODO 未对期数和总期数进行修改
         return tblActivityMapper.deleteTblActivityById(id);
     }
 

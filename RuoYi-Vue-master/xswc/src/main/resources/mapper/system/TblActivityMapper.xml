@@ -80,7 +80,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="signinFilePath != null  and signinFilePath != ''"> and signin_file_path = #{signinFilePath}</if>
             <if test="applicationFilePath != null  and applicationFilePath != ''"> and application_file_path = #{applicationFilePath}</if>
         </where>
-        order by lat desc
+        order by lat desc , totality desc
 <!--        &lt;!&ndash; 添加分页 &ndash;&gt;-->
 <!--        <if test="pageSize != null and pageNum != null">-->
 <!--            limit #{pageSize}  offset (#{pageNum} - 1)* #{pageSize}-->
@@ -147,7 +147,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         FROM
             tbl_activity
         WHERE
-                    id >= 2270
+                    lat >= "2024-04-11 19:00:00"
                     AND state=2
                 AND sort = 1
                 AND YEAR(lat) = YEAR(#{lat});
@@ -160,7 +160,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         FROM
             tbl_activity
         WHERE
-                    id >= 2266
+                    lat>="2024-03-26 10:00:00"
                 AND state=2
                 AND sort = 2
                 AND YEAR(lat) = YEAR(#{lat});
@@ -182,13 +182,13 @@ order by lat asc
     <select id="countSortOne" resultType="java.lang.Integer">
         SELECT  COUNT(*)+410 AS num_activities
         FROM tbl_activity
-        where id >= 2270    and state =2 and sort =1 and  #{lat}>=lat
+        where    lat >= "2024-04-11 19:00:00"    and state =2 and sort =1 and  #{lat}>=lat
     </select>
 
     <select id="countSortTwo" resultType="java.lang.Integer">
         SELECT  COUNT(*) +12 AS num_activities
         FROM tbl_activity
-        where id >= 2266 and state =2 and sort =2  and #{lat}>=lat
+        where lat>="2024-03-26 10:00:00" and state =2 and sort =2  and #{lat}>=lat
     </select>
 
 
