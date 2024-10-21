@@ -55,11 +55,13 @@ public class TblUserActivityController extends BaseController
        if(res==0){
            return AjaxResult.error("报名失败，人数达到上限");
        }
-       if(res==-1){
+       else if(res==-1){
            return AjaxResult.error("报名时间已过");
        }
-       if(res==-2){
+       else if(res==-2){
            return  AjaxResult.error("已经报过名");
+       }else if(res==-3){
+           return AjaxResult.error("报名人数过多，请稍后重试");
        }
        return success();
     }

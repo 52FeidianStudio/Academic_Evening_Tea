@@ -5,6 +5,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.UUID;
 
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.utils.SecurityUtils;
@@ -18,6 +19,7 @@ import com.ruoyi.system.constant.ResultConstant;
 import com.ruoyi.system.domain.*;
 import com.ruoyi.system.mapper.*;
 
+import com.ruoyi.system.utils.RedisLockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.service.ITblUserActivityService;
@@ -47,6 +49,9 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
     @Autowired
     private TblCreditUserMapper tblCreditUserMapper;
 
+    @Autowired
+    private RedisLockService redisLockService;
+
     /**
      * 查询【请填写功能名称】
      * 
@@ -73,61 +78,141 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
 
     /**
      * 用户报名活动
-     * 
+     *
      * @param tblUserActivity 用户报名活动
      * @return 结果
      */
     @Override
     @Transactional
-    public int insertTblUserActivity(TblUserActivity tblUserActivity)
-    {
-        //是否报过名
-        List<TblUserActivity> tblUserActivities = tblUserActivityMapper.selectTblUserActivityList(tblUserActivity);
-        if(tblUserActivities.size()!=0){
-            return -2;
-        }
-        //对活动状态更新
-        TblActivity pretblActivity = tblActivityMapper.selectTblActivityById(tblUserActivity.getActivityId());
-        updateActivityAspect(pretblActivity);
-        //判断活动报名是否截止
-        TblActivity tblActivity = tblActivityMapper.selectTblActivityById(tblUserActivity.getActivityId());
-        if(tblActivity.getIsClose()==2){
-            return -1;
-        }
-        //得到用户的部门id
-        Long userId = SecurityUtils.getUserId();
-        SysUser sysUser = sysUserMapper.selectUserById(userId);
-        Long deptId = sysUser.getDeptId();
-        //检查用户的学院人数是否有限制
-        DeptActivity deptActivity = new DeptActivity();
-        deptActivity.setActivityId(tblUserActivity.getActivityId());
-        deptActivity.setDeptId(deptId);
-        Long resNum = deptActivityMapper.getResNum(deptActivity);
+    public int insertTblUserActivity(TblUserActivity tblUserActivity) {
+        String lockKey = "activityLock:" + tblUserActivity.getActivityId();
+        String lockValue = UUID.randomUUID().toString(); // 防止锁被误释放
 
-        //该活动的已经报名人数不能超过总人数
-        Long hbNum = tblActivity.getHbNum();
-        Long hot = tblActivity.getHot();
-        Long res=hot-hbNum;
+        // 获取 Redis 锁，锁的超时时间为 10 秒
+        boolean isLocked = redisLockService.tryLock(lockKey, lockValue, 10);
+        if (!isLocked) {
+            return -3; // 返回-3表示获取锁失败，活动正在被其他用户处理
+        }
 
-        //用户对应的学院没有限制报名人数
-        if(res>0&&resNum== null){
-            tblActivity.setHbNum(hbNum+1);
-            tblActivityMapper.updateTblActivity(tblActivity);
-            return tblUserActivityMapper.insertTblUserActivity(tblUserActivity);
-        }
-        //学院剩余人数为0 或者活动报名人数达到上限
-        if(res<=0 || resNum==0){
-            return ResultConstant.ERROR;
-        }
-        //用户学院报名人数设有限制
-        else{
-            deptActivity.setResNum(resNum-1);
-            tblActivity.setHbNum(hbNum+1);
-            tblActivityMapper.updateTblActivity(tblActivity);
-            deptActivityMapper.updateDeptActivity(deptActivity);
-            return tblUserActivityMapper.insertTblUserActivity(tblUserActivity);
+        try {
+            // 是否报过名
+            List<TblUserActivity> tblUserActivities = tblUserActivityMapper.selectTblUserActivityList(tblUserActivity);
+            if (tblUserActivities.size() != 0) {
+                return -2;
+            }
+
+            // 对活动状态更新
+            TblActivity pretblActivity = tblActivityMapper.selectTblActivityById(tblUserActivity.getActivityId());
+            updateActivityAspect(pretblActivity);
+
+            // 判断活动报名是否截止
+            TblActivity tblActivity = tblActivityMapper.selectTblActivityById(tblUserActivity.getActivityId());
+            if (tblActivity.getIsClose() == 2) {
+                return -1;
+            }
+
+            // 得到用户的部门id
+            Long userId = SecurityUtils.getUserId();
+            SysUser sysUser = sysUserMapper.selectUserById(userId);
+            Long deptId = sysUser.getDeptId();
+
+            // 检查用户的学院人数是否有限制
+            DeptActivity deptActivity = new DeptActivity();
+            deptActivity.setActivityId(tblUserActivity.getActivityId());
+            deptActivity.setDeptId(deptId);
+            Long resNum = deptActivityMapper.getResNum(deptActivity);
+
+            // 该活动的已经报名人数不能超过总人数
+            Long hbNum = tblActivity.getHbNum();
+            Long hot = tblActivity.getHot();
+            Long res = hot - hbNum;
+
+            // 用户对应的学院没有限制报名人数
+            if (res > 0 && resNum == null) {
+                tblActivity.setHbNum(hbNum + 1);
+                tblActivityMapper.updateTblActivity(tblActivity);
+                return tblUserActivityMapper.insertTblUserActivity(tblUserActivity);
+            }
+            // 学院剩余人数为0 或者活动报名人数达到上限
+            if (res <= 0 || resNum == 0) {
+                return ResultConstant.ERROR;
+            }
+            // 用户学院报名人数设有限制
+            else {
+                deptActivity.setResNum(resNum - 1);
+                tblActivity.setHbNum(hbNum + 1);
+                tblActivityMapper.updateTblActivity(tblActivity);
+                deptActivityMapper.updateDeptActivity(deptActivity);
+                return tblUserActivityMapper.insertTblUserActivity(tblUserActivity);
+            }
+        } finally {
+            // 释放锁
+            redisLockService.releaseLock(lockKey, lockValue);
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
+
+    /**
+     * 用户报名活动
+     * 
+     * @param tblUserActivity 用户报名活动
+     * @return 结果
+     */
+//    @Override
+//    @Transactional
+//    public int insertTblUserActivity(TblUserActivity tblUserActivity)
+//    {
+//        //是否报过名
+//        List<TblUserActivity> tblUserActivities = tblUserActivityMapper.selectTblUserActivityList(tblUserActivity);
+//        if(tblUserActivities.size()!=0){
+//            return -2;
+//        }
+//        //对活动状态更新
+//        TblActivity pretblActivity = tblActivityMapper.selectTblActivityById(tblUserActivity.getActivityId());
+//        updateActivityAspect(pretblActivity);
+//        //判断活动报名是否截止
+//        TblActivity tblActivity = tblActivityMapper.selectTblActivityById(tblUserActivity.getActivityId());
+//        if(tblActivity.getIsClose()==2){
+//            return -1;
+//        }
+//        //得到用户的部门id
+//        Long userId = SecurityUtils.getUserId();
+//        SysUser sysUser = sysUserMapper.selectUserById(userId);
+//        Long deptId = sysUser.getDeptId();
+//        //检查用户的学院人数是否有限制
+//        DeptActivity deptActivity = new DeptActivity();
+//        deptActivity.setActivityId(tblUserActivity.getActivityId());
+//        deptActivity.setDeptId(deptId);
+//        Long resNum = deptActivityMapper.getResNum(deptActivity);
+//
+//        //该活动的已经报名人数不能超过总人数
+//        Long hbNum = tblActivity.getHbNum();
+//        Long hot = tblActivity.getHot();
+//        Long res=hot-hbNum;
+//
+//        //用户对应的学院没有限制报名人数
+//        if(res>0&&resNum== null){
+//            tblActivity.setHbNum(hbNum+1);
+//            tblActivityMapper.updateTblActivity(tblActivity);
+//            return tblUserActivityMapper.insertTblUserActivity(tblUserActivity);
+//        }
+//        //学院剩余人数为0 或者活动报名人数达到上限
+//        if(res<=0 || resNum==0){
+//            return ResultConstant.ERROR;
+//        }
+//        //用户学院报名人数设有限制
+//        else{
+//            deptActivity.setResNum(resNum-1);
+//            tblActivity.setHbNum(hbNum+1);
+//            tblActivityMapper.updateTblActivity(tblActivity);
+//            deptActivityMapper.updateDeptActivity(deptActivity);
+//            return tblUserActivityMapper.insertTblUserActivity(tblUserActivity);
+//        }
+//    }
     public void  updateActivityAspect (TblActivity tblActivity){
 
         // 获取当前时间
