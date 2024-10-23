@@ -23,7 +23,11 @@ import com.ruoyi.system.utils.RedisLockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.ruoyi.system.service.ITblUserActivityService;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 /**
  * 【请填写功能名称】Service业务层处理
@@ -51,7 +55,8 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
 
     @Autowired
     private RedisLockService redisLockService;
-
+    @Autowired
+    private PlatformTransactionManager transactionManager;
     /**
      * 查询【请填写功能名称】
      * 
@@ -83,27 +88,42 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
      * @return 结果
      */
     @Override
-    @Transactional
+//    @Transactional
     public int insertTblUserActivity(TblUserActivity tblUserActivity) {
+        // 是否报过名
+        List<TblUserActivity> tblUserActivities = tblUserActivityMapper.selectTblUserActivityList(tblUserActivity);
+        if (tblUserActivities.size() != 0) {
+            return -2;
+        }
+        // 对活动状态更新
+        TblActivity pretblActivity = tblActivityMapper.selectTblActivityById(tblUserActivity.getActivityId());
+        updateActivityAspect(pretblActivity);
+
+
+
         String lockKey = "activityLock:" + tblUserActivity.getActivityId();
         String lockValue = UUID.randomUUID().toString(); // 防止锁被误释放
 
         // 获取 Redis 锁，锁的超时时间为 10 秒
+        int retryCount = 0;
         boolean isLocked = redisLockService.tryLock(lockKey, lockValue, 10);
+        while(!isLocked&& retryCount < 3){
+            retryCount++;
+            isLocked=redisLockService.tryLock(lockKey,lockValue,10);
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
         if (!isLocked) {
+//            System.out.println("333333333333333333333333333333333333333333333333333333333333333333333333333333333");
             return -3; // 返回-3表示获取锁失败，活动正在被其他用户处理
         }
-
+        DefaultTransactionDefinition defaultTransactionDefinition = new DefaultTransactionDefinition();
+        defaultTransactionDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+        TransactionStatus transactionStatus = transactionManager.getTransaction(defaultTransactionDefinition);
         try {
-            // 是否报过名
-            List<TblUserActivity> tblUserActivities = tblUserActivityMapper.selectTblUserActivityList(tblUserActivity);
-            if (tblUserActivities.size() != 0) {
-                return -2;
-            }
-
-            // 对活动状态更新
-            TblActivity pretblActivity = tblActivityMapper.selectTblActivityById(tblUserActivity.getActivityId());
-            updateActivityAspect(pretblActivity);
 
             // 判断活动报名是否截止
             TblActivity tblActivity = tblActivityMapper.selectTblActivityById(tblUserActivity.getActivityId());
@@ -131,7 +151,10 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
             if (res > 0 && resNum == null) {
                 tblActivity.setHbNum(hbNum + 1);
                 tblActivityMapper.updateTblActivity(tblActivity);
-                return tblUserActivityMapper.insertTblUserActivity(tblUserActivity);
+                tblUserActivityMapper.insertTblUserActivity(tblUserActivity);
+                transactionManager.commit(transactionStatus);
+//                System.out.println("111111111111111111111111111111111111111111111111111111111111111111111111");
+                return 1;
             }
             // 学院剩余人数为0 或者活动报名人数达到上限
             if (res <= 0 || resNum == 0) {
@@ -143,23 +166,21 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
                 tblActivity.setHbNum(hbNum + 1);
                 tblActivityMapper.updateTblActivity(tblActivity);
                 deptActivityMapper.updateDeptActivity(deptActivity);
-                return tblUserActivityMapper.insertTblUserActivity(tblUserActivity);
+                tblUserActivityMapper.insertTblUserActivity(tblUserActivity);
+                transactionManager.commit(transactionStatus);
+//                System.out.println("1111111111111111111111111111111111111111111111111111111111111111111111111111111");
+                return 1;
             }
         } finally {
-            // 释放锁
+//             释放锁
             redisLockService.releaseLock(lockKey, lockValue);
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
         }
     }
 
     /**
      * 用户报名活动
      * 
-     * @param tblUserActivity 用户报名活动
+     * @param 用户报名活动
      * @return 结果
      */
 //    @Override
