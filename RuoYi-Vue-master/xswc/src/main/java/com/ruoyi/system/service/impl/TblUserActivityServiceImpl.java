@@ -126,15 +126,16 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
         }
 
         // 使用事务处理
-        DefaultTransactionDefinition defaultTransactionDefinition = new DefaultTransactionDefinition();
-        defaultTransactionDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-        defaultTransactionDefinition.setTimeout(10); // 设置事务超时时间为10秒
-        TransactionStatus transactionStatus = transactionManager.getTransaction(defaultTransactionDefinition);
+//        DefaultTransactionDefinition defaultTransactionDefinition = new DefaultTransactionDefinition();
+//        defaultTransactionDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+//        defaultTransactionDefinition.setTimeout(10); // 设置事务超时时间为10秒
+//        TransactionStatus transactionStatus = transactionManager.getTransaction(defaultTransactionDefinition);
 
         try {
             // 判断活动报名是否截止
             TblActivity tblActivity = tblActivityMapper.selectTblActivityById(tblUserActivity.getActivityId());
             if (tblActivity.getIsClose() == 2) {
+//                transactionManager.rollback(transactionStatus); // 事务回滚
                 return -1; // 报名截止
             }
 
@@ -159,7 +160,7 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
                 tblActivity.setHbNum(hbNum + 1);
                 tblActivityMapper.updateTblActivity(tblActivity);
                 tblUserActivityMapper.insertTblUserActivity(tblUserActivity);
-                transactionManager.commit(transactionStatus);
+//                transactionManager.commit(transactionStatus);
                 return 1; // 报名成功
             }
 
@@ -173,12 +174,12 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
                 tblActivityMapper.updateTblActivity(tblActivity);
                 deptActivityMapper.updateDeptActivity(deptActivity);
                 tblUserActivityMapper.insertTblUserActivity(tblUserActivity);
-                transactionManager.commit(transactionStatus);
+//                transactionManager.commit(transactionStatus);
                 return 1; // 报名成功
             }
         } catch (DataAccessException e) {
             // 处理数据库访问异常
-            transactionManager.rollback(transactionStatus); // 事务回滚
+//            transactionManager.rollback(transactionStatus); // 事务回滚
             // 检查是否为死锁异常
             Throwable cause = e.getCause();
             if (cause != null && cause.getMessage() != null && cause.getMessage().contains("Lock wait timeout exceeded")) {
@@ -190,6 +191,7 @@ public class TblUserActivityServiceImpl implements ITblUserActivityService
             // 释放锁
             redisLockService.releaseLock(lockKey, lockValue);
         }
+
     }
 
 
